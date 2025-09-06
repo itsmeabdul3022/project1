@@ -1,0 +1,38 @@
+- name: 4.1.2.5 Ensure access to /etc/security is configured
+  become: true
+  block:
+    - name: Find all files and directories in /etc/security
+      ansible.builtin.find:
+        paths: /etc/security
+        file_type: any
+        recurse: yes
+        excludes:
+          - aixpert
+          - audit
+          - ice
+      register: security_files
+
+    - name: Set ownership for all security files and directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        owner: root
+        group: security
+      loop: "{{ security_files.files }}"
+      loop_control:
+        label: "Setting ownership for {{ item.path }}"
+
+    - name: Set permissions for security directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: 'g-w,o-rwx'
+      loop: "{{ security_files.files | selectattr('isdir') | list }}"
+      loop_control:
+        label: "Setting permissions for directory {{ item.path }}"
+
+    - name: Set permissions for security files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: 'u-x,g-wx,o-rwx'
+      loop: "{{ security_files.files | selectattr('isreg') | list }}"
+      loop_control:
+        label: "Setting permissions for file {{ item.path }}"

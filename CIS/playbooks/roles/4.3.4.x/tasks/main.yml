@@ -1,0 +1,153 @@
+    - name: 4.3.4.1 Ensure bootps daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'bootps' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.2 Ensure chargen daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'chargen' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.3 Ensure comsat daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'comsat' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.4 Ensure daytime daemon is not in use
+      ansible.builtin.shell: |
+        chsubserver -r inetd -C /etc/inetd.conf -d -v 'daytime' -p tcp
+        chsubserver -r inetd -C /etc/inetd.conf -d -v 'daytime' -p udp
+        lssrc -s inetd && refresh -s inetd
+      changed_when: true
+      ignore_errors: true
+
+    - name: 4.3.4.5 Ensure discard daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'discard' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.6 Ensure echo daemon is not in use
+      ansible.builtin.shell: |
+        chsubserver -r inetd -C /etc/inetd.conf -d -v 'echo' -p tcp
+        chsubserver -r inetd -C /etc/inetd.conf -d -v 'echo' -p udp
+        lssrc -s inetd && refresh -s inetd
+      changed_when: true
+      ignore_errors: true
+
+    - name: 4.3.4.7 Ensure exec daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'exec' -p 'tcp6' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+
+    - name: 4.3.4.8 Ensure finger daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'finger' -p tcp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.9 Ensure ftpd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'ftp' -p 'tcp6' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.10 Ensure imap2 daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'imap2' -p tcp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.11 Ensure instsrv daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'instsrv' -p 'tcp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.12 Ensure klogin daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'klogin' -p tcp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.13 Ensure kshell daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'kshell' -p tcp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.15 Ensure netstat daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'netstat' -p 'tcp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.16 Ensure ntalk daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'ntalk' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.17 Ensure pcnfsd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'pcnfsd' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.18 Ensure pop3 daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'pop3' -p tcp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.19 Ensure rexd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'rexd' -p 'tcp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.20 Ensure rquotad daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'rquotad' -p 'udp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.21 Ensure rstatd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'rstatd' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.22 Ensure rusersd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'rusersd' -p 'udp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.23 Ensure rwalld daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'rwalld' -p 'udp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.25 Ensure sprayd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'sprayd' -p udp && lssrc -s inetd && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.26 Ensure xmquery daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'xmquery' -p 'udp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.27 Ensure talk daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'talk' -p 'udp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.28 Ensure telnetd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'telnet' -p 'tcp6' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.29 Ensure tftpd daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'tftp' -p 'udp6' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.30 Ensure time daemon is not in use
+      ansible.builtin.shell: |
+        chsubserver -r inetd -C /etc/inetd.conf -d -v 'time' -p 'tcp'
+        chsubserver -r inetd -C /etc/inetd.conf -d -v 'time' -p 'udp'
+        refresh -s inetd
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.4.31 Ensure uucp daemon is not in use
+      ansible.builtin.shell: "chsubserver -r inetd -C /etc/inetd.conf -d -v 'uucp' -p 'tcp' && refresh -s inetd"
+      changed_when: true
+      ignore_errors: true

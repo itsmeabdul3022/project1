@@ -1,0 +1,93 @@
+    - name: 4.5.1 Ensure sockthresh is configured
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o sockthresh=60
+      changed_when: true
+      
+    - name: 4.5.2 Ensure bcastping is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o bcastping=0
+      changed_when: true
+      
+    - name: 4.5.3 Ensure clean_partial_conns is enabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o clean_partial_conns=1
+      changed_when: true
+      
+    - name: 4.5.4 Ensure directed_broadcast is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o directed_broadcast=0
+      changed_when: true
+      
+    - name: 4.5.5 Ensure icmpaddressmask is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o icmpaddressmask=0
+      changed_when: true
+      
+    - name: 4.5.6 Ensure ipforwarding is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ipforwarding=0
+      changed_when: true
+      
+    - name: 4.5.7 Ensure ip6forwarding is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ip6forwarding=0
+      changed_when: true
+      
+    - name: 4.5.8 Ensure ipignoreredirects is enabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ipignoreredirects=1
+      changed_when: true
+      
+    - name: 4.5.9 Ensure ipsendredirects is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ipsendredirects=0
+      changed_when: true
+      
+    - name: 4.5.10 Ensure ipsrcrouteforward is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ipsrcrouteforward=0
+      changed_when: true
+      
+    - name: 4.5.11 Ensure ipsrcrouterecv is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ipsrcrouterecv=0
+      changed_when: true
+      
+    - name: 4.5.12 Ensure ipsrcroutesend is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ipsrcroutesend=0
+      changed_when: true
+      
+    - name: 4.5.13 Ensure ip6srcrouteforward is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o ip6srcrouteforward=0
+      changed_when: true
+      
+    - name: 4.5.14 Ensure nfs_use_reserved_ports is enabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: nfso -p -o portcheck=1
+      changed_when: true
+      
+    - name: 4.5.14 Ensure nfs_use_reserved_ports is enabled (part 2)
+      ansible.builtin.command: nfso -p -o nfs_use_reserved_ports=1
+      changed_when: true
+      
+    - name: 4.5.15 Ensure nonlocsrcroute is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o nonlocsrcroute=0
+      changed_when: true
+      
+    - name: 4.5.16 Ensure tcp_pmtu_discover is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o tcp_pmtu_discover=0
+      changed_when: true
+      
+    - name: 4.5.17 Ensure tcp_tcpsecure is configured
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o tcp_tcpsecure=7
+      changed_when: true
+      
+    - name: 4.5.18 Ensure udp_pmtu_discover is disabled
+      # This makes the change permanent by adding the entry into /etc/tunables/nextboot
+      ansible.builtin.command: no -p -o udp_pmtu_discover=0
+      changed_when: true

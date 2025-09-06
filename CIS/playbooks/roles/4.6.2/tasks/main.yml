@@ -1,0 +1,9 @@
+    - name: 4.6.2 Ensure IPv4 loopback traffic is blocked
+      ansible.builtin.shell: genfilt -v 4 -a D -s 127.0.0.0 -m 255.0.0.0 -l Y -i all
+      changed_when: true
+      ignore_errors: true
+
+    - name: 4.6.2 Ensure IPv6 loopback traffic is blocked
+      ansible.builtin.shell: genfilt -v 6 -a D -s ::1 -m 128 -l Y -i all
+      changed_when: true
+      ignore_errors: true

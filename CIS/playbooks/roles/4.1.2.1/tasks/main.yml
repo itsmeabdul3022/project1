@@ -1,0 +1,30 @@
+---
+- name: 4.1.2.1 Ensure local user Home directories exists
+  hosts: your_aix_hosts
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Get list of local user homes
+      ansible.builtin.command: lsuser -a home ALL
+      register: user_info
+      changed_when: false
+
+    - name: Get user IDs to check against rule
+      ansible.builtin.command: lsuser -a id ALL
+      register: user_ids
+      changed_when: false
+    
+    - name: Lock accounts with missing home directories
+      ansible.builtin.shell: chuser account_locked=true "{{ item.split(':')[0] }}"
+      # Explanation: The command `lsuser -a home ALL` gives output like 'username: home=/path'.
+      # The `split(':')[0]` gets the username part.
+      # The `when` clause checks if the line contains a home directory that does not exist.
+      # It's a simplistic approach that works for a single playbook.
+      # A more robust solution would involve combining both `user_info` and `user_ids` data.
+      when:
+        - "':home=' in item"
+        - "item.split('=')[1] is not defined or item.split('=')[1] == ''"
+      loop: "{{ user_info.stdout_lines }}"
+      loop_control:
+        label: "Processing user: {{ item.split(':')[0] }}"

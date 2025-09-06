@@ -1,0 +1,14 @@
+    - name: 4.3.3.1 Ensure autoconf6 is not in use
+      ansible.builtin.command: chrctcp -d autoconf6
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.3.2 Ensure ndpd-host is not in use
+      ansible.builtin.command: chrctcp -d ndpd-host
+      changed_when: true
+      ignore_errors: true
+      
+    - name: 4.3.3.3 Ensure ndpd-router is not in use
+      ansible.builtin.command: chrctcp -d ndpd-router
+      changed_when: true
+      ignore_errors: true

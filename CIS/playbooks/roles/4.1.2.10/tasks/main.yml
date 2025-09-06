@@ -1,0 +1,14 @@
+  - name: 4.1.2.10 Ensure root user has a dedicated home directory
+      # This task creates the /root home directory with correct ownership and permissions,
+      # and then sets the root user's home directory to /root.
+      ansible.builtin.file:
+        path: /root
+        owner: root
+        group: system
+        mode: '0700'
+        state: directory
+
+    - name: Set root user's home directory
+      community.general.aix_chuser:
+        user: root
+        home: /root

@@ -1,0 +1,19 @@
+    - name: 3.7 Ensure no files or directories without an owner and a group exist
+      # Review the currently mounted local filesystems:
+      # find / ( -fstype jfs -o -fstype jfs2 ) ( -type d -o -type f ) ( -nouser -o -nogroup ) -ls
+      # - Either assign UID/GID:
+      #   chown <owner> <file>
+      #   chgrp <group> <file>
+      # - or remove the file/directory:
+      #   [[ -f <file> ]] && rm -f <file>
+      #   [[ -d <file> ]] && rmdir <file>
+      # - Repeat the audit
+      ansible.builtin.command: find / \( -fstype jfs -o -fstype jfs2 \) \( -type d -o -type f \) \( -nouser -o -nogroup \) -ls
+      register: orphan_files
+      changed_when: false
+
+    - name: Report files/directories without an owner/group
+      ansible.builtin.debug:
+        msg: "The following files/directories have no owner or group and need manual remediation: {{ orphan_files.stdout_lines }}"
+      when: orphan_files.stdout_lines | length > 0
+  
