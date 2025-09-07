@@ -1,0 +1,14 @@
+    - name: 4.1.1.2 Get current settings for /etc/group
+      ansible.builtin.stat:
+        path: /etc/group
+      register: group_file_stat
+
+    - name: Save settings to a local rollback file
+      ansible.builtin.copy:
+        content: |
+          path: /etc/group
+          owner: {{ group_file_stat.stat.pw_name }}
+          group: {{ group_file_stat.stat.gr_name }}
+          mode: '{{ group_file_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.2_etc_group_rollback_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
