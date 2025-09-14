@@ -1,0 +1,48 @@
+- name: 4.9 Pre-check user and shell settings
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Get root user details
+      ansible.builtin.user:
+        name: root
+      register: root_user_info
+
+    - name: Slurp /etc/profile
+      ansible.builtin.slurp:
+        src: /etc/profile
+      register: etc_profile_content
+      ignore_errors: yes
+
+    - name: Slurp /root/.profile
+      ansible.builtin.slurp:
+        src: /root/.profile
+      register: root_profile_content
+      ignore_errors: yes
+
+    - name: Slurp /etc/motd
+      ansible.builtin.slurp:
+        src: /etc/motd
+      register: motd_content
+      ignore_errors: yes
+
+    - name: Write all pre-check data to a JSON file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ pre_check_data | to_nice_json }}"
+        dest: "/tmp/pre_checks/4.9_pre_check.{{ ansible_hostname }}.json"
+      vars:
+        pre_check_data:
+          root_shell: "{{ root_user_info.shell }}"
+          etc_profile: "{{ etc_profile_content.content | b64decode | default('') }}"
+          root_profile: "{{ root_profile_content.content | b64decode | default('') }}"
+          motd_content: "{{ motd_content.content | b64decode | default('') }}"
+      delegate_to: localhost

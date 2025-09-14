@@ -1,0 +1,38 @@
+- name: 5.1 Pre-check user and group settings
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Get list of all local users
+      ansible.builtin.shell: |
+        /usr/sbin/lsuser -a all ALL
+      register: all_users
+      changed_when: false
+      failed_when: false
+
+    - name: Get list of all local groups
+      ansible.builtin.shell: |
+        /usr/sbin/lsgroup -a all ALL
+      register: all_groups
+      changed_when: false
+      failed_when: false
+
+    - name: Write user and group info to a file on Ansible host
+      ansible.builtin.copy:
+        content: |
+          ### User Information ###
+          {{ all_users.stdout }}
+
+          ### Group Information ###
+          {{ all_groups.stdout }}
+        dest: "/tmp/pre_checks/5.1_pre_check.{{ ansible_hostname }}.txt"
+      delegate_to: localhost

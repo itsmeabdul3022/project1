@@ -1,0 +1,43 @@
+---
+- name: 4.7.4 Pre-check Sendmail configuration
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Read and backup sendmail.cf file content
+      ansible.builtin.slurp:
+        src: /etc/mail/sendmail.cf
+      register: sendmail_cf_content
+      ignore_errors: yes
+
+    - name: Write sendmail.cf content to a file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ sendmail_cf_content.content | default('') | b64decode }}"
+        dest: "/tmp/pre_checks/sendmail.cf.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: sendmail_cf_content.content is defined
+
+    - name: Get stats of relevant files and directories
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop:
+        - /etc/mail/sendmail.cf
+        - /var/spool/clientmqueue
+        - /var/spool/mqueue
+      register: file_stats
+
+    - name: Write file stats to a JSON file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ file_stats.results | to_nice_json }}"
+        dest: "/tmp/pre_checks/sendmail_perms.{{ ansible_hostname }}.json"
+      delegate_to: localhost
+      when: file_stats.results is defined

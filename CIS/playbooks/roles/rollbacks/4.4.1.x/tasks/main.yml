@@ -1,0 +1,48 @@
+- name: 4.4.1 Rollback NFS Security
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/4.4.1_pre_check.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_data
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found. Cannot perform rollback."
+      when: not pre_check_data.content is defined
+
+    - name: Set facts from pre-check data
+      ansible.builtin.set_fact:
+        nfs_was_running: "{{ (pre_check_data.content | b64decode | from_json).nfs_is_running }}"
+        original_exports_content: "{{ (pre_check_data.content | b64decode | from_json).exports_content }}"
+
+    - name: Restore /etc/exports
+      ansible.builtin.copy:
+        content: "{{ original_exports_content }}"
+        dest: /etc/exports
+        owner: root
+        group: security
+        mode: '0640'
+      notify:
+        - Exportfs -a
+
+    - name: Restore NFS server services if they were running
+      ansible.builtin.shell: startsrc -s nfsd && startsrc -s biod && startsrc -s rpc.mountd && startsrc -s rpc.statd && startsrc -s rpc.lockd
+      args:
+        warn: false
+      when: nfs_was_running | bool
+      ignore_errors: yes
+
+  handlers:
+    - name: Exportfs -a
+      ansible.builtin.shell: exportfs -a
+      args:
+        warn: false

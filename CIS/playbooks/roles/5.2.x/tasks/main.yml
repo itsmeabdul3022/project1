@@ -1,0 +1,22 @@
+- name: 5.2 Ensure password policies are configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 5.2.4 Ensure passwords are controlled by password attributes
+      ansible.builtin.replace:
+        path: /etc/security/user
+        regexp: '^(\s*SYSTEM = "files|compat")'
+        replace: 'SYSTEM = "DCE"'
+        backup: yes
+      register: system_file
+
+    - name: 5.2.8 Ensure a strong password hashing algorithm is configured
+      ansible.builtin.shell: |
+        /usr/sbin/chsec -f /etc/security/user -s default -a pwd_alg=ssha256
+      args:
+        warn: false
+      register: pwd_alg_change
+      changed_when: '"ssha256" in pwd_alg_change.stdout'
+      failed_when: false

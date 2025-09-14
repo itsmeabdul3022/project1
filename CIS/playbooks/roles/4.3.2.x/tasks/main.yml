@@ -1,0 +1,21 @@
+- name: 4.3.2 Ensure network services are not running
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 4.3.2.3-16 Ensure specified services are not in use
+      ansible.builtin.shell: |
+        stopsrc -c -s dhcpcd
+        stopsrc -c -s dhcprd
+        stopsrc -c -s dhcpsd
+        stopsrc -c -s gated
+        stopsrc -c -s named
+        stopsrc -c -s portmap
+        stopsrc -c -s routed
+        stopsrc -c -s rwhod
+        stopsrc -c -s timed
+      args:
+        warn: false
+      ignore_errors: yes
+      changed_when: true

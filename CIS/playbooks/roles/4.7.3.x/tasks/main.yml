@@ -1,0 +1,137 @@
+- name: 4.7.3 Ensure SSHD configuration is compliant
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 4.7.3.1 Ensure latest version of openssh is installed
+      community.general.aix_lpp:
+        name: openssh.base.client,openssh.base.server
+        state: latest
+      notify: Restart sshd
+
+    - name: 4.7.3.2 Ensure /etc/shosts.equiv and /etc/rhosts.equiv are removed
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/shosts.equiv
+        - /etc/rhosts.equiv
+      notify: Restart sshd
+
+    - name: 4.7.3.3 Ensure sftp-server arguments are configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?Subsystem sftp '
+        line: 'Subsystem sftp /usr/sbin/sftp-server -u 002'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.5 Ensure sshd Banner is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?Banner '
+        line: 'Banner /etc/issue'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.6 Ensure sshd Ciphers are configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?Ciphers '
+        line: 'Ciphers aes128-cbc,3des-cbc,aes256-cbc,aes128-ctr,aes192-ctr,aes256-ctr,arcfour128,arcfour256,arcfour,blowfish-cbc,cast128-cbc'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.7 Ensure sshd HostbasedAuthentication is disabled
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?HostbasedAuthentication '
+        line: 'HostbasedAuthentication no'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.9 Ensure sshd KexAlgorithms is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?KexAlgorithms '
+        line: 'KexAlgorithms ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.10 Ensure sshd LogLevel is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?LogLevel '
+        line: 'LogLevel VERBOSE'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.11 Ensure sshd MACs are configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?MACs '
+        line: 'MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,hmac-sha1'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.12 Ensure sshd MaxAuthTries is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?MaxAuthTries '
+        line: 'MaxAuthTries 4'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.13 Ensure sshd PermitEmptyPasswords is disabled
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitEmptyPasswords '
+        line: 'PermitEmptyPasswords no'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+    - name: 4.7.3.14 Ensure sshd PermitRootLogin is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin '
+        line: 'PermitRootLogin no'
+        state: present
+        owner: root
+        group: security
+        mode: '0600'
+      notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      listen: "Restart sshd"

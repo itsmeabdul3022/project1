@@ -1,0 +1,25 @@
+- name: 4.3.2 Rollback Network Services
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/4.3.2_pre_check.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_data
+
+    - name: Set facts from pre-check data
+      ansible.builtin.set_fact:
+        original_statuses: "{{ pre_check_data.content | b64decode | from_json }}"
+
+    - name: Start services that were running
+      ansible.builtin.shell: startsrc -s {{ item.key }}
+      args:
+        warn: false
+      when: item.value | bool
+      loop: "{{ original_statuses | dict2items }}"

@@ -1,0 +1,25 @@
+---
+- name: 5.3 Secure System Users
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    secured_users:
+      - bin
+      - daemon
+      - guest
+      - lpd
+      - nobody
+      - nuucp
+      - sys
+      - uucp
+
+  tasks:
+    - name: Ensure specified users are secured
+      ansible.builtin.user:
+        name: "{{ item }}"
+        shell: /usr/bin/false
+        password: '!'
+      loop: "{{ secured_users }}"
+      ignore_errors: yes

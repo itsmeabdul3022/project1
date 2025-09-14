@@ -1,0 +1,65 @@
+- name: 4.2 Pre-check NIS and Remote Daemons
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    legacy_daemons:
+      - rsh
+      - rlogind
+      - rexecd
+      - talkd
+      - ntalkd
+      - tftp
+      - uucpd
+      - shell
+      - login
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Check for NIS client files
+      ansible.builtin.stat:
+        path: /usr/sbin/ypbind
+      register: ypbind_stat
+
+    - name: Check status of NIS server services
+      ansible.builtin.shell: lssrc -s ypserv || lssrc -s yppasswdd || lssrc -s ypbind
+      args:
+        warn: false
+      register: nis_status
+      ignore_errors: yes
+
+    - name: Slurp /etc/inetd.conf
+      ansible.builtin.slurp:
+        src: /etc/inetd.conf
+      register: inetd_conf_content
+      ignore_errors: yes
+
+    - name: Check for running legacy daemons
+      ansible.builtin.shell: lssrc -s {{ item }} | grep active
+      args:
+        warn: false
+      register: daemon_status
+      loop: "{{ legacy_daemons }}"
+      ignore_errors: yes
+
+    - name: Set fact with pre-check data
+      ansible.builtin.set_fact:
+        pre_check_data:
+          nis_client_installed: "{{ ypbind_stat.stat.exists | default(false) }}"
+          nis_was_running: "{{ nis_status.rc == 0 }}"
+          inetd_conf_content: "{{ inetd_conf_content.content | b64decode }}"
+          legacy_daemons_running: "{{ daemon_status.results | selectattr('rc', 'equalto', 0) | map(attribute='item') | list }}"
+
+    - name: Save pre-check data to a file on Ansible host
+      ansible.builtin.copy:
+        content: "{{ pre_check_data | to_nice_json }}"
+        dest: "/tmp/pre_checks/4.2_pre_check.{{ ansible_hostname }}.json"
+      delegate_to: localhost

@@ -1,0 +1,37 @@
+- name: 6.2.4 Pre-check cron.allow configuration
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Check for /etc/cron.allow and slurp content
+      ansible.builtin.slurp:
+        src: /etc/cron.allow
+      register: cron_allow_content
+      ignore_errors: yes
+
+    - name: Check for /etc/cron.deny and slurp content
+      ansible.builtin.slurp:
+        src: /etc/cron.deny
+      register: cron_deny_content
+      ignore_errors: yes
+
+    - name: Save pre-check data to a file on Ansible host
+      ansible.builtin.copy:
+        content: "{{ pre_check_data | to_nice_json }}"
+        dest: "/tmp/pre_checks/6.2.4_pre_check.{{ ansible_hostname }}.json"
+      vars:
+        pre_check_data:
+          cron_allow_exists: "{{ cron_allow_content.failed is not defined }}"
+          cron_allow_content: "{{ cron_allow_content.content | default('') | b64decode }}"
+          cron_deny_exists: "{{ cron_deny_content.failed is not defined }}"
+          cron_deny_content: "{{ cron_deny_content.content | default('') | b64decode }}"
+      delegate_to: localhost

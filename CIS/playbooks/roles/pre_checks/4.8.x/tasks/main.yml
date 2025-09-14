@@ -1,0 +1,41 @@
+- name: 4.8 Pre-check user and login settings
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Read and backup login.cfg file content
+      ansible.builtin.slurp:
+        src: /etc/security/login.cfg
+      register: login_cfg_content
+      ignore_errors: yes
+
+    - name: Write login.cfg content to a file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ login_cfg_content.content | default('') | b64decode }}"
+        dest: "/tmp/pre_checks/login.cfg.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: login_cfg_content.content is defined
+
+    - name: Get list of administrative accounts and their lock status
+      ansible.builtin.shell: |
+        lsuser -a account_locked admin ALL | awk 'NF>2' | grep "admin=true"
+      args:
+        warn: false
+      register: admin_users
+      changed_when: false
+
+    - name: Write administrative users status to a file
+      ansible.builtin.copy:
+        content: "{{ admin_users.stdout }}"
+        dest: "/tmp/pre_checks/admin_users.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: admin_users.stdout is defined

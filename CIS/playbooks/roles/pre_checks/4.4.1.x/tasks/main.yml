@@ -1,0 +1,36 @@
+- name: 4.4.1 Pre-check NFS Security
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Check NFS server status
+      ansible.builtin.shell: lssrc -s nfsd | grep active || lssrc -s biod | grep active || lssrc -s rpc.mountd | grep active || lssrc -s rpc.statd | grep active || lssrc -s rpc.lockd | grep active
+      args:
+        warn: false
+      register: nfs_status
+      ignore_errors: yes
+
+    - name: Slurp /etc/exports
+      ansible.builtin.slurp:
+        src: /etc/exports
+      register: exports_content
+      ignore_errors: yes
+
+    - name: Save pre-check data to a file on Ansible host
+      ansible.builtin.copy:
+        content: "{{ pre_check_data | to_nice_json }}"
+        dest: "/tmp/pre_checks/4.4.1_pre_check.{{ ansible_hostname }}.json"
+      vars:
+        pre_check_data:
+          nfs_is_running: "{{ not nfs_status.failed }}"
+          exports_content: "{{ exports_content.content | default('') | b64decode }}"
+      delegate_to: localhost

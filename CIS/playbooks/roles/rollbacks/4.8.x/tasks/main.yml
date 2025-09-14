@@ -1,0 +1,40 @@
+- name: 4.8 Rollback user and login settings
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    login_cfg_pre_check_file: "/tmp/pre_checks/login.cfg.{{ ansible_hostname }}.txt"
+    admin_users_pre_check_file: "/tmp/pre_checks/admin_users.{{ ansible_hostname }}.txt"
+
+  tasks:
+    - name: Read login.cfg pre-check content from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ login_cfg_pre_check_file }}"
+      delegate_to: localhost
+      register: login_cfg_content
+      ignore_errors: yes
+
+    - name: Restore login.cfg file content
+      ansible.builtin.copy:
+        content: "{{ login_cfg_content.content | b64decode }}"
+        dest: /etc/security/login.cfg
+        owner: root
+        group: security
+        mode: '0600'
+      when: login_cfg_content.content is defined
+
+    - name: Read administrative user status from pre-check file
+      ansible.builtin.slurp:
+        src: "{{ admin_users_pre_check_file }}"
+      delegate_to: localhost
+      register: admin_users_status
+      ignore_errors: yes
+
+    - name: Unlock administrative users that were not originally locked
+      ansible.builtin.shell: |
+        chuser account_locked=false {{ item }}
+      args:
+        warn: false
+      loop: "{{ admin_users_status.content | b64decode | from_json | map(attribute='user') | list }}"
+      when: not "account_locked=true" in item

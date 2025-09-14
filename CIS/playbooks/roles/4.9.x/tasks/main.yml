@@ -1,0 +1,34 @@
+ name: 4.9 Ensure user and shell settings are configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 4.9.2 Ensure root user default shell is ksh
+      ansible.builtin.user:
+        name: root
+        shell: /usr/bin/ksh
+
+    - name: 4.9.4 Ensure default PATH does not include current working directory
+      ansible.builtin.replace:
+        path: /etc/profile
+        regexp: '(PATH=.*)(:.*|^)(([.:])*)(:.*|$)'
+        replace: '\1\2:\5'
+        validate: 'grep "PATH=.*" %s'
+      failed_when: false
+
+    - name: 4.9.5 Ensure root user PATH does not include current working directory
+      ansible.builtin.replace:
+        path: /root/.profile
+        regexp: '(PATH=.*)(:.*|^)(([.:])*)(:.*|$)'
+        replace: '\1\2:\5'
+        validate: 'grep "PATH=.*" %s'
+      failed_when: false
+
+    - name: 4.9.6 Ensure motd is configured
+      ansible.builtin.file:
+        path: /etc/motd
+        owner: root
+        group: sys
+        mode: '0644'
+        state: touch

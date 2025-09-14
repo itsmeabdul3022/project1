@@ -1,0 +1,44 @@
+- name: 4.3.2 Pre-check Network Services
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    services_to_check:
+      - dhcpcd
+      - dhcprd
+      - dhcpsd
+      - gated
+      - named
+      - portmap
+      - routed
+      - rwhod
+      - timed
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Check status of each service
+      ansible.builtin.shell: lssrc -s {{ item }} | grep active
+      args:
+        warn: false
+      register: service_status
+      loop: "{{ services_to_check }}"
+      ignore_errors: yes
+
+    - name: Set fact with service statuses
+      ansible.builtin.set_fact:
+        pre_check_data: "{{ pre_check_data | default({}) | combine({item.item: (item.rc == 0)}) }}"
+      loop: "{{ service_status.results }}"
+
+    - name: Save pre-check data to a file on Ansible host
+      ansible.builtin.copy:
+        content: "{{ pre_check_data | to_nice_json }}"
+        dest: "/tmp/pre_checks/4.3.2_pre_check.{{ ansible_hostname }}.json"
+      delegate_to: localhost

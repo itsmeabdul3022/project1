@@ -1,0 +1,36 @@
+---
+- name: 5.2 Rollback password policies
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/5.2_pre_check.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_data
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found. Cannot perform rollback."
+      when: not pre_check_data.content is defined
+
+    - name: Restore system authentication method
+      ansible.builtin.lineinfile:
+        path: /etc/security/user
+        regexp: '^SYSTEM ='
+        line: "{{ (pre_check_data.content | b64decode | from_json).system_method }}"
+        state: present
+
+    - name: Restore password hashing algorithm
+      ansible.builtin.shell: |
+        /usr/sbin/chsec -f /etc/security/user -s default -a pwd_alg={{ (pre_check_data.content | b64decode | from_json).pwd_alg_method | regex_replace('^pwd_alg=') }}
+      args:
+        warn: false
+      changed_when: false
+      failed_when: false

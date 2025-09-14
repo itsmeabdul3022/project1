@@ -1,0 +1,22 @@
+---
+- name: 7.2.1 Pre-check syslog local logging
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Backup the /etc/syslog.conf file
+      ansible.builtin.copy:
+        src: /etc/syslog.conf
+        dest: "/tmp/pre_checks/7.2.1_pre_check.{{ ansible_hostname }}.txt"
+        mode: '0644'
+        remote_src: yes
+      delegate_to: localhost

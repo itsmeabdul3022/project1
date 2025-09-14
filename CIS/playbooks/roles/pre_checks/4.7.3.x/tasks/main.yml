@@ -1,0 +1,27 @@
+- name: 4.7.3 Pre-check SSHD configuration
+  hosts: all
+  become: no
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Read the content of the sshd_config file
+      ansible.builtin.slurp:
+        src: /etc/ssh/sshd_config
+      register: sshd_config_content
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes
+
+    - name: Write the file content to a file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ sshd_config_content.content | b64decode }}"
+        dest: "/tmp/pre_checks/sshd_config.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: sshd_config_content.content is defined

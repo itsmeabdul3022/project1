@@ -1,0 +1,31 @@
+- name: 6.2.4 Ensure cron.allow is configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    allowed_cron_users:
+      - root
+
+  tasks:
+    - name: Ensure /etc/cron.deny does not exist
+      ansible.builtin.file:
+        path: /etc/cron.deny
+        state: absent
+      ignore_errors: yes
+
+    - name: Ensure /etc/cron.allow exists with correct permissions
+      ansible.builtin.file:
+        path: /etc/cron.allow
+        state: touch
+        owner: root
+        group: security
+        mode: '0640'
+
+    - name: Ensure /etc/cron.allow contains only authorized users
+      ansible.builtin.copy:
+        content: "{{ allowed_cron_users | join('\n') }}\n"
+        dest: /etc/cron.allow
+        owner: root
+        group: security
+        mode: '0640'

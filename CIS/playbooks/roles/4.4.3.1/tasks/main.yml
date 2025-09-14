@@ -1,0 +1,35 @@
+- name: 4.4.3.1 Ensure only / permits device files
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Ensure devpermit file exists and has correct permissions
+      ansible.builtin.file:
+        path: /etc/security/devpermit
+        state: touch
+        owner: root
+        group: security
+        mode: '0640'
+
+    - name: Configure devpermit to allow device files only in /
+      ansible.builtin.lineinfile:
+        path: /etc/security/devpermit
+        regexp: '^\*\:(\/)\:\*\:([^\s]+)$'
+        line: '*:/::/dev'
+        state: present
+        owner: root
+        group: security
+        mode: '0640'
+
+    - name: Remove other device file permissions
+      ansible.builtin.lineinfile:
+        path: /etc/security/devpermit
+        regexp: '^\*\:\!\/::\*$'
+        state: absent
+      notify:
+        - Restart devpermit service
+
+  handlers:
+    - name: Restart devpermit service
+      ansible.builtin.shell: refresh -s devpermit

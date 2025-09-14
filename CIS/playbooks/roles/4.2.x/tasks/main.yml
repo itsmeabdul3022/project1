@@ -1,0 +1,44 @@
+- name: 4.2 Disable NIS and Remote Daemons
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 4.2.2 Ensure NIS client is not installed
+      ansible.builtin.shell: installp -u bos.net.nis.client
+      args:
+        warn: false
+      ignore_errors: yes
+      changed_when: true
+
+    - name: 4.2.3 Ensure NIS server services are not in use
+      ansible.builtin.shell: |
+        stopsrc -c -s ypserv
+        stopsrc -c -s yppasswdd
+        stopsrc -c -s ypbind
+      args:
+        warn: false
+      ignore_errors: yes
+      changed_when: true
+
+    - name: 4.2.4 Ensure legacy NIS markers are removed
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/yp
+        - /var/yp
+
+    - name: 4.2.7 Ensure legacy remote daemon support is not available
+      ansible.builtin.lineinfile:
+        path: /etc/inetd.conf
+        regexp: '^(rsh|rlogind|rexecd|talkd|ntalkd|tftp|uucpd|shell|login)\s'
+        state: absent
+      notify:
+        - Refresh inetd
+  
+  handlers:
+    - name: Refresh inetd
+      ansible.builtin.shell: refresh -s inetd
+      args:
+        warn: false

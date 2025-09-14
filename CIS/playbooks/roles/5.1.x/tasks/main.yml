@@ -1,0 +1,26 @@
+- name: 5.1 Ensure user and group settings are configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 5.1.1 Ensure all local user accounts have a hashed password
+      ansible.builtin.shell: |
+        /usr/sbin/lsuser -a password ALL
+      register: user_pass_check
+      changed_when: false
+      failed_when: "'password = NONE' in user_pass_check.stdout"
+
+    - name: 5.1.2 Ensure usernames and UIDs are unique
+      ansible.builtin.shell: |
+        /usr/sbin/lsuser -a id ALL | sort | uniq -d
+      register: unique_user_check
+      changed_when: false
+      failed_when: unique_user_check.stdout
+
+    - name: 5.1.3 Ensure group names and GIDs are unique
+      ansible.builtin.shell: |
+        /usr/sbin/lsgroup -a id ALL | sort | uniq -d
+      register: unique_group_check
+      changed_when: false
+      failed_when: unique_group_check.stdout

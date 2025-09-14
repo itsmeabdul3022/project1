@@ -1,0 +1,40 @@
+- name: 5.3.10 Ensure FTP access is disabled for system accounts
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    ftp_users:
+      - root
+      - bin
+      - daemon
+      - adm
+      - lp
+      - sync
+      - shutdown
+      - halt
+      - mail
+      - news
+      - uucp
+      - nobody
+
+  tasks:
+    - name: Add system users to /etc/ftpusers file
+      ansible.builtin.lineinfile:
+        path: /etc/ftpusers
+        line: "{{ item }}"
+        state: present
+        create: yes
+        owner: root
+        group: security
+        mode: '0600'
+      loop: "{{ ftp_users }}"
+      register: ftp_users_added
+      notify:
+        - Restart inetd
+
+  handlers:
+    - name: Restart inetd
+      ansible.builtin.service:
+        name: inetd
+        state: restarted

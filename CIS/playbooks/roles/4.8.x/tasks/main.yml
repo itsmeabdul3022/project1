@@ -1,0 +1,35 @@
+- name: 4.8 Ensure user and login settings are configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 4.8.1 Ensure herald is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^herald'
+        line: 'herald = "/etc/motd"'
+        state: present
+
+    - name: 4.8.3 Ensure loginretries is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^loginretries'
+        line: 'loginretries = 3'
+        state: present
+
+    - name: 4.8.5 Ensure administrative user accounts are locked
+      ansible.builtin.shell: |
+        /usr/sbin/chuser account_locked=true admin=true
+      args:
+        warn: false
+      failed_when: false
+      register: lock_admin_users
+      changed_when: '"account_locked=true" in lock_admin_users.stdout'
+
+    - name: 4.8.6 Ensure session timeout is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^usertimeout'
+        line: 'usertimeout = 900'
+        state: present

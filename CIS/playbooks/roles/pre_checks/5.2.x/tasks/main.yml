@@ -1,0 +1,36 @@
+- name: 5.2 Pre-check password policies
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Get current system authentication method
+      ansible.builtin.shell: |
+        grep 'SYSTEM' /etc/security/user
+      register: system_method
+      changed_when: false
+
+    - name: Get current password hashing algorithm
+      ansible.builtin.shell: |
+        /usr/sbin/lssec -f /etc/security/user -s default -a pwd_alg
+      register: pwd_alg_method
+      changed_when: false
+      failed_when: false
+
+    - name: Write pre-check data to a JSON file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ pre_check_data | to_nice_json }}"
+        dest: "/tmp/pre_checks/5.2_pre_check.{{ ansible_hostname }}.json"
+      vars:
+        pre_check_data:
+          system_method: "{{ system_method.stdout }}"
+          pwd_alg_method: "{{ pwd_alg_method.stdout }}"
+      delegate_to: localhost

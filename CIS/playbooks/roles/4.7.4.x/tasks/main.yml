@@ -1,0 +1,57 @@
+---
+- name: 4.7.4 Ensure Sendmail configuration is compliant
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: 4.7.4.1 Ensure sendmail version information is hidden
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O SmtpGreetingMessage='
+        line: 'O SmtpGreetingMessage=$j Sendmail $b'
+        state: present
+      notify: Restart sendmail
+
+    - name: 4.7.4.2 Ensure sendmail PrivacyOptions is configured
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O PrivacyOptions='
+        line: 'O PrivacyOptions=authwarnings,noetrn,restrictqrun,restrictmailq,goaway'
+        state: present
+      notify: Restart sendmail
+
+    - name: 4.7.4.3 Ensure sendmail DaemonPortOptions is configured
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O DaemonPortOptions='
+        line: 'O DaemonPortOptions=Port=smtp,Name=MTA'
+        state: present
+      notify: Restart sendmail
+
+    - name: 4.7.4.4 Ensure access to /etc/mail/sendmail.cf is configured
+      ansible.builtin.file:
+        path: /etc/mail/sendmail.cf
+        owner: root
+        group: mail
+        mode: '0640'
+
+    - name: 4.7.4.5 Ensure access to /var/spool/clientmqueue is configured
+      ansible.builtin.file:
+        path: /var/spool/clientmqueue
+        owner: smmsp
+        group: smmsp
+        mode: '0700'
+
+    - name: 4.7.4.6 Ensure access to /var/spool/mqueue is configured
+      ansible.builtin.file:
+        path: /var/spool/mqueue
+        owner: root
+        group: mail
+        mode: '0700'
+
+  handlers:
+    - name: Restart sendmail
+      ansible.builtin.service:
+        name: sendmail
+        state: restarted
