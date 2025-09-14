@@ -1,0 +1,91 @@
+---
+- name: 4.1.1.x_rollback play
+  hosts: node6
+  become: true
+  tasks:
+    - name: Set a fact for the current date in MMDDYY format
+      ansible.builtin.set_fact:
+        current_date_mmddyy: "{{ ansible_date_time.date[5:7] }}{{ ansible_date_time.date[8:10] }}{{ ansible_date_time.date[2:4] }}"
+
+    - name: Read and rollback /smit.log (4.1.1.1)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /smit.log
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.1_smit.log_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Read and rollback /etc/group (4.1.1.2)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+          file_path: /etc/group
+          rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.2_etc_group_precheck_{{ inventory_hostname }}.txt"
+    - name: Read and rollback /etc/inetd.conf (4.1.1.3)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+         file_path: /etc/inetd.conf
+         rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.3_etc_inetd.conf_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/motd (4.1.1.4)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/motd
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.4_motd_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/passwd (4.1.1.5)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/passwd
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.5_passwd_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/mail/submit.cf (4.1.1.6)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/mail/submit.cf
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.6_submit_cf_precheck_{{ inventory_hostname }}.txt"
+   
+    - name: Rollback /etc/ssh/ssh_banner (4.1.1.7)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/ssh/ssh_banner
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.7_ssh_banner_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/ssh/ssh_config (4.1.1.8)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/ssh/ssh_config
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.8_ssh_config_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/ssh/sshd_config (4.1.1.9)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/ssh/sshd_config
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.9_sshd_config_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/adm/cron/cron.allow (4.1.1.11)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/adm/cron/cron.allow
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.11_cron_allow_precheck_{{ inventory_hostname }}.txt"
+    
+    - name: Rollback /var/ct/RMstart.log (4.1.1.13)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/ct/RMstart.log
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.13_rmstart_log_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/tmp/pre_checks_{{ current_date_mmddyy }}/dpid2.log (4.1.1.14)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/tmp/pre_checks_{{ current_date_mmddyy }}/dpid2.log
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.14_dpid2_log_precheck_{{ inventory_hostname }}.txt"
+  
+    - name: Rollback /var/tmp/pre_checks_{{ current_date_mmddyy }}/hostmibd.log (4.1.1.15)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/tmp/pre_checks_{{ current_date_mmddyy }}/hostmibd.log
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.15_hostmibd_log_precheck_{{ inventory_hostname }}.txt"
+  
+    - name: Rollback /var/tmp/pre_checks_{{ current_date_mmddyy }}/snmpd.log (4.1.1.16)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/tmp/pre_checks_{{ current_date_mmddyy }}/snmpd.log
+        rollback_filename: "/tmp/pre_checks_{{ current_date_mmddyy }}/4.1.1.16_snmpd_log_precheck_{{ inventory_hostname }}.txt"

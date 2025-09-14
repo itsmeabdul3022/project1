@@ -1,0 +1,17 @@
+- name: Read rollback file for {{ file_path }}
+  ansible.builtin.slurp:
+    src: "{{ rollback_filename }}"
+  register: rollback_content
+  delegate_to: localhost
+
+- name: Apply previous settings for {{ file_path }}
+  ansible.builtin.file:
+    path: "{{ file_path }}"
+    owner: "{{ (rollback_content.content | b64decode | from_yaml).owner | default(omit) }}"
+    group: "{{ (rollback_content.content | b64decode | from_yaml).group | default(omit) }}"
+    mode: "{{ (rollback_content.content | b64decode | from_yaml).mode | default(omit) }}"
+  when: rollback_content.content is defined
+
+- name: Restore original trust status if needed
+  ansible.builtin.command: trustchk -u /etc/inetd.conf mode={{ (rollback_content.content | b64decode | from_yaml).mode }}
+  when: "(rollback_content.content | b64decode | from_yaml).trust_status is defined and (rollback_content.content | b64decode | from_yaml).trust_status != 'trusted'"
