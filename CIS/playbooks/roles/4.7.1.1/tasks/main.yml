@@ -1,0 +1,53 @@
+---
+- name: Ensure CDE is not installed on AIX
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    cde_packages:
+      - bos.hil
+      - X11.base.rte
+      - X11.dt.lib
+      - X11.dt.help
+      - X11.dt.lib
+      - X11.dt.rte
+      - X11.fnt.ibm1046
+      - X11.fnt.iso8859
+      - X11.fnt.iso8859.0
+      - X11.fnt.iso8859.1
+      - X11.fnt.iso8859.13
+      - X11.fnt.iso8859.14
+      - X11.fnt.iso8859.15
+      - X11.fnt.iso8859.2
+      - X11.fnt.iso8859.3
+      - X11.fnt.iso8859.4
+      - X11.fnt.iso8859.5
+      - X11.fnt.iso8859.6
+      - X11.fnt.iso8859.7
+      - X11.fnt.iso8859.8
+      - X11.fnt.iso8859.9
+      - X11.dt.help.ja_JP
+      - X11.dt.lib.ja_JP
+      - X11.dt.rte.ja_JP
+      - X11.msg.en_US.dt.help
+
+  tasks:
+    - name: 4.7.1.1 Remove CDE packages if they exist
+      community.general.aix_lpp:
+        name: "{{ item }}"
+        state: absent
+      with_items: "{{ cde_packages }}"
+      ignore_errors: yes
+
+    - name: Verify CDE packages are removed
+      community.general.aix_lpp_query:
+        name: "{{ item }}"
+      with_items: "{{ cde_packages }}"
+      register: cde_status
+      failed_when: cde_status.failed
+
+    - name: Check for any remaining CDE packages
+      debug:
+        msg: "Package '{{ item.item }}' status: present={{ item.present }}, installed={{ item.installed }}"
+      with_items: "{{ cde_status.results }}"

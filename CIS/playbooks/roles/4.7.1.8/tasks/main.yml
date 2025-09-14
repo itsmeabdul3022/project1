@@ -1,0 +1,18 @@
+---
+- name: 4.7.1.8 Ensure CDE login screen hostname is masked on AIX
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Set Dtlogin greeting to false to mask hostname
+      ansible.builtin.lineinfile:
+        path: /etc/dt/config/Xconfig
+        regexp: '^Dtlogin\*greeting:'
+        line: 'Dtlogin*greeting: False'
+        state: present
+        owner: root
+        group: sys
+        mode: '0644'
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes

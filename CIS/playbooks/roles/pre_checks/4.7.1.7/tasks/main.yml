@@ -1,0 +1,28 @@
+---
+- name: 4.7.1.7 Pre-check CDE screensaver lock status
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Read the content of the dtspc.res file
+      ansible.builtin.slurp:
+        src: /etc/dt/app-defaults/C/dtspc.res
+      register: dtspc_content
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes
+
+    - name: Write the file content to a file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ dtspc_content.content | b64decode | default('File not found') }}"
+        dest: "/tmp/pre_checks/4.7.1.7_pre_checks.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: dtspc_content.content is defined

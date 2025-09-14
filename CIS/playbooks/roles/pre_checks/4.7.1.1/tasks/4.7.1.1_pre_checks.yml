@@ -1,0 +1,66 @@
+---
+- name: 4.7.1.1 pre_checks
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    cde_packages:
+      - bos.hil
+      - X11.base.rte
+      - X11.dt.lib
+      - X11.dt.help
+      - X11.dt.lib
+      - X11.dt.rte
+      - X11.fnt.ibm1046
+      - X11.fnt.iso8859
+      - X11.fnt.iso8859.0
+      - X11.fnt.iso8859.1
+      - X11.fnt.iso8859.13
+      - X11.fnt.iso8859.14
+      - X11.fnt.iso8859.15
+      - X11.fnt.iso8859.2
+      - X11.fnt.iso8859.3
+      - X11.fnt.iso8859.4
+      - X11.fnt.iso8859.5
+      - X11.fnt.iso8859.6
+      - X11.fnt.iso8859.7
+      - X11.fnt.iso8859.8
+      - X11.fnt.iso8859.9
+      - X11.dt.help.ja_JP
+      - X11.dt.lib.ja_JP
+      - X11.dt.rte.ja_JP
+      - X11.msg.en_US.dt.help
+
+  tasks:
+    - name: Query for installed CDE packages on the AIX host
+      community.general.aix_lpp_query:
+        name: "{{ item }}"
+      with_items: "{{ cde_packages }}"
+      register: cde_status
+
+    - name: Set a fact for installed CDE packages
+      ansible.builtin.set_fact:
+        installed_cde_packages: >
+          {{ cde_status.results | selectattr('installed') | map(attribute='item') | list }}
+
+    - name: Create the pre-checks directory on the Ansible host
+      ansible.builtin.file:
+        path: /tmp/pre_checks
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+
+    - name: Write installed packages to file on the Ansible host
+      ansible.builtin.copy:
+        content: |
+          CDE Packages installed on {{ ansible_hostname }}:
+          ---
+          {% if installed_cde_packages %}
+          {{ installed_cde_packages | join('\n') }}
+          {% else %}
+          No CDE packages found.
+          {% endif %}
+        dest: "/tmp/pre_checks/4.7.1.1_pre_checks_{{ ansible_hostname }}.txt"
+        mode: '0644'
+      delegate_to: localhost

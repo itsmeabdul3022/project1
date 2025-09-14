@@ -1,0 +1,28 @@
+---
+- name: 4.7.1.11 Pre-check /etc/dt/config/Xresources permissions
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Get file stats of Xresources
+      ansible.builtin.stat:
+        path: /etc/dt/config/Xresources
+      register: xresources_stats
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes
+
+    - name: Write file stats to a JSON file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ xresources_stats.stat | to_nice_json }}"
+        dest: "/tmp/pre_checks/4.7.1.11_pre_checks.{{ ansible_hostname }}.json"
+      delegate_to: localhost
+      when: xresources_stats.stat is defined

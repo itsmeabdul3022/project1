@@ -1,0 +1,50 @@
+- name: Ensure CDE-related services are not available
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: 4.7.1.2 Ensure the cmsd service is not available
+      ansible.builtin.service:
+        name: cmsd
+        state: stopped
+        enabled: no
+      register: cmsd_service_status
+      ignore_errors: yes # Ignore errors if the service is not found or not running
+
+    - name: 4.7.1.2 Verify that the cmsd service is stopped
+      ansible.builtin.command: lssrc -s cmsd
+      changed_when: false
+      failed_when: "'Active' in cmsd_service_check.stdout"
+      register: cmsd_service_check
+      ignore_errors: yes
+
+    - name: 4.7.1.3 Ensure dtlogin service is not available
+      ansible.builtin.service:
+        name: dtlogin
+        state: stopped
+        enabled: no
+      register: dtlogin_service_status
+      ignore_errors: yes
+
+    - name: 4.7.1.3 Verify that the dtlogin service is stopped
+      ansible.builtin.command: lssrc -s dtlogin
+      changed_when: false
+      failed_when: "'Active' in dtlogin_service_check.stdout"
+      register: dtlogin_service_check
+      ignore_errors: yes
+
+    - name: 4.7.1.4 Ensure dtspc service is not available
+      ansible.builtin.service:
+        name: dtspc
+        state: stopped
+        enabled: no
+      register: dtspc_service_status
+      ignore_errors: yes
+
+    - name: 4.7.1.4 Verify that the dtspc service is stopped
+      ansible.builtin.command: lssrc -s dtspc
+      changed_when: false
+      failed_when: "'Active' in dtspc_service_check.stdout"
+      register: dtspc_service_check
+      ignore_errors: yes

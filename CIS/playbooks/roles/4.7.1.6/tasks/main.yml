@@ -1,0 +1,17 @@
+- name: 4.7.1.6 Ensure CDE remote GUI login is disabled on AIX
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Disable remote GUI login by commenting out the '*' line in Xaccess
+      ansible.builtin.lineinfile:
+        path: /etc/dt/config/Xaccess
+        regexp: '^\*$'
+        line: '#*'
+        state: present
+        owner: root
+        group: sys
+        mode: '0644'
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes

@@ -1,0 +1,15 @@
+---
+- name: 4.7.1.11 Ensure access to Xresources is configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Set permissions of Xresources to 0644
+      ansible.builtin.file:
+        path: /etc/dt/config/Xresources
+        mode: '0644'
+        owner: root
+        group: sys
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes

@@ -1,0 +1,26 @@
+---
+- name: Ensure CDE daemons have sgid and suid mode disabled
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    cde_daemons:
+      - /usr/dt/bin/dtlogin
+      - /usr/dt/bin/dtspc
+      - /usr/dt/bin/dtappgather
+      - /usr/dt/bin/dtsession
+      - /usr/dt/bin/dthelpo
+      - /usr/dt/bin/dtprintinfo
+
+  tasks:
+    - name: 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled
+      ansible.builtin.file:
+        path: "{{ item }}"
+        mode: "u-s,g-s"
+        state: file
+      with_items: "{{ cde_daemons }}"
+      ignore_errors: yes
+      when:
+        - ansible_os_family == "AIX"
+        - ansible_facts['services'] is not defined or 'CDE' in ansible_facts['services'] # A simple heuristic check

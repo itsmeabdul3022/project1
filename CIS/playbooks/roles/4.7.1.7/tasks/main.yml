@@ -1,0 +1,28 @@
+---
+- name: 4.7.1.7 Ensure CDE screensaver lock is enabled on AIX
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Enable the screensaver lock
+      ansible.builtin.lineinfile:
+        path: /etc/dt/app-defaults/C/dtspc.res
+        regexp: '^Dtspc\*lock:'
+        line: 'Dtspc*lock: True'
+        state: present
+        owner: root
+        group: sys
+        mode: '0644'
+      ignore_errors: yes
+
+    - name: Set screensaver timeout to 15 minutes (900 seconds)
+      ansible.builtin.lineinfile:
+        path: /etc/dt/app-defaults/C/dtspc.res
+        regexp: '^Dtspc\*timeout:'
+        line: 'Dtspc*timeout: 900'
+        state: present
+        owner: root
+        group: sys
+        mode: '0644'
+      ignore_errors: yes

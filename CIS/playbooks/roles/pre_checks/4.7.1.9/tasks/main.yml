@@ -1,0 +1,27 @@
+- name: 4.7.1.9 Pre-check /etc/dt/config/Xconfig permissions
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Get file stats of Xconfig
+      ansible.builtin.stat:
+        path: /etc/dt/config/Xconfig
+      register: xconfig_stats
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes
+
+    - name: Write file stats to a JSON file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ xconfig_stats.stat | to_nice_json }}"
+        dest: "/tmp/pre_checks/4.7.1.9_pre_checks.{{ ansible_hostname }}.json"
+      delegate_to: localhost
+      when: xconfig_stats.stat is defined

@@ -1,0 +1,16 @@
+---
+- name: 4.7.1.10 Ensure the file /etc/dt/config/Xservers is configured
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Ensure Xservers is empty to disable remote GUI logins
+      ansible.builtin.copy:
+        content: ""
+        dest: /etc/dt/config/Xservers
+        owner: root
+        group: sys
+        mode: '0644'
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes

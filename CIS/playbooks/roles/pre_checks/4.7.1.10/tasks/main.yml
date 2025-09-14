@@ -1,0 +1,28 @@
+---
+- name: 4.7.1.10 Pre-check /etc/dt/config/Xservers configuration
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Read the content of the Xservers file
+      ansible.builtin.slurp:
+        src: /etc/dt/config/Xservers
+      register: xservers_content
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes
+
+    - name: Write the file content to a file on the Ansible host
+      ansible.builtin.copy:
+        content: "{{ xservers_content.content | default('') | b64decode }}"
+        dest: "/tmp/pre_checks/4.7.1.10_pre_checks.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: xservers_content.content is defined

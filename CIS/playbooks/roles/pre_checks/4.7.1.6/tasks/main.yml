@@ -1,0 +1,32 @@
+- name: 4.7.1.6 Pre-check CDE remote GUI login status
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Read the content of the Xaccess file
+      ansible.builtin.slurp:
+        src: /etc/dt/config/Xaccess
+      register: xaccess_content
+      when: ansible_os_family == 'AIX'
+      ignore_errors: yes
+
+    - name: Write the relevant line status to a file on the Ansible host
+      ansible.builtin.copy:
+        content: |
+          ---
+          CDE remote GUI login pre-check for {{ ansible_hostname }}
+
+          # Content of the Xaccess file:
+          {{ xaccess_content.content | b64decode | default('File not found') }}
+        dest: "/tmp/pre_checks/4.7.1.6_pre_checks.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: xaccess_content.content is defined

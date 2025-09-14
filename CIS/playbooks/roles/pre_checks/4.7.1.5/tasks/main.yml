@@ -1,0 +1,44 @@
+- name: Pre-check CDE daemons for sgid and suid modes
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    cde_daemons:
+      - /usr/dt/bin/dtlogin
+      - /usr/dt/bin/dtspc
+      - /usr/dt/bin/dtappgather
+      - /usr/dt/bin/dtsession
+      - /usr/dt/bin/dthelpo
+      - /usr/dt/bin/dtprintinfo
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: /tmp/pre_checks
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+
+    - name: Get file attributes of CDE daemons
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      with_items: "{{ cde_daemons }}"
+      ignore_errors: yes
+      register: cde_daemon_stats
+
+    - name: Write sgid and suid status to a file on the Ansible host
+      ansible.builtin.copy:
+        content: |
+          ---
+          CDE Daemons sgid/suid Pre-check for {{ ansible_hostname }}
+
+          {% for daemon in cde_daemon_stats.results %}
+          --- Path: {{ daemon.stat.path | default('Not found') }} ---
+          Permissions: {{ daemon.stat.mode | default('N/A') }}
+          Is setuid enabled: {{ 'yes' if daemon.stat.isuid else 'no' }}
+          Is setgid enabled: {{ 'yes' if daemon.stat.isgid else 'no' }}
+
+          {% endfor %}
+        dest: "/tmp/pre_checks/4.7.1.5_pre_checks.{{ ansible_hostname }}.txt"
+      delegate_to: localhost

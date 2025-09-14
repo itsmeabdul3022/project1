@@ -1,0 +1,47 @@
+- name: Get CDE service status and write to file
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: /tmp/pre_checks
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+
+    - name: 4.7.1.2 Get cmsd service status
+      ansible.builtin.command: lssrc -s cmsd
+      changed_when: false
+      ignore_errors: yes
+      register: cmsd_status
+
+    - name: 4.7.1.3 Get dtlogin service status
+      ansible.builtin.command: lssrc -s dtlogin
+      changed_when: false
+      ignore_errors: yes
+      register: dtlogin_status
+
+    - name: 4.7.1.4 Get dtspc service status
+      ansible.builtin.command: lssrc -s dtspc
+      changed_when: false
+      ignore_errors: yes
+      register: dtspc_status
+
+    - name: Write service status to file on Ansible host
+      ansible.builtin.copy:
+        content: |
+          ---
+          CDE Services Pre-check for {{ ansible_hostname }}
+
+          --- cmsd service status ---
+          {{ cmsd_status.stdout | default('Service not found or check failed') }}
+
+          --- dtlogin service status ---
+          {{ dtlogin_status.stdout | default('Service not found or check failed') }}
+
+          --- dtspc service status ---
+          {{ dtspc_status.stdout | default('Service not found or check failed') }}
+        dest: "/tmp/pre_checks/4.7.1.2-4.{{ ansible_hostname }}.txt"
+      delegate_to: localhost
