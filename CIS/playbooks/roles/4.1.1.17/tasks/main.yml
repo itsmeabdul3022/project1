@@ -1,0 +1,26 @@
+---
+  tasks:
+    - name: Remove /etc/cron.deny file
+      ansible.builtin.file:
+        path: /etc/cron.deny
+        state: absent
+      when: ansible_os_family == 'AIX'
+      
+    - name: Create /etc/cron.allow with correct permissions
+      ansible.builtin.file:
+        path: /etc/cron.allow
+        state: touch
+        owner: root
+        group: security
+        mode: '0600'
+      when: ansible_os_family == 'AIX'
+
+    - name: Ensure root and specified users are in /etc/cron.allow
+      ansible.builtin.lineinfile:
+        path: /etc/cron.allow
+        line: "{{ item }}"
+        state: present
+        create: no
+        mode: '0600'
+      loop: "{{ authorized_cron_users }}"
+      when: ansible_os_family == 'AIX'
