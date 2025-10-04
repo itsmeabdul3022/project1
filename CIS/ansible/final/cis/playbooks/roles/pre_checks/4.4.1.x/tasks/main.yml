@@ -1,0 +1,53 @@
+    - name: pre_check 4.4.1.x Gather info  for  nfs services
+      ansible.builtin.shell: "lssrc -a | grep -i {{ item }} "
+      loop:
+        - nfsd
+        - biod
+        - rpc.mountd
+        - rpc.statd
+        - rpc.lockd
+      register: nfs_service_out
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      
+    - name: Slurp content from remote source file /etc/exports
+      ansible.builtin.slurp:
+        src: /etc/exports
+      register: exports_file_content
+      failed_when: false
+      changed_when: false
+
+
+    - name: Get nfs mounts and the settings
+      ansible.builtin.shell: ' mount | grep -i  nfs '
+      register: nfs_mount
+      failed_when: false
+      changed_when: false
+
+
+    - name: copy the file to local folder
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          # ----------------------------------------------------
+          # inittab entries found:
+          
+          {% for result in nfs_service_out.results %}
+          # Service ID: {{ result.item }}
+          {% if result.rc == 0 %}
+          {{ result.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found or lsitab failed (rc={{ result.rc }})
+          # Stderr: {{ result.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+          # content from /etc/exports
+          {{ exports_file_content.content | b64decode }}
+
+          # content from nfs mounts
+          {{ nfs_mount.stdout }}
+
+        dest: /tmp/pre_checks/4.4.1.x_{{ inventory_hostname }}_pre_checks.out
+      delegate_to: localhost

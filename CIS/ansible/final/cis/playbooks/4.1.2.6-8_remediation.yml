@@ -1,0 +1,5 @@
+- name:  4.1.2.6-8  remediation  play
+  hosts: AIX
+  become: true
+  roles:
+      - roles/4.1.2.6-8

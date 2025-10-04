@@ -1,0 +1,14 @@
+---
+# vars file for 4.3.2.x
+
+services_to_check:
+ -  dhcpcd
+ -  dhcprd
+ -  dhcpsd
+ -  gated
+ -  named
+ -  portmap
+ -  routed
+ -  rwhod
+ -  timed
+

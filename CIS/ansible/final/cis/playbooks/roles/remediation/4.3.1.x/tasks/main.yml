@@ -1,0 +1,39 @@
+
+    - name: 4.3.1.1 Ensure writesrv service is not in use
+      ansible.builtin.shell: "lsitab writesrv | grep -q 'writesrv'"
+      register: writesrv_check
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+        #  tags: writesrv
+    
+    - name: Remove writesrv service from /etc/inittab and stop it
+      ansible.builtin.shell: "rmitab writesrv && stopsrc -s writesrv"
+      when: writesrv_check.rc == 0
+      tags: writesrv
+
+    - name: 4.3.1.2 Ensure dt service is not in use
+      ansible.builtin.shell: "lsitab dt | grep -q 'dt'"
+      register: dt_check
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      tags: dt
+
+    - name: Remove dt service from /etc/inittab
+      ansible.builtin.shell: "rmitab dt"
+      when: dt_check.rc == 0
+      tags: dt
+
+    - name: 4.3.1.4 Ensure qdaemon service is not in use
+      ansible.builtin.shell: "lsitab qdaemon | grep -q 'qdaemon'"
+      register: qdaemon_check
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      tags: qdaemon
+
+    - name: Remove qdaemon service from /etc/inittab
+      ansible.builtin.shell: "rmitab qdaemon"
+      when: qdaemon_check.rc == 0
+      tags: qdaemon

@@ -1,0 +1,36 @@
+    - name: 4.4.1.2 Ensure NFS server services are not in use
+      ansible.builtin.shell: |
+        stopsrc -c -s nfsd
+        stopsrc -c -s biod
+        stopsrc -c -s rpc.mountd
+        stopsrc -c -s rpc.statd
+        stopsrc -c -s rpc.lockd
+      ignore_errors: yes
+      changed_when: true
+
+    - name: 4.4.1.3 Ensure NFS client mounts include nosuid and nodev options
+      ansible.builtin.mount:
+        name: "{{ item.mount }}"
+        src: "{{ item.src }}"
+        fstype: "{{ item.fstype }}"
+        opts: "{{ item.opts + ',nosuid,nodev' }}"
+        state: mounted
+      with_items: "{{ ansible_mounts }}"
+      when: item.fstype == 'nfs'
+
+    - name: 4.4.1.4 Ensure localhost aliases do not exist in /etc/exports
+      ansible.builtin.lineinfile:
+        path: /etc/exports
+        regexp: '^\s*(?:localhost|127\.0\.0\.1|::1)\b'
+        state: absent
+      notify:
+        - Exportfs -a
+
+    - name: 4.4.1.6 Ensure root access is disabled or blocked
+      ansible.builtin.lineinfile:
+        path: /etc/exports
+        regexp: '^\s*.*no_root_squash.*$'
+        state: absent
+      notify:
+        - Exportfs -a
+

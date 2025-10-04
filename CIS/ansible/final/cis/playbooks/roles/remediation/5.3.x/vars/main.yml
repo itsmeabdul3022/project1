@@ -1,0 +1,12 @@
+---
+# vars file for 5.3.x
+   secured_users:
+      - bin
+      - daemon
+      - guest
+      - lpd
+      - nobody
+      - nuucp
+      - sys
+      - uucp
+

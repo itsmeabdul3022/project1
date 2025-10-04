@@ -1,0 +1,22 @@
+- name: 4.1.2.6 Ensure access on /var/adm/ras is configured
+  become: true
+  ansible.builtin.file:
+    path: /var/adm/ras
+    mode: 'o-rw'
+
+- name: 4.1.2.7 Ensure access on /var/adm/sa is configured
+  become: true
+  ansible.builtin.file:
+    path: /var/adm/sa
+    owner: adm
+    group: adm
+    mode: 'u=rwx,go=rx'
+
+- name: 4.1.2.8 Ensure access on /var/spool/cron/crontabs is configured
+  become: true
+  ansible.builtin.file:
+    path: /var/spool/cron/crontabs
+    owner: root
+    group: cron
+    mode: 'ug=rwx,o='
+    recurse: yes

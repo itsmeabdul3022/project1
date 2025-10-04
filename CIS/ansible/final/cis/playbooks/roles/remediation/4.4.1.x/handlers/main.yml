@@ -1,0 +1,4 @@
+---
+    - name: Exportfs -a
+      ansible.builtin.shell: exportfs -a
+

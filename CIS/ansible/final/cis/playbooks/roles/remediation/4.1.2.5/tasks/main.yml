@@ -1,0 +1,52 @@
+- name: 4.1.2.5 Ensure access to /etc/security is configured
+  become: true
+  block:
+    - name: Find all files and directories in /etc/security
+      ansible.builtin.find:
+        paths: /etc/security
+        file_type: any
+        recurse: yes
+      register: security_files
+
+    - name: Set ownership for all security files and directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        owner: root
+        group: security
+      loop: "{{ security_files.files }}"
+      when:
+        - not item.path.startswith('/etc/security/aixpert')
+        - not item.path.startswith('/etc/security/audit')
+        - not item.path.startswith('/etc/security/ice')
+        # You may also want to explicitly exclude the top-level directory itself if it was included:
+        - item.path not in ['/etc/security/aixpert', '/etc/security/audit', '/etc/security/ice']
+      loop_control:
+        label: "Setting ownership for {{ item.path }}"
+
+    - name: Set permissions for security directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: 'g-w,o-rwx'
+      loop: "{{ security_files.files | selectattr('isdir') | list }}"
+      when:
+        - not item.path.startswith('/etc/security/aixpert')
+        - not item.path.startswith('/etc/security/audit')
+        - not item.path.startswith('/etc/security/ice')
+        # You may also want to explicitly exclude the top-level directory itself if it was included:
+        - item.path not in ['/etc/security/aixpert', '/etc/security/audit', '/etc/security/ice']
+      loop_control:
+        label: "Setting permissions for directory {{ item.path }}"
+
+    - name: Set permissions for security files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: 'u-x,g-wx,o-rwx'
+      loop: "{{ security_files.files | selectattr('isreg') | list }}"
+      when:
+        - not item.path.startswith('/etc/security/aixpert')
+        - not item.path.startswith('/etc/security/audit')
+        - not item.path.startswith('/etc/security/ice')
+        # You may also want to explicitly exclude the top-level directory itself if it was included:
+        - item.path not in ['/etc/security/aixpert', '/etc/security/audit', '/etc/security/ice']
+      loop_control:
+        label: "Setting permissions for file {{ item.path }}"

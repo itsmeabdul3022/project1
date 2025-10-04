@@ -1,0 +1,34 @@
+    - name: Find  files in /audit and /etc/security/audit and subfolders
+      ansible.builtin.find:
+        paths:
+          - /audit
+          - /etc/security/audit
+        recurse: yes
+        file_type: any
+        excludes: ['lost+found']
+      register: audit_files
+
+    - name: Set root:audit ownership on audit files and directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        owner: root
+        group: audit
+      loop: "{{ audit_files.files }}"
+      loop_control:
+        label: "Setting ownership for {{ item.path }}"
+      
+    - name: Set permissions on audit directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: 'u=rwx,g=rxs,o='
+      loop: "{{ audit_files.files | selectattr('isdir') | list }}"
+      loop_control:
+        label: "Setting permissions for directory {{ item.path }}"
+
+    - name: Set permissions on audit files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: 'u=rw,g=r,o='
+      loop: "{{ audit_files.files | selectattr('isreg') | list }}"
+      loop_control:
+        label: "Setting permissions for file {{ item.path }}"

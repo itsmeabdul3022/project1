@@ -1,0 +1,33 @@
+    - name: pre_check 4.3.3.x Gather info  for  autoconf ndpd-host ndpd-router from /etc/rc.tcpip
+      ansible.builtin.shell: "cat  /etc/rc.tcpip | grep -i {{ item }} "
+      loop:
+        - autoconf6
+        - ndpd-host
+        - ndpd-router
+      register: rc_tcpip_out
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      
+
+
+    - name: copy the file to local folder
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          # ----------------------------------------------------
+          # inittab entries found:
+          
+          {% for result in rc_tcpip_out.results %}
+          # Service ID: {{ result.item }}
+          {% if result.rc == 0 %}
+          {{ result.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found or lsitab failed (rc={{ result.rc }})
+          # Stderr: {{ result.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+
+        dest: /tmp/pre_checks/4.3.3.x_{{ inventory_hostname }}_pre_checks.out
+      delegate_to: localhost

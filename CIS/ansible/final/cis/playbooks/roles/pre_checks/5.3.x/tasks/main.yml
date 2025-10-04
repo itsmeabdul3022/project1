@@ -1,0 +1,43 @@
+---
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Get current user information
+      ansible.builtin.shell: |
+        /usr/sbin/lsuser -a id home shell account_locked {{ item }}
+      loop:
+        - bin
+        - daemon
+        - guest
+        - lpd
+        - nobody
+        - nuucp
+        - sys
+        - uucp
+      register: user_info_results
+      changed_when: false
+      failed_when: false
+
+    - name: Write aggregated user info to a file on Ansible host
+      ansible.builtin.copy:
+         content: |
+           # Host: {{ inventory_hostname }}
+           # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+           # =========================================================
+           
+           {% for result in user_info_results.results %}
+           # --- User: {{ result.item }} ---
+           {% if result.rc == 0 %}
+           {{ result.stdout | trim }}
+           {% else %}
+           # Error retrieving info for {{ result.item }}: {{ result.stderr | default('N/A') }}
+           {% endif %}
+           {% endfor %}
+           
+         dest: "/tmp/pre_checks/5.3.x_pre_check.{{ ansible_hostname }}.txt"
+      delegate_to: localhost

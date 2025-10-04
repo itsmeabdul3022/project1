@@ -1,0 +1,24 @@
+- name: 4.7.1.2-3-4 Stop and permanently disable services (AIX)
+  ansible.builtin.shell: |
+    # Stop the service immediately
+    stopsrc -s {{ item }}
+    # Permanently disable the service from starting at boot
+    chrctcp -d {{ item }}
+  loop: "{{ services }}"
+  register: service_disable_result # Use a unique register name
+  ignore_errors: yes # Keeps playbook running if service is already stopped or missing
+  changed_when: true # Assume a change for configuration permanence
+
+    
+- name: 4.7.1.2-3-4 Verify that the services are stopped (AIX)
+  ansible.builtin.command: 'lssrc -s {{ item }}'
+  changed_when: false
+  loop: "{{ services }}"
+  register: service_check_result
+
+  # CRITICAL FIX: The failed_when condition must check the CURRENT task's output
+  # for the word 'active' within the loop.
+  failed_when: "'active' in service_check_result.stdout" 
+
+  # Do NOT ignore errors here. The goal of verification is to FAIL 
+  # the playbook if the service is still active.

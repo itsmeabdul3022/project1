@@ -1,0 +1,5 @@
+- name:  4.7.1.2-4 pre_checks
+  hosts: AIX
+  become: true
+  roles:
+      - roles/pre_checks/4.7.1.2-4

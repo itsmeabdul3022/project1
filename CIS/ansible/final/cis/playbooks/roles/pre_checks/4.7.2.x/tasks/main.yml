@@ -1,0 +1,58 @@
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+        #    - name: Fetch /etc/ftpusers to control node
+        #      ansible.builtin.fetch:
+        #        src: /etc/ftpusers
+        #        # The flat=yes option simplifies the destination path.
+        #        # It will create the file at: /tmp/pre_checks/4.7.2_ftpusers_pre_check.TEST72.txt
+        #        dest: "/tmp/pre_checks/4.7.2_ftpusers_pre_check.{{ ansible_hostname }}"
+        #        flat: yes
+        #      ignore_errors: yes
+        #
+        #    # --- Task 2: Backup /etc/ftpaccess ---
+        #    - name: Fetch /etc/ftpaccess to control node
+        #      ansible.builtin.fetch:
+        #        src: /etc/ftpaccess
+        #        dest: "/tmp/pre_checks/4.7.2_ftpaccess_pre_check.{{ ansible_hostname }}"
+        #        flat: yes
+        #      ignore_errors: yes
+ 
+
+    - name: Slurp /etc/ftpusers content
+      ansible.builtin.slurp:
+        src: /etc/ftpusers
+      register: ftpusers_content
+      ignore_errors: yes
+    
+        #  - name: Write /etc/ftpusers content to control node
+        #    ansible.builtin.copy:
+        #      content: "{{ ftpusers_content.content | b64decode }}"
+        #      dest: "/tmp/pre_checks/4.7.2_ftpusers_pre_check.{{ ansible_hostname }}.txt"
+        #      mode: '0644'
+        #    delegate_to: localhost
+        #      #  when: ftpusers_content is defined and ftpusers_content.rc == 0 # Only write if slurp succeeded
+    
+    - name: Slurp /etc/ftpaccess content
+      ansible.builtin.slurp:
+        src: /etc/ftpaccess
+      register: ftpaccess_content
+      ignore_errors: yes
+    
+    - name: Write /etc/ftpusers and /etc/ftpaccess ontent to control node
+      ansible.builtin.copy:
+        content: |
+           #  ftpaccess:
+           {{ ftpaccess_content.content | b64decode }}
+
+           # ftpusers:
+           {{ ftpusers_content.content | b64decode }}
+        dest: "/tmp/pre_checks/4.7.2.x.{{ inventory_hostname }}.pre_checks"
+        mode: '0644'
+      delegate_to: localhost
+        #  when: ftpaccess_content is defined and ftpusers_content.rc == 0 # Only write if slurp succeeded

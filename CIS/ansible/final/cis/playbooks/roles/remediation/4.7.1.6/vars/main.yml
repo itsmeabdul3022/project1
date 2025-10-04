@@ -1,0 +1,6 @@
+---
+# vars file for 4.7.1.6
+    dt_install_dir: /usr/dt/
+    dt_config_dir: /etc/dt/config
+    src_xconfig: /usr/dt/config/Xconfig
+    dest_xconfig: /etc/dt/config/Xconfig

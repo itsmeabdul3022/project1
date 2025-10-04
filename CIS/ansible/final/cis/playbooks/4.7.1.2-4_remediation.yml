@@ -1,0 +1,5 @@
+- name:  4.7.1.2-4 remediation
+  hosts: AIX
+  become: true
+  roles:
+      - roles/4.7.1.2-4

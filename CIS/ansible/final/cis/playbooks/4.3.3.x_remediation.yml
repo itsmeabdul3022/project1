@@ -1,0 +1,5 @@
+- name:  4.3.3.x remediation
+  hosts: AIX
+  become: true
+  roles:
+      - roles/remediation/4.3.3.x

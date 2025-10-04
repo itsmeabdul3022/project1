@@ -1,0 +1,22 @@
+- name: get  root user's info
+  ansible.builtin.shell: 'lsuser root'
+  register: root_info
+
+- name: Create pre-check directory
+  ansible.builtin.file:
+     path: "{{ dest_dir }}"
+     state: directory
+     mode: '0755'
+  delegate_to: localhost # Run this task on the Ansible control node
+
+- name: Save current information as  pre_check
+  ansible.builtin.copy:
+    content: |
+      # Host: {{ inventory_hostname }}
+      # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+       # lsuser root Output:
+      {{ root_info.stdout }}
+    dest: "{{ dest_dir }}/4.1.2.10_{{ inventory_hostname }}.pre_check.out"
+  delegate_to: localhost
+
+

@@ -1,0 +1,9 @@
+---
+# handlers file for 4.7.1.6
+    - name: Restart dtlogin service
+      # NOTE: On AIX, dtlogin is managed by the SRC, so we use startsrc/stopsrc
+      ansible.builtin.shell: |
+        stopsrc -s dtlogin
+        startsrc -s dtlogin
+      # This handler only runs if the configuration was changed AND CDE is installed
+      when: dt_install_stat.stat.exists

@@ -1,0 +1,7 @@
+- name: remediation  4.3.2.x 
+  hosts: AIX
+  become: true
+  vars: 
+    dest_dir: /tmp/pre_checks
+  roles:
+      - roles/4.3.2.x

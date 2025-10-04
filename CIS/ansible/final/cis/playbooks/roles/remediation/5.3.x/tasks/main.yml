@@ -1,0 +1,5 @@
+---
+    - name: Ensure specified users are secured
+      ansible.builtin.shell: 'chuser account_locked=true login=false rlogin=false {{ item }}'
+      loop: "{{ secured_users }}"
+      ignore_errors: yes

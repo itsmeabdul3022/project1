@@ -1,0 +1,33 @@
+    - name: pre_check 4.3.1.1 Gather inittab information for  writesrv,dt,qdeamon  service 
+      ansible.builtin.shell: "lsitab {{ item }} "
+      loop:
+        - writesrv
+        - dt
+        - qdeamon
+      register: service_inittab_entry
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      tags: writesrv
+
+
+    - name: copy the file to local folder
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          # ----------------------------------------------------
+          # inittab entries found:
+          
+          {% for result in service_inittab_entry.results %}
+          # Service ID: {{ result.item }}
+          {% if result.rc == 0 %}
+          {{ result.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found or lsitab failed (rc={{ result.rc }})
+          # Stderr: {{ result.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+
+        dest: /tmp/pre_checks/4.3.1.x_{{ inventory_hostname }}_pre_checks.out
+      delegate_to: localhost

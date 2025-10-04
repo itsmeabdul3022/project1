@@ -1,0 +1,5 @@
+- name:  4.1.2.4 Ensure access on /audit and /etc/security/audit is configured
+  hosts: AIX
+  become: true
+  roles:
+      - roles/remediation/4.1.1.x

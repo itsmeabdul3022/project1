@@ -1,0 +1,11 @@
+---
+# vars file for 4.7.1.5
+
+cde_daemons:
+      - /usr/dt/bin/dtlogin
+      - /usr/dt/bin/dtspc
+      - /usr/dt/bin/dtappgather
+      - /usr/dt/bin/dtsession
+      - /usr/dt/bin/dthelpo
+      - /usr/dt/bin/dtprintinfo
+

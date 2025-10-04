@@ -1,0 +1,169 @@
+    - name: 4.1.1.1 Ensure access on /smit.log is configured
+      ansible.builtin.file:
+        path: /smit.log
+        mode: o-rw
+      
+    - name: 4.1.1.2 Ensure access on /etc/group is configured
+      ansible.builtin.file:
+        path: /etc/group
+        owner: root
+        group: security
+        mode: u=rw,go=r
+
+    - name: 4.1.1.3 Ensure access on /etc/inetd.conf is configured
+      ansible.builtin.file:
+        path: /etc/inetd.conf
+        owner: root
+        group: system
+        mode: u=rw,go=r
+
+    - name: 4.1.1.3 Run trustchk on /etc/inetd.conf
+      ansible.builtin.command: trustchk -u /etc/inetd.conf mode=644
+      
+    - name: 4.1.1.4 Ensure access on /etc/motd is configured
+      ansible.builtin.file:
+        path: /etc/motd
+        owner: bin
+        group: bin
+        mode: u=rw,go=r
+
+    - name: 4.1.1.5 Ensure access on /etc/passwd is configured
+      ansible.builtin.file:
+        path: /etc/passwd
+        owner: root
+        group: security
+        mode: u=rw,go=r
+
+    - name: 4.1.1.6 Ensure /etc/mail/submit.cf access is configured
+      ansible.builtin.file:
+        path: /etc/mail/submit.cf
+        mode: u=rw,g=r,o=
+
+    - name: 4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured
+      ansible.builtin.file:
+        path: /etc/ssh/ssh_banner
+        owner: root
+        group: root
+        mode: u=rw,go=r
+
+    - name: 4.1.1.8 Ensure access on /etc/ssh/ssh_config is configured
+      ansible.builtin.file:
+        path: /etc/ssh/ssh_config
+        mode: '644'
+
+    - name: 4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured
+      ansible.builtin.file:
+        path: /etc/ssh/sshd_config
+        mode: u=rw,go=r
+
+    - name: 4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured
+      ansible.builtin.file:
+        path: /var/adm/cron/cron.allow
+        owner: root
+        group: sys
+        mode: u=r,go=
+
+    - name: 4.1.1.13 Ensure access on /var/ct/RMstart.log is configured
+      ansible.builtin.file:
+        path: /var/ct/RMstart.log
+        mode: o-rw
+
+    - name: 4.1.1.14 Ensure access on /var/tmp/dpid2.log is configured
+      ansible.builtin.file:
+        path: /var/tmp/dpid2.log
+        mode: o-rw
+
+    - name: 4.1.1.15 Ensure access on /var/tmp/hostmibd.log is configured
+      ansible.builtin.file:
+        path: /var/tmp/hostmibd.log
+        mode: o-rw
+
+    - name: 4.1.1.16 Ensure access on /var/tmp/snmpd.log is configured
+      ansible.builtin.file:
+        path: /var/tmp/snmpd.log
+        mode: o-rw
+    - name: 4.1.1.1 Ensure access on /smit.log is configured
+      ansible.builtin.file:
+        path: /smit.log
+        mode: o-rw
+      
+    - name: 4.1.1.2 Ensure access on /etc/group is configured
+      ansible.builtin.file:
+        path: /etc/group
+        owner: root
+        group: security
+        mode: u=rw,go=r
+
+    - name: 4.1.1.3 Ensure access on /etc/inetd.conf is configured
+      ansible.builtin.file:
+        path: /etc/inetd.conf
+        owner: root
+        group: system
+        mode: u=rw,go=r
+
+    - name: 4.1.1.3 Run trustchk on /etc/inetd.conf
+      ansible.builtin.command: trustchk -u /etc/inetd.conf mode=644
+      
+    - name: 4.1.1.4 Ensure access on /etc/motd is configured
+      ansible.builtin.file:
+        path: /etc/motd
+        owner: bin
+        group: bin
+        mode: u=rw,go=r
+
+    - name: 4.1.1.5 Ensure access on /etc/passwd is configured
+      ansible.builtin.file:
+        path: /etc/passwd
+        owner: root
+        group: security
+        mode: u=rw,go=r
+
+    - name: 4.1.1.6 Ensure /etc/mail/submit.cf access is configured
+      ansible.builtin.file:
+        path: /etc/mail/submit.cf
+        mode: u=rw,g=r,o=
+
+    - name: 4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured
+      ansible.builtin.file:
+        path: /etc/ssh/ssh_banner
+        owner: root
+        group: root
+        mode: u=rw,go=r
+
+    - name: 4.1.1.8 Ensure access on /etc/ssh/ssh_config is configured
+      ansible.builtin.file:
+        path: /etc/ssh/ssh_config
+        mode: '644'
+
+    - name: 4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured
+      ansible.builtin.file:
+        path: /etc/ssh/sshd_config
+        mode: u=rw,go=r
+
+    - name: 4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured
+      ansible.builtin.file:
+        path: /var/adm/cron/cron.allow
+        owner: root
+        group: sys
+        mode: u=r,go=
+
+    - name: 4.1.1.13 Ensure access on /var/ct/RMstart.log is configured
+      ansible.builtin.file:
+        path: /var/ct/RMstart.log
+        mode: o-rw
+
+    - name: 4.1.1.14 Ensure access on /var/tmp/dpid2.log is configured
+      ansible.builtin.file:
+        path: /var/tmp/dpid2.log
+        mode: o-rw
+
+    - name: 4.1.1.15 Ensure access on /var/tmp/hostmibd.log is configured
+      ansible.builtin.file:
+        path: /var/tmp/hostmibd.log
+        mode: o-rw
+
+    - name: 4.1.1.16 Ensure access on /var/tmp/snmpd.log is configured
+      ansible.builtin.file:
+        path: /var/tmp/snmpd.log
+        mode: o-rw
+    

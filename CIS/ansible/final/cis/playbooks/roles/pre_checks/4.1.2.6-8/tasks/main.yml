@@ -1,0 +1,41 @@
+    - name: Find and register audit files and directories details
+      ansible.builtin.find:
+        paths:
+          - /var/adm/ras
+          - /var/adm/sa
+          - /var/spool/cron/crontabs
+        recurse: yes
+        file_type: any
+        excludes: ['lost+found']
+      register: var_files
+      # The 'audit_files' variable now contains a list of objects, each with
+      # 'path', 'owner', 'group', 'mode', etc., for the pre-check state.
+
+    - name: Create pre-check directory
+      ansible.builtin.file:
+        path: "{{ dest_dir }}"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost # Run this task on the Ansible control node
+
+    - name: Save current file ownership and permissions for rollback 4.1.2.5 pre_check
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          {% for item in var_files.files %}
+          path: {{ item.path }}
+          owner: {{ item.pw_name }}
+          group: {{ item.gr_name }}
+          mode: {{ item.mode }}
+          --------------------
+          {% endfor %}
+        dest: "{{ dest_dir }}/4.1.2.6-8_{{ inventory_hostname }}.pre_check.out"
+        # We use a unique file name per host in the pre_check directory on the control node
+      delegate_to: localhost
+        #      run_once: true # Optional: If you only need one copy of the file on the control node
+        #vars:
+        # ansible_date_time: "{{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M:%S') }}"
+
+# ----------------------------------------------------------------------------------
+

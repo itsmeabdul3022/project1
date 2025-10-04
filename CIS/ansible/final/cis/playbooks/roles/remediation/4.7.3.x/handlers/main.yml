@@ -1,0 +1,8 @@
+---
+# handlers file for 4.7.3.x
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      listen: "Restart sshd"
+

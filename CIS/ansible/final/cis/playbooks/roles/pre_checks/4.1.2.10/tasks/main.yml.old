@@ -1,0 +1,20 @@
+- name: Set root user's home directory
+  community.general.aix_lsuser:
+     user: root
+  register: root_info
+
+- name: Create pre-check directory
+  ansible.builtin.file:
+     path: "{{ dest_dir }}"
+     state: directory
+     mode: '0755'
+  delegate_to: localhost # Run this task on the Ansible control node
+
+- name: Save current file ownership and permissions for rollback 4.1.2.5 pre_check
+  ansible.builtin.copy:
+    content: |
+      # Host: {{ inventory_hostname }}
+      # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+       root_info.files 
+    dest: "{{ dest_dir }}/4.1.2.10_{{ inventory_hostname }}.pre_check.out"
+

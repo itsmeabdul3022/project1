@@ -1,0 +1,7 @@
+- name: pre_check  4.4.1.x 
+  hosts: AIX
+  become: true
+  vars: 
+    dest_dir: /tmp/pre_checks
+  roles:
+      - roles/pre_checks/4.4.1.x

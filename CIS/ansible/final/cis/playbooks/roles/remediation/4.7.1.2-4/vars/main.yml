@@ -1,0 +1,6 @@
+---
+# vars file for 4.7.1.2-4
+services:
+  - cmsd
+  - dtlogin
+  - dtspc

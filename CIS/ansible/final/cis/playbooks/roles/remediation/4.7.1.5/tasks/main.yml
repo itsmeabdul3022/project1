@@ -1,0 +1,25 @@
+---
+    - name: check if  /usr/dt/bin/ exists
+      ansible.builtin.stat:
+        path: /usr/dt/bin/
+      register: dt_bin_stat
+
+    - name: Run CDE-related task only if the directory exists
+      ansible.builtin.debug:
+        msg: "CDE binaries are present. Proceeding with configuration."
+      when: dt_bin_stat.stat.exists and dt_bin_stat.stat.isdir
+
+
+
+    - name: 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled
+      ansible.builtin.file:
+        path: "{{ item }}"
+        # Removes the SUID (u-s) and SGID (g-s) bits.
+        mode: "u-s,g-s"
+        # state: file tells Ansible to only operate if the path exists AND is a file.
+        state: file 
+      loop: "{{ cde_daemons }}"
+      ignore_errors: yes
+      
+      # The entire task is skipped if the CDE directory is not present
+      when: dt_bin_stat.stat.exists and dt_bin_stat.stat.isdir

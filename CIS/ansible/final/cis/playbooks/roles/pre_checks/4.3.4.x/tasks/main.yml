@@ -1,0 +1,60 @@
+    - name: pre_check 4.3.4.x Gather info from /etc/inetd.conf 
+      ansible.builtin.shell: "cat  /etc/inetd.conf | grep -i {{ item }} "
+      loop:
+        - bootps
+        - chargen
+        - comsat
+        - daytime
+        - discard
+        - echo
+        - exec
+        - finger
+        - ftpd
+        - imap2
+        - instsrv
+        - klogin
+        - kshell
+        - netstat 
+        - ntalk
+        - pcnfsd
+        - pop3
+        - rexd
+        - rquotad
+        - rstatd
+        - rusersd
+        - rwalld
+        - sprayd
+        - xmquery
+        - talk
+        - telnetd
+        - tftpd
+        - time
+        - uucp
+
+      register: inetd_conf_out
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      
+
+
+    - name: copy the file to local folder
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          # ----------------------------------------------------
+          # inittab entries found:
+          
+          {% for result in inetd_conf_out.results %}
+          # Service ID: {{ result.item }}
+          {% if result.rc == 0 %}
+          {{ result.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found or lsitab failed (rc={{ result.rc }})
+          # Stderr: {{ result.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+
+        dest: /tmp/pre_checks/4.3.4.x_{{ inventory_hostname }}_pre_checks.out
+      delegate_to: localhost

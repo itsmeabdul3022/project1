@@ -1,0 +1,38 @@
+---
+# tasks file for 4.7.1.6
+#
+   # 1. Check for the existence of the CDE installation directory (/usr/dt/)
+    - name: 1. Check if CDE is installed
+      ansible.builtin.stat:
+        path: "{{ dt_install_dir }}"
+      register: dt_install_stat
+
+    - name: 2. Create /etc/dt/config directory if missing
+      ansible.builtin.file:
+        path: "{{ dt_config_dir }}"
+        state: directory
+        mode: '0755'
+        owner: root
+        group: system
+      when: dt_install_stat.stat.exists
+
+    - name: 3. Copy /usr/dt/config/Xconfig to /etc/dt/config/ ONLY if it doesn't exist
+      ansible.builtin.copy:
+        src: "{{ src_xconfig }}"
+        dest: "{{ dest_xconfig }}"
+        remote_src: yes
+        owner: root
+        group: system
+        mode: '0644'
+        force: no 
+      when: dt_install_stat.stat.exists
+
+    - name: 4. Disable remote X sessions (Dtlogin.requestPort 0)
+      ansible.builtin.lineinfile:
+        path: "{{ dest_xconfig }}"
+        regexp: '^#?Dtlogin\.requestPort:\s*\d+'
+        line: 'Dtlogin.requestPort: 0'
+      when: dt_install_stat.stat.exists
+      # CRITICAL: This fires the handler if the file was changed
+      # notify: Restart dtlogin service
+

@@ -1,0 +1,71 @@
+    - name: pre_check 4.5.x Gather info  
+      ansible.builtin.shell: "no -o  {{ item }} "
+      loop:
+        - sockthresh
+        - bcastping
+        - clean_partial_conns
+        - directed_broadcast
+        - icmpaddressmask
+        - ipforwarding
+        - ip6forwarding
+        - ipignoreredirects
+        - ipsendredirects
+        - ipsrcrouteforward
+        - ipsrcrouterecv
+        - ipsrcroutesend
+        - ip6srcrouteforward
+        - nonlocsrcroute
+        - tcp_pmtu_discover
+        - tcp_tcpsecure
+        - udp_pmtu_discover
+      register: no_out
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+
+
+    - name: Gather nfso info
+      ansible.builtin.shell: "nfso -o  {{ item }} "
+      loop:
+        - portcheck
+        - nfs_use_reserved_ports
+
+      register: nfso_out
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+
+
+    - name: copy the file to local folder
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          # ----------------------------------------------------
+          # inittab entries found:
+          
+          {% for result in no_out.results %}
+          # Service ID: {{ result.item }}
+          {% if result.rc == 0 %}
+          {{ result.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found no failed (rc={{ result.rc }})
+          # Stderr: {{ result.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+
+  
+
+          {% for result2 in nfso_out.results %}
+          # Service ID: {{ result2.item }}
+          {% if result2.rc == 0 %}
+          {{ result2.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found no failed (rc={{ result2.rc }})
+          # Stderr: {{ result2.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+
+
+        dest: /tmp/pre_checks/4.5.x_{{ inventory_hostname }}_pre_checks.out
+      delegate_to: localhost

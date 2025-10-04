@@ -1,0 +1,50 @@
+    - name: Create pre_checks directory on Ansible host
+      ansible.builtin.file:
+        path: "/tmp/pre_checks"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: yes
+
+
+    - name: Check status of each service
+      ansible.builtin.shell: lssrc -s {{ item }} | grep -i {{ item }}
+      register: service_status
+      loop: "{{ services_to_check }}"
+      ignore_errors: yes
+      failed_when: false
+      changed_when: false
+
+
+
+    - name: copy /etc/rc.tcp file
+      ansible.builtin.copy:
+        src: /etc/rc.tcpip
+        dest: "/etc/rc.tcp.bak-{{ ansible_date_time.date }}"
+        remote_src: yes
+        owner: root
+        group: system
+        mode: '0644'
+
+
+    - name: copy the file to local folder
+      ansible.builtin.copy:
+        content: |
+          # Host: {{ inventory_hostname }}
+          # Date: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+          # ----------------------------------------------------
+          # inittab entries found:
+
+          {% for result in service_status.results %}
+          # Service ID: {{ result.item }}
+          {% if result.rc == 0 %}
+          {{ result.stdout | default('Not Found or Empty Output') }}
+          {% else %}
+          # ERROR: Entry not found  (rc={{ result.rc }})
+          # Stderr: {{ result.stderr | default('N/A') }}
+          {% endif %}
+          {% endfor %}
+
+        dest: /tmp/pre_checks/4.3.2.x_{{ inventory_hostname }}_pre_checks.out
+      delegate_to: localhost
+
