@@ -1,0 +1,31 @@
+    - name: Ensure pre-check directory exists on local host
+      ansible.builtin.file:
+         path: /tmp/pre_checks
+         state: directory
+         mode: '0755'
+      delegate_to: localhost
+
+    - name:  4.7.1.7 Pre-check CDE screensaver lock status CDE config files
+      # Search both the override (/etc) and default (/usr) locations for the setting.
+      ansible.builtin.shell: 
+           cmd: |
+             echo "--- Host: {{ inventory_hostname }} ---"
+             echo "Current dtsession*saverTimeout values found:"
+             
+             # Check /etc files (highest precedence)
+             grep 'dtsession\*saverTimeout:' /etc/dt/config/*/sys.resources 2>/dev/null || true
+             
+             # Check /usr files if /etc files didn't exist/override
+             grep 'dtsession\*saverTimeout:' /usr/dt/config/*/sys.resources 2>/dev/null || true
+             
+             echo ""
+      register: current_timeout_settings
+      changed_when: false
+
+    - name: Append current settings to local pre-check file
+      ansible.builtin.lineinfile:
+        path: /tmp/pre_checks/4.7.1.7_pre_checks_{{ inventory_hostname }}out
+        line: "{{ current_timeout_settings.stdout }}"
+        create: yes
+        insertafter: EOF # Append to the end of the file
+      delegate_to: localhost

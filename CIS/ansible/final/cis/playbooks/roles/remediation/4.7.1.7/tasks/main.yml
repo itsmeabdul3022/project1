@@ -1,0 +1,34 @@
+---
+    - name: Check if CDE is installed (/usr/dt exists)
+      ansible.builtin.stat:
+        path: /usr/dt
+      register: dt_check
+
+# The remaining tasks will only run if dt_check.stat.exists is True
+
+    - name: Find CDE resource directories
+      ansible.builtin.find:
+        paths: /usr/dt/config
+        patterns: sys.resources
+        recurse: yes
+        file_type: file
+      register: cde_resources
+      when: dt_check.stat.exists
+
+    - name: 4.7.1.7 Configure session timeouts in /etc/dt/config
+      ansible.builtin.lineinfile:
+        path: "{{ item.path | dirname | regex_replace('^/usr/', '/etc/') }}/sys.resources"
+        line: "dtsession*saverTimeout: 10"
+        create: yes
+        regexp: '^dtsession\*saverTimeout:'
+      with_items: "{{ cde_resources.files }}"
+      when: dt_check.stat.exists
+
+    - name: 4.7.1.7 Configure dtsession*lockTimeout
+      ansible.builtin.lineinfile:
+        path: "{{ item.path | dirname | regex_replace('^/usr/', '/etc/') }}/sys.resources"
+        line: "dtsession*lockTimeout: 10"
+        create: yes
+        regexp: '^dtsession\*lockTimeout:'
+      with_items: "{{ cde_resources.files }}"
+      when: dt_check.stat.exists
