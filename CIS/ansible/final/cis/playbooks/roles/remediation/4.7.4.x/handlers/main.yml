@@ -1,0 +1,7 @@
+---
+# handlers file for 4.7.4.x
+- name: Restart Sendmail
+  ansible.builtin.service:
+      name: sendmail
+      state: restarted
+

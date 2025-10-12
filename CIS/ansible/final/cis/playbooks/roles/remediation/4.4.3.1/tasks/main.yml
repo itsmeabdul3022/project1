@@ -1,0 +1,37 @@
+---
+    - name:  Identify non-compliant filesystems (runtime mounts)
+      # Find mounted JFS/JFS2 filesystems that are not root and do not have 'nodev'
+      shell: |
+        /usr/sbin/mount | /usr/bin/grep ' jfs' | /usr/bin/awk '$1 != "{{ root_fs_lv }}" && !($0 ~ /nodev/)' | /usr/bin/awk '{print $2}'
+      register: non_compliant_mounts
+      changed_when: false # This task is only for information gathering
+
+    - name: 4.4.3.1 Ensure only / permits device files Remediate runtime mount options
+      # Use a loop and 'aix_mount' to remount with 'nodev'
+      ansible.builtin.shell:
+        cmd: "/usr/sbin/mount -o remount,nodev {{ item }}"
+      loop: "{{ non_compliant_mounts.stdout_lines }}"
+      when: non_compliant_mounts.stdout_lines | length > 0
+      # Using shell here is simpler than aix_mount for remounting and maintaining existing options
+      register: mount_remediation
+      ignore_errors: true
+
+    # ----------------------------------------------------------------------
+
+    - name:  Identify non-compliant filesystems (permanent configuration)
+      # Find filesystems in /etc/filesystems (lsfs) that are not root and do not have 'nodev'
+      shell: |
+        /usr/sbin/lsfs | /usr/bin/grep ' jfs' | /usr/bin/awk '$1 != "{{ root_fs_lv }}" && !($0 ~ /nodev/)' | /usr/bin/awk '{print $3}'
+      register: non_compliant_lsfs
+      changed_when: false
+
+    - name:  Remediate permanent configuration using chfs
+      # Iterate over non-compliant filesystems and update the /etc/filesystems entry
+      ansible.builtin.shell:
+        # The 'chfs' command updates the permanent configuration
+        cmd: "/usr/sbin/chfs -a options=nodev,{{ item | replace('--', '') }} {{ item }}"
+      loop: "{{ non_compliant_lsfs.stdout_lines }}"
+      # The loop variable 'item' is the filesystem mount point, e.g., /opt
+      when: non_compliant_lsfs.stdout_lines | length > 0
+      register: lsfs_remediation
+      ignore_errors: true

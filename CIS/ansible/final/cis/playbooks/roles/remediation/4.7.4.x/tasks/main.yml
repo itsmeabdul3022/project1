@@ -1,0 +1,100 @@
+---
+    # ----------------------------------------------------------------------
+    # 4.7.4.x - Backup and SmtpGreetingMessage
+    # ----------------------------------------------------------------------
+    - name: 4.7.4.x Backup sendmail.cf before changes
+      ansible.builtin.copy:
+        src: /etc/mail/sendmail.cf
+        dest: "/etc/mail/sendmail.cf.{{ ansible_date_time.date }}.bak"
+        remote_src: yes
+        owner: root
+        group: "{{ sendmail_group }}"
+        mode: preserve
+      changed_when: true
+      check_mode: no
+
+    - name: 4.7.4.1 Set SmtpGreetingMessage to 'mailerready'
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O SmtpGreetingMessage=.*'
+        line: 'O SmtpGreetingMessage=mailerready'
+        owner: root
+        group: "{{ sendmail_group }}"
+        mode: '0644'
+      notify: Restart Sendmail
+
+    - name: Ensure /etc/mail/helpfile exists
+      ansible.builtin.file:
+        path: /etc/mail/helpfile
+        state: touch
+        owner: root
+        group: "{{ sendmail_group }}"
+        mode: '0644'
+
+    # ----------------------------------------------------------------------
+    # 4.7.1.11 - PrivacyOptions
+    # ----------------------------------------------------------------------
+    - name: 4.7.4.2 Enforce secure Sendmail PrivacyOptions
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O PrivacyOptions=.*'
+        line: 'O PrivacyOptions=authwarnings,noexpn,novrfy'
+        owner: root
+        group: "{{ sendmail_group }}"
+        mode: '0644'
+      notify: Restart Sendmail
+
+    # ----------------------------------------------------------------------
+    # 4.7.4.3 - DaemonPortOptions (Restrict to localhost)
+    # ----------------------------------------------------------------------
+    - name: 4.7.4.3 Restrict Sendmail MTA to localhost on AIX
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O DaemonPortOptions=Name=MTA.*'
+        line: "O DaemonPortOptions=Name=MTA,Addr={{ sendmail_localhost_addr }}"
+        owner: root
+        group: "{{ sendmail_group }}"
+        mode: '0644'
+      notify: Restart Sendmail
+
+    # ----------------------------------------------------------------------
+    # 4.7.4.4 - File Permissions and TCB (AIX Specific)
+    # ----------------------------------------------------------------------
+    - name: 4.7.4.4  Set secure permissions and ownership on sendmail.cf
+      ansible.builtin.file:
+        path: /etc/mail/sendmail.cf
+        # chmod u=rw,g=r,o= is mode '0640'
+        mode: '0640'
+        owner: root
+        group: system # Using 'system' as the group for security context
+        state: file
+
+    - name: Update TCB attributes for sendmail.cf
+      ansible.builtin.shell:
+        cmd: /usr/sbin/trustchk -u /etc/mail/sendmail.cf mode owner group
+      register: trustchk_result
+      changed_when: trustchk_result.rc == 0 and 'updated successfully' in trustchk_result.stdout
+      failed_when: trustchk_result.rc != 0 and 'not found' not in trustchk_result.stderr
+
+    # ----------------------------------------------------------------------
+    # 4.7.4.5- clientmqueue permissions
+    # ----------------------------------------------------------------------
+    - name: 4.7.4.5  Set secure permissions (0770) and ownership on /var/spool/clientmqueue
+      ansible.builtin.file:
+        path: /var/spool/clientmqueue
+        mode: '0770'
+        owner: smmsp
+        group: smmsp
+        state: directory
+
+    # ----------------------------------------------------------------------
+    # 4.7.4.6 - mqueue permissions
+    # ----------------------------------------------------------------------
+    - name: 4.7.4.6 Set secure permissions (0700) and ownership on /var/spool/mqueue
+      ansible.builtin.file:
+        path: /var/spool/mqueue
+        mode: '0700'
+        owner: root
+          #  group: system
+        state: directory
+

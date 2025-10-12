@@ -1,0 +1,53 @@
+---
+# tasks file for 4.7.4.x
+
+    - name: 📝 Record Configuration File Settings from sendmail.cf
+      ansible.builtin.shell: |
+        echo "--- Host: {{ inventory_hostname }} ---"
+        echo "--- Sendmail Configuration Pre-Check ---"
+        echo ""
+
+        # 4.7.1.10: SmtpGreetingMessage
+        echo "Current SmtpGreetingMessage:"
+        grep -E '^O SmtpGreetingMessage=' /etc/mail/sendmail.cf 2>/dev/null || echo "Not found"
+        echo ""
+
+        # 4.7.1.11: PrivacyOptions
+        echo "Current PrivacyOptions:"
+        grep -E '^O PrivacyOptions=' /etc/mail/sendmail.cf 2>/dev/null || echo "Not found"
+        echo ""
+
+        # 4.7.1.12: DaemonPortOptions (MTA)
+        echo "Current DaemonPortOptions (MTA):"
+        grep -E '^O DaemonPortOptions=Name=MTA' /etc/mail/sendmail.cf 2>/dev/null || echo "Not found"
+        echo "----------------------------------------"
+
+      register: sendmail_config_output
+      changed_when: false
+
+    - name: 📂 Record Permissions for Sensitive Files and Directories
+      ansible.builtin.shell: |
+        # 4.7.1.13: /etc/mail/sendmail.cf
+        echo "Permissions for /etc/mail/sendmail.cf:"
+        ls -ld /etc/mail/sendmail.cf 2>/dev/null || echo "Not found"
+
+        # 4.7.1.14: /var/spool/clientmqueue
+        echo "Permissions for /var/spool/clientmqueue:"
+        ls -ld /var/spool/clientmqueue 2>/dev/null || echo "Not found"
+
+        # 4.7.1.15: /var/spool/mqueue
+        echo "Permissions for /var/spool/mqueue:"
+        ls -ld /var/spool/mqueue 2>/dev/null || echo "Not found"
+
+      register: sendmail_perms_output
+      changed_when: false
+
+    - name: 💾 Save Pre-Check Results to Local File
+      ansible.builtin.lineinfile:
+        path: "{{ pre_check_file }}"
+        line: "{{ sendmail_config_output.stdout }}\n{{ sendmail_perms_output.stdout }}"
+        create: yes
+        insertafter: EOF
+      delegate_to: localhost
+      # Ensure this runs for every host to create a unique file
+      run_once: no

@@ -1,0 +1,50 @@
+# FILE: playbooks/roles/pre_checks/3.7/tasks/main.yml
+
+- name: 3.7 Ensure no files or directories without an owner and a group exist
+  ansible.builtin.shell: /usr/bin/find / \( -fstype jfs -o -fstype jfs2 \) \( -type d -o -type f \) \( -nouser -o -nogroup \) -ls
+  register: orphan_files
+  changed_when: false
+
+# ----------------------------------------------------------------------
+
+- name: Report files/directories without an owner/group
+  ansible.builtin.debug:
+    # 'msg:' is aligned with the 'ansible.builtin.debug' module
+    msg: |
+      # Content starts here, indented two spaces further than 'msg:'
+      *** ORPHAN FILE AUDIT: {{ inventory_hostname }} ***
+      {{ '-'*80 }}
+      | UID  | GID  | FILE PATH
+      {{ '-'*80 }}
+      {% for line in orphan_files.stdout_lines %}
+      {% set parts = line.split() %}
+      {% set uid = parts[4] %}
+      {% set gid = parts[5] %}
+      {% set path = parts[-1] %}
+      | {{ uid | center(4) }} | {{ gid | center(4) }} | {{ path }}
+      {% endfor %}
+      {{ '-'*80 }}
+  when: orphan_files.stdout_lines | length > 0
+
+# ----------------------------------------------------------------------
+
+- name: Save formatted orphan file list to local report file
+  ansible.builtin.copy:
+    # 'content:' is aligned with 'dest:' below
+    content: |
+      # Content starts here, indented two spaces further than 'content:'
+      *** ORPHAN FILE AUDIT: {{ inventory_hostname }} ***
+      {{ '-'*80 }}
+      | UID  | GID  | FILE PATH
+      {{ '-'*80 }}
+      {% for line in orphan_files.stdout_lines %}
+      {% set parts = line.split() %}
+      {% set uid = parts[4] %}
+      {% set gid = parts[5] %}
+      {% set path = parts[-1] %}
+      | {{ uid | center(4) }} | {{ gid | center(4) }} | {{ path }}
+      {% endfor %}
+      {{ '-'*80 }}
+    dest: "{{ dest_dir }}/3.7_pre_checks-{{ inventory_hostname }}"
+  delegate_to: localhost
+  when: orphan_files.stdout_lines | length > 0

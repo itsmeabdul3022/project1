@@ -1,0 +1,100 @@
+    - name: 1. Fetch ALL User Attributes from AIX
+      ansible.builtin.command: lsuser -R files -a id home account_locked ALL
+      register: user_data
+      changed_when: false
+
+    - name: 2. Parse and Filter Users Eligible for Audit
+      # This logic replicates the filtering (UID >= 200, NOT locked, home != /dev/null)
+      ansible.builtin.set_fact:
+        eligible_users: |
+          [
+          {% for line in user_data.stdout_lines %}
+            {% set parts = line.split() %}
+            {% if parts | length >= 4 %}
+              {% set name = parts[0] %}
+              {% set uid = parts[1].split('=')[1] | int(default=0) %}
+              {% set home_path = parts[2].split('=')[1] %}
+              {% set locked = parts[3].split('=')[1] %}
+
+              {% if uid >= 200 and locked != 'true' and home_path != '/dev/null' %}
+                { 'name': '{{ name }}', 'home': '{{ home_path }}', 'uid': {{ uid }} },
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          ] 
+      # Only proceed if there are eligible users to check
+      when: user_data.stdout_lines | length > 0
+
+    - name: Get eligible_users_list
+      ansible.builtin.set_fact:
+        eligible_users_list: "{{ eligible_users | from_yaml | unique }}"
+
+    - name: eligible_users_list 
+      debug:
+        var: eligible_users_list
+
+    - name: 3. Check Existence and Ownership of Home Directories
+      # Loop through the list of filtered users
+      ansible.builtin.stat:
+        path: "{{ item.home }}"
+      register: home_dir_stats
+      loop: "{{ eligible_users_list }}"
+      loop_control:
+        label: "Stat check for {{ item.name }}"
+
+    - name: debug home_dir_stats
+      debug:
+        msg:  "{{ home_dir_stats.results }}" 
+
+    # --- Remediation Block ---
+
+    - name:  4.1.2.2 Pre_check Report and Skip Missing Home Directories
+      # This replicates the '[[ ! -d ${home} ]]' check and printf action
+      ansible.builtin.debug:
+        msg: "WARNING: Home directory '{{ item.item.home }}' for user '{{ item.item.name }}' does not exist. Manual remediation required."
+      loop: "{{ home_dir_stats.results }}"
+      loop_control:
+        label: "Missing home for {{ item.item.name }}"
+      when: not item.stat.exists and not item.skipped
+
+
+    - name: 4.1.2.2. Identify Accounts with Mismatched Home Ownership
+      ansible.builtin.debug:
+        msg: " {{ item.item.home }}  {{ item.stat.uid }})  {{ item.item.name }} "
+      register: home_dir_issue
+      loop: "{{ home_dir_stats.results }}"
+      loop_control:
+        label: "Locked {{ item.item.name }}"
+      # The conditional here must match the '4.B' conditional logic exactly
+      when:
+        - item.stat is defined
+        - item.stat.exists
+        - item.stat.uid | int != item.item.uid | int
+        - item.stat.uid | int != 0
+
+    - name: Copy the home_dirs to a file
+      ansible.builtin.copy: 
+         content: |
+             ******Improper home directory permissions *********
+             {{ '-'*80 }}
+             | HOME_DIR | UID | OWNER
+             {% for result in home_dir_issue.results %}
+             {% if not (result.skipped | default(False)) %}
+             
+             {% set clean_msg = result.msg | replace(') ', '') | trim %}
+             {% set parts = clean_msg.split() %}
+             
+             # Ensure there are enough parts before accessing indexes
+             {% if parts | length >= 3 %}
+             {% set HOME_DIR = parts[0] %}
+             {% set UID = parts[1] %}
+             {% set OWNER = parts[2] %}
+             | {{ HOME_DIR | center(10) }} | {{ UID | center(5) }} | {{ OWNER }}
+             {% endif %}
+             
+             {% endif %}
+             {% endfor %}
+         dest: "{{ dest_dir }}/4.1.2.2_pre_checks_{{ inventory_hostname }}.out"
+      delegate_to: localhost
+
+

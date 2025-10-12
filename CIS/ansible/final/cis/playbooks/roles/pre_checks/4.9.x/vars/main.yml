@@ -1,0 +1,8 @@
+---
+# vars file for 4.9.x
+        pre_check_data:
+          root_shell: "{{ root_user_info.results[0].getent.root[0] | default('') | split(':') | last }}"
+          etc_profile: "{{ etc_profile_content.content | b64decode | default('') }}"
+          root_profile: "{{ root_profile_content.content | b64decode | default('') }}"
+          motd_content: "{{ motd_content.content | b64decode | default('') }}"
+

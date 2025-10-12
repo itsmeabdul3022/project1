@@ -1,0 +1,75 @@
+---
+# tasks file for 4.8.x
+
+    # ----------------------------------------------------------------------
+    # 1. Configure Login Herald/Banner
+    # Equivalent to: chsec -f /etc/security/login.cfg -s default -a herald="..."
+    # ----------------------------------------------------------------------
+    - name: 4.8.1 Set login herald (Banner)
+      # The chsec command is AIX specific and idempotent when run directly.
+      ansible.builtin.shell:
+        cmd: chsec -f /etc/security/login.cfg -s default -a herald="Unauthorized use of this system is prohibited.\\nlogin:"
+      # Note: We must double-escape the newline (\n) for the shell.
+      changed_when: false # chsec doesn't have a reliable return code for "no change"
+
+    # ----------------------------------------------------------------------
+    # 2. Configure Login Retries
+    # Equivalent to: chsec -f /etc/security/user -s default -a loginretries=5
+    # ----------------------------------------------------------------------
+    - name: 4.8.2 Set default login retries to 5
+      ansible.builtin.shell:
+        cmd: chsec -f /etc/security/user -s default -a loginretries=5
+      changed_when: false
+
+    # ----------------------------------------------------------------------
+    # 3. Lock System Accounts (daemon, bin, sys, etc.)
+    # Equivalent to: lsuser | while read... chuser account_locked=true
+    # ----------------------------------------------------------------------
+    - name: 4.8.5 Ensure specified system accounts are locked
+      vars:
+        system_accounts: [daemon, bin, sys, adm, uucp, nobody, lpd, lp, invscout, ipsec, nuucp, sshd]
+
+      # Use a loop over the list of accounts.
+      # The shell command checks the status and locks the account only if it's NOT already locked.
+      ansible.builtin.shell: |
+        # Check current status: if 'account_locked=true' is NOT in the output, lock it.
+        STATUS=$(lsuser -a account_locked {{ item }})
+        if echo "$STATUS" | grep -qv "account_locked=true"; then
+          chuser account_locked=true {{ item }} && echo "LOCKED"
+        else
+          echo "ALREADY LOCKED"
+        fi
+
+      loop: "{{ system_accounts }}"
+      register: lock_results
+      # Report a change only if the 'chuser' command ran successfully (indicated by "LOCKED" in stdout)
+      changed_when: "'LOCKED' in lock_results.stdout"
+
+    # ----------------------------------------------------------------------
+    # 4. Configure Session Timeout in /etc/profile
+    # Equivalent to: check for TMOUT/TIMEOUT and add if missing
+    # ----------------------------------------------------------------------
+    - name: 4.8.6 Ensure TMOUT and TIMEOUT are set and read-only
+      # Task 1: Set TMOUT
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^TMOUT=.*'
+        line: 'TMOUT=900'
+        backup: yes
+
+    - name: 4.8.6 Set TIMEOUT
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^TIMEOUT=.*'
+        line: 'TIMEOUT=900'
+
+    - name: 4.7.4.4 Ensure TMOUT and TIMEOUT are readonly
+      # This regex ensures the line exists and contains both variable names
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        # This regexp is complex: it finds the line, ensures it starts with 'readonly',
+        # and has both TMOUT and TIMEOUT.
+        regexp: '^readonly.*(TMOUT|TIMEOUT).*'
+        # The line is the target state, inserted after the TMOUT setting for clarity.
+        line: 'readonly TMOUT TIMEOUT'
+        insertafter: '^TMOUT=.*'

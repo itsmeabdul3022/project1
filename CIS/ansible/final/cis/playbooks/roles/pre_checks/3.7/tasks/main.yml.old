@@ -1,0 +1,52 @@
+  - name: 3.7 Ensure no files or directories without an owner and a group exist
+    # Review the currently mounted local filesystems:
+    # find / ( -fstype jfs -o -fstype jfs2 ) ( -type d -o -type f ) ( -nouser -o -nogroup ) -ls
+    # - Either assign UID/GID:
+    #   chown <owner> <file>
+    #   chgrp <group> <file>
+    # - or remove the file/directory:
+    #   [[ -f <file> ]] && rm -f <file>
+    #   [[ -d <file> ]] && rmdir <file>
+    # - Repeat the audit
+    ansible.builtin.shell: /usr/bin/find / \( -fstype jfs -o -fstype jfs2 \) \( -type d -o -type f \) \( -nouser -o -nogroup \) -ls
+    register: orphan_files
+    changed_when: false
+
+  - name: Report files/directories without an owner/group
+    ansible.builtin.debug:
+      msg: |
+       *** ORPHAN FILE AUDIT: {{ inventory_hostname }} ***
+        {{ '-'*80 }}
+        | UID  | GID  | FILE PATH
+        {{ '-'*80 }}
+        {% for line in orphan_files.stdout_lines %}
+        {% set parts = line.split() %}
+        {% set uid = parts[3] %}
+        {% set gid = parts[4] %}
+        {% set path = parts[-1] %}
+        | {{ uid | center(4) }} | {{ gid | center(4) }} | {{ path }}
+        {% endfor %}
+        {{ '-'*80 }}
+    when: orphan_files.stdout_lines | length > 0
+
+
+  - name:  Save formatted orphan file list to local report file
+    ansible.builtin.copy:
+      content: |
+       *** ORPHAN FILE AUDIT: {{ inventory_hostname }} ***
+        {{ '-'*80 }}
+        | UID  | GID  | FILE PATH
+        {{ '-'*80 }}
+        {% for line in orphan_files.stdout_lines %}
+        {% set parts = line.split() %}
+        {% set uid = parts[3] %}
+        {% set gid = parts[4] %}
+        {% set path = parts[-1] %}
+        | {{ uid | center(4) }} | {{ gid | center(4) }} | {{ path }}
+        {% endfor %}
+        {{ '-'*80 }}
+      dest: "./pre_checks_3.7_{{ inventory_hostname }}"
+    delegate_to: localhost
+    when: orphan_files.stdout_lines | length > 0
+
+

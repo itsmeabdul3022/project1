@@ -1,0 +1,86 @@
+---
+    # 1. Check if CDE is installed (optional, but good practice)
+    - name: Check if CDE is installed (/usr/dt exists)
+      ansible.builtin.stat:
+        path: /usr/dt
+      register: dt_check
+
+    # 2. Find all default Xresources files
+    - name: Find CDE default Xresources files
+      ansible.builtin.find:
+        paths: /usr/dt/config
+        patterns: Xresources
+        recurse: yes
+        file_type: file
+      register: cde_resources
+      when: dt_check.stat.exists
+
+    - name: list the files
+      ansible.builtin.debug:
+        msg: "{{ cde_resources.files | map(attribute='path') | list }}"
+
+    - name: list the files2
+      vars:
+        etc_dir: "{{ item.path | dirname | regex_replace('^/usr/', '/etc/') }}"
+        etc_file: "{{ etc_dir }}/Xresources"
+
+      ansible.builtin.debug:
+        msg: "{{ etc_file }} {{ item.path }}"
+      loop: "{{ cde_resources.files }}"
+
+    - name: Ensure /etc override file exists by checking and copying
+      # Define the target path in /etc
+      vars:
+        etc_file: "{{ item.path | dirname | regex_replace('^/usr/', '/etc/') }}/Xresources"
+
+      block:   
+      - name: STAT check for existing /etc/dt/config/*/Xresources
+        ansible.builtin.stat:
+            path: "{{ etc_file }}"
+        register: etc_file_stat
+
+        # 2. Copy the default /usr file ONLY if the /etc file does NOT exist
+      - name: Copy default Xresources to /etc if not present
+        ansible.builtin.copy:
+            src: "{{ item.path }}"
+            dest: "{{ etc_file }}"
+            remote_src: yes
+            mode: preserve
+        when: etc_file_stat.stat.exists is not defined or not etc_file_stat.stat.exists
+
+      # -------------------------------------------------------------------
+      # FIX: Ensure 'loop' and 'when' are at the same indentation level as 'block:'
+      # -------------------------------------------------------------------
+      loop: "{{ cde_resources.files }}"
+      when: dt_check.stat.exists
+
+
+
+    # 4. Append the warning banner to the /etc/dt/config/*/Xresources files
+    - name: Add Dtlogin warning banner lines
+      # Define the target path in /etc
+      vars:
+        etc_file: "{{ item.path | dirname | regex_replace('^/usr/', '/etc/') }}/Xresources"
+
+      ansible.builtin.lineinfile:
+        path: "{{ etc_file }}"
+        line: "{{ item.resource_line }}"
+        create: no # The file is guaranteed to exist by the previous task or the system default
+        # Ensure idempotency by replacing an existing labelString setting
+        regexp: "^{{ item.resource_line.split(':')[0] }}:"
+
+      loop:
+        # Loop over the found files (cde_resources.files)
+        # and, for each file, generate the two resource lines
+        "{{ cde_resources.files | product(dtlogin_resources) | list }}"
+
+      vars:
+        # Define the resource settings to be applied
+        dtlogin_resources:
+          - { resource_line: "Dtlogin*greeting.labelString: {{ login_warning }}" }
+          - { resource_line: "Dtlogin*greeting.persLabelString: {{ login_warning }}" }
+
+      loop_control:
+        label: "Configuring {{ etc_file }}"
+
+      when: dt_check.stat.exists

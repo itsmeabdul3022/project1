@@ -1,0 +1,26 @@
+---
+# tasks file for 4.6.2
+
+    - name: 4.6.2 Check if the IPsec filter rule already exists
+      # The 'lsfilt' command lists existing filters. We search for our specific rule.
+      ansible.builtin.shell: "/usr/sbin/lsfilt -v 6 | /usr/bin/grep '::1' | /usr/bin/grep 'deny'"
+      register: filter_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: 4.6.2. Add the IPv6 deny loopback filter rule
+      # Executes the genfilt command only if the filter was not found in the check.
+      ansible.builtin.shell: ""/usr/sbin/genfilt -v 6 -a D -s ::1 -m 128 -l Y -i all""
+      when: filter_check.rc != 0
+      register: genfilt_result
+
+    - name: 4.6.2 Make the IPsec filter rules persistent
+      # The 'mkfilt -u' command saves the current kernel filter rules to the configuration files.
+      ansible.builtin.shell: "/usr/sbin/mkfilt -u"
+      when: filter_check.rc != 0 or genfilt_result is changed
+      # Note: We run mkfilt if the filter was just added (genfilt_result is changed)
+      # or if the initial check failed, implying the state needs to be reconciled.
+      
+    - name: 4. Report status
+      ansible.builtin.debug:
+        msg: "The IPv6 deny loopback filter rule is now active and persistent."

@@ -1,0 +1,6 @@
+---
+# vars file for 4.7.4.x
+    # Use 127.0.0.1 for explicit loopback restriction on AIX
+    sendmail_localhost_addr: '127.0.0.1'
+    sendmail_group: mail # Common group for sendmail, confirm if it should be 'system' or 'mail' on your AIX system
+
