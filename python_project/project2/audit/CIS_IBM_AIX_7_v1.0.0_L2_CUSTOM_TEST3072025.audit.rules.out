@@ -1,0 +1,12 @@
+Total matching lines: 11
+description : "4.2.5 Ensure all entries in /etc/hosts.equiv are removed"
+description : "4.3.2.9 Ensure mrouted is not in use"
+description : "4.4.1.5 Ensure NFS exports use allow lists"
+description : "4.4.1.7 Ensure secure RPC authentication is enabled"
+description : "4.4.2.1 Ensure File System Level encryption is enabled"
+description : "4.7.3.15 Ensure sshd PermitRootLogin is disabled"
+description : "7.1.1 Ensure /audit filesystem has been created and configured"
+description : "7.1.2 Ensure Audit configuration defines audit classes"
+description : "7.1.3 Ensure Audit creates audit processing commands"
+description : "7.1.4 Ensure Audit bin(ary) audit event collection is configured"
+description : "7.2.3 Ensure syslog is not configured to receive logs from a remote client"

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This XML file represents a sample aixpert security profile.
+It defines a set of security rules to be checked and enforced.
+The rules here are representative examples from the provided list.
+-->
+<aixpert>
+
+  <!-- Section 4.1.1.x: Ensure file permissions are configured -->
+  <rule id="passwd_access_check">
+    <description>Ensure /etc/passwd permissions are correctly configured</description>
+    <file_check path="/etc/passwd">
+      <permission_mode>0644</permission_mode>
+      <owner>root</owner>
+      <group>security</group>
+    </file_check>
+  </rule>
+  <rule id="group_access_check">
+    <description>Ensure /etc/group permissions are correctly configured</description>
+    <file_check path="/etc/group">
+      <permission_mode>0644</permission_mode>
+      <owner>root</owner>
+      <group>security</group>
+    </file_check>
+  </rule>
+  <rule id="inetd_conf_access_check">
+    <description>Ensure /etc/inetd.conf permissions are correctly configured</description>
+    <file_check path="/etc/inetd.conf">
+      <permission_mode>0644</permission_mode>
+      <owner>root</owner>
+      <group>system</group>
+    </file_check>
+  </rule>
+  <rule id="motd_access_check">
+    <description>Ensure /etc/motd permissions are correctly configured</description>
+    <file_check path="/etc/motd">
+      <permission_mode>0644</permission_mode>
+      <owner>root</owner>
+      <group>sys</group>
+    </file_check>
+  </rule>
+  <rule id="ssh_config_access_check">
+    <description>Ensure /etc/ssh/ssh_config permissions are correctly configured</description>
+    <file_check path="/etc/ssh/ssh_config">
+      <permission_mode>0644</permission_mode>
+      <owner>root</owner>
+      <group>system</group>
+    </file_check>
+  </rule>
+  <rule id="sshd_config_access_check">
+    <description>Ensure /etc/ssh/sshd_config permissions are correctly configured</description>
+    <file_check path="/etc/ssh/sshd_config">
+      <permission_mode>0600</permission_mode>
+      <owner>root</owner>
+      <group>system</group>
+    </file_check>
+  </rule>
+  <rule id="cron_allow_access_check">
+    <description>Ensure /var/adm/cron/cron.allow permissions are correctly configured</description>
+    <file_check path="/var/adm/cron/cron.allow">
+      <permission_mode>0640</permission_mode>
+      <owner>root</owner>
+      <group>cron</group>
+    </file_check>
+  </rule>
+  <rule id="home_dir_access_check">
+    <description>Ensure local user Home directories access is configured</description>
+    <file_check path="/home">
+      <permission_mode>0755</permission_mode>
+      <owner>root</owner>
+      <group>system</group>
+    </file_check>
+  </rule>
+  <rule id="root_home_dir_access_check">
+    <description>Ensure root user has a dedicated home directory</description>
+    <file_check path="/root">
+      <permission_mode>0700</permission_mode>
+      <owner>root</owner>
+      <group>system</group>
+    </file_check>
+  </rule>
+  <rule id="security_dir_access_check">
+    <description>Ensure access to /etc/security is configured</description>
+    <file_check path="/etc/security">
+      <permission_mode>0750</permission_mode>
+      <owner>root</owner>
+      <group>security</group>
+    </file_check>
+  </rule>
+
+  <!-- Section 4.3.x: Ensure unneeded services and daemons are not in use -->
+  <rule id="nis_client_check">
+    <description>Ensure NIS client services are not in use</description>
+    <service_check name="ypbind" status="disabled" />
+  </rule>
+  <rule id="writesrv_check">
+    <description>Ensure writesrv service is not in use</description>
+    <service_check name="writesrv" status="disabled" />
+  </rule>
+  <rule id="dt_service_check">
+    <description>Ensure dt service is not in use</description>
+    <service_check name="dt" status="disabled" />
+  </rule>
+  <rule id="qdaemon_check">
+    <description>Ensure qdaemon service is not in use</description>
+    <service_check name="qdaemon" status="disabled" />
+  </rule>
+  <rule id="dhcpcd_check">
+    <description>Ensure dhcpcd is not in use</description>
+    <service_check name="dhcpcd" status="disabled" />
+  </rule>
+  <rule id="dhcprd_check">
+    <description>Ensure dhcprd is not in use</description>
+    <service_check name="dhcprd" status="disabled" />
+  </rule>
+  <rule id="dhcpsd_check">
+    <description>Ensure dhcpsd is not in use</description>
+    <service_check name="dhcpsd" status="disabled" />
+  </rule>
+  <rule id="gated_check">
+    <description>Ensure gated is not in use</description>
+    <service_check name="gated" status="disabled" />
+  </rule>
+  <rule id="named_check">
+    <description>Ensure named is not in use</description>
+    <service_check name="named" status="disabled" />
+  </rule>
+  <rule id="portmap_check">
+    <description>Ensure portmap is not in use</description>
+    <service_check name="portmap" status="disabled" />
+  </rule>
+  <rule id="routed_check">
+    <description>Ensure routed is not in use</description>
+    <service_check name="routed" status="disabled" />
+  </rule>
+  <rule id="rwhod_check">
+    <description>Ensure rwhod is not in use</description>
+    <service_check name="rwhod" status="disabled" />
+  </rule>
+  <rule id="timed_check">
+    <description>Ensure timed is not in use</description>
+    <service_check name="timed" status="disabled" />
+  </rule>
+  <rule id="autoconf6_check">
+    <description>Ensure autoconf6 is not in use</description>
+    <service_check name="autoconf6" status="disabled" />
+  </rule>
+  <rule id="telnetd_daemon_check">
+    <description>Ensure telnetd service is disabled</description>
+    <service_check name="telnetd" status="disabled" />
+  </rule>
+  <rule id="ftpd_daemon_check">
+    <description>Ensure ftpd service is not in use</description>
+    <service_check name="ftpd" status="disabled" />
+  </rule>
+  <rule id="sendmail_check">
+    <description>Ensure sendmail service is not in use</description>
+    <service_check name="sendmail" status="disabled" />
+  </rule>
+
+  <!-- Section 5.3.x: Secure system accounts -->
+  <rule id="bin_account_check">
+    <description>Ensure user bin is secured</description>
+    <user_check name="bin">
+      <login_disabled />
+    </user_check>
+  </rule>
+  <rule id="daemon_account_check">
+    <description>Ensure user daemon is secured</description>
+    <user_check name="daemon">
+      <login_disabled />
+    </user_check>
+  </rule>
+  <rule id="guest_account_check">
+    <description>Ensure user guest is secured</description>
+    <user_check name="guest">
+      <login_disabled />
+    </user_check>
+  </rule>
+  <rule id="nobody_account_check">
+    <description>Ensure user nobody is secured</description>
+    <user_check name="nobody">
+      <login_disabled />
+    </user_check>
+  </rule>
+  <rule id="uucp_account_check">
+    <description>Ensure user uucp is secured</description>
+    <user_check name="uucp">
+      <login_disabled />
+    </user_check>
+  </rule>
+
+</aixpert>

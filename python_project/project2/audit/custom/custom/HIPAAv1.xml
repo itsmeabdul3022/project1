@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROCKET_PROLOG_BEGIN_TAG							-->
+<!--										-->
+<!-- COPYRIGHT Rocket Software, Inc. 2024					-->
+<!-- All Rights Reserved							-->
+<!--										-->
+<!-- ROCKET_PROLOG_END_TAG							-->
+
+<AIXPertSecurityHardening>
+    <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_hashedpasswords" function="hashedpasswords">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="1">Implements HIPAAv1 recommendations for AIX: All accounts must have a hashed password.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>hashed</AIXPertArgs>
+        <AIXPertGroup>Password policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_checkuid" function="checkuid">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="2">Implements HIPAAv1 recommendations for AIX: Ensure all users have a unique UID and name on the system.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/checkuid</AIXPertCommand>
+        <AIXPertArgs>uid cisv2_checkuid</AIXPertArgs>
+        <AIXPertGroup>Password Policy Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_checkgid" function="checkgid">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="3">Implements HIPAAv1 recommendations for AIX: Ensure all groups have a unique GID and name on the system.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/checkgid</AIXPertCommand>
+        <AIXPertArgs>gid cisv2_checkgid</AIXPertArgs>
+        <AIXPertGroup>Password Policy Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_cde_lock" function="cde_lock">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="4">Implements HIPAAv1 recommendations for AIX: AIX must automatically lock after 15 minutes of inactivity in the CDE Graphical desktop environment.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/cde_lock</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_tmout" function="tmout">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="5">Implements HIPAAv1 recommendations for AIX: AIX must terminate all login sessions after 10 mins if inactivity.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/autologoff</AIXPertCommand>
+        <AIXPertArgs>600 dodv7_tmout</AIXPertArgs>
+        <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_jfs2_efs" function="jfs2_efs">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="6">Implements HIPAAv1 recommendations for AIX: AIX must encrypt user data at rest using AIX Encrypted File System (EFS) if it is required.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/jfs2_efs</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Remote access settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_installed" function="sshd_installed">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="7">Implements HIPAAv1 recommendations for AIX: AIX must protect the confidentiality and integrity of transmitted information during preparation for transmission and maintain the confidentiality and integrity of information during reception and disable all non-encryption network access methods.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/sshd_installed</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_chownaudit" function="chownaudit">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="8">Implements HIPAAv1 recommendations for AIX: Set the ownership root:audit for /audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:audit path:/audit</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_chpermaudit" function="chpermaudit">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="9">Implements HIPAAv1 recommendations for AIX: Set the permissions u=rwx,g=rx,o= for /audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0750 path:/audit</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_chpermauditdirtree" function="chpermauditdirtree">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="10">Implements HIPAAv1 recommendations for AIX: Set the permissions u=rw,g=r,o= for all /audit/* objects and the children objects recursively.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0640 recursiveexcl:/audit</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_chownsecurityaudit" function="chownsecurityaudit">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="11">Implements HIPAAv1 recommendations for AIX: Set the ownership root:audit for all /etc/security/audit directory tree objects.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:audit recursiveincl:/etc/security/audit</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_chpermsecurityaudit" function="chpermsecurityaudit">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="12">Implements HIPAAv1 recommendations for AIX: Set the permissions u=rwx,g=rx,o= for/etc/security/audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0750 path:/etc/security/audit</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_chpermsecurityauditdirtree" function="chpermsecurityauditdirtree">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="13">Implements HIPAAv1 recommendations for AIX: Set the permissions u=rw,g=r,o= for all /etc/security/audit/* objects and the children objects recursively.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0640 recursiveexcl:/etc/security/audit</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_justified_remote_syslog" function="justified_remote_syslog">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="14">Implements HIPAAv1 recommendations for AIX: AIX must only use remote syslog servers justified and documented using site-defined procedures.</AIXPertDescription>
+        <AIXPertPrereqList></AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/syslog</AIXPertCommand>
+        <AIXPertArgs>dodv7_justified_remote_syslog</AIXPertArgs>
+        <AIXPertGroup>Syslog Rule</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_no_remote_syslog" function="no_remote_syslog">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="15">Implements HIPAAv1 recommendations for AIX: Syslog should not accept remote syslog messages.</AIXPertDescription>
+        <AIXPertPrereqList></AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/syslog</AIXPertCommand>
+        <AIXPertArgs>dodv7_no_remote_syslog</AIXPertArgs>
+        <AIXPertGroup>Syslog Rule</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_rbac" function="dodrbac">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="16">Implements HIPAAv1 recommendations for AIX: AIX must provide RBAC roles to perform auditing on all operating system components.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/dodrbac</AIXPertCommand>
+        <AIXPertArgs>dodrbac</AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_space_allocation" function="audit_space_allocation">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="17">Implements HIPAAv1 recommendations for AIX: AIX must allocate audit record storage capacity to store at least one weeks worth of audit records, when audit records are not immediately sent to a central audit record storage facility.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_space_allocation</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditbinperm" function="auditbinperm">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="18">Implements HIPAAv1 recommendations for AIX: AIX audit tools must be set to 4550 or less permissive.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:4550 path:/usr/sbin/auditbin/</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_tool_hash" function="audit_tool_hash">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="19">Implements HIPAAv1 recommendations for AIX: AIX must verify the hash of audit tools.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_tool_hash</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_log_rotate" function="audit_log_rotate">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="20">Implements HIPAAv1 recommendations for AIX: AIX audit logs must be rotated daily.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_log_rotate</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_report_gen" function="audit_report_gen">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="21">Implements HIPAAv1 recommendations for AIX: AIX must provide a report generation function that supports on-demand audit review and analysis, on-demand reporting requirements, and after-the-fact investigations of security incidents.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_report_gen</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_timezone" function="audit_timezone">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="22">Implements HIPAAv1 recommendations for AIX: AIX must record time stamps for audit records that can be mapped to Coordinated Universal Time (UTC) or Greenwich Mean Time (GMT).</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_timezone</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditconf" function="auditconf">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="23">Implements HIPAAv1 recommendations for AIX: AIX audit files must be set to 640 or less permissive.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/auditconffiles</AIXPertCommand>
+        <AIXPertArgs>a auditconffiles </AIXPertArgs>
+        <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditcatgrp" function="auditcatgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="24">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditcat</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditconv" function="auditconv">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="25">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditconv</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_tcpd_logging" function="tcpd_logging">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="26">Implements HIPAAv1 recommendations for AIX: TCPD mail logging should be configured in syslog.conf.</AIXPertDescription>
+        <AIXPertPrereqList></AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/syslog</AIXPertCommand>
+        <AIXPertArgs>dodv7_tcpd_logging</AIXPertArgs>
+        <AIXPertGroup>Syslog Rule</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_process_id" function="audit_process_id">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="27">Implements HIPAAv1 recommendations for AIX: AIX must produce audit records containing information to establish the source and the identity of any individual or process associated with an event.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/auditprocessid</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_status" function="audit_status">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="28">Implements HIPAAv1 recommendations for AIX: AIX must produce audit records containing information to establish the outcome of the events.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_status</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditbin" function="auditbin">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="29">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditbin</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditbingrp" function="auditbingrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="30">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditbin</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditcat" function="auditcat">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="31">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditcat</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditcatgrp" function="auditcatgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="32">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditcat</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditconv" function="auditconv">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="33">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditconv</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditconvgrp" function="auditconvgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="34">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditconv</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit" function="audit">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="35">Implements HIPAAv1 recommendations for AIX: Audit conf files on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/audit</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditgrp" function="auditgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="36">Implements HIPAAv1 recommendations for AIX: Audit conf files on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/audit</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditmerge" function="auditmerge">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="37">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditmerge</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditmergegrp" function="auditmergegrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="38">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditmerge</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditpr" function="auditpr">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="39">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditpr</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditprgrp" function="auditprgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="40">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditpr</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditselectgrp" function="auditselectgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="41">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit and owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:audit path:/usr/sbin/auditselect</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditstream" function="auditstream">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="42">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditstream</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditstreamgrp" function="auditstreamgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="43">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:audit path:/usr/sbin/auditstream</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditldap" function="auditldap">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="44">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/usr/sbin/auditldap</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditldapgrp" function="auditldapgrp">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="45">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be group owned by audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:security path:/usr/sbin/auditldap</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditlog" function="dodauditlog">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="46">Implements HIPAAv1 recommendations for AIX: Audit log files must be set to 660 or less permissive.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/auditlogfiles</AIXPertCommand>
+        <AIXPertArgs>a auditlogfiles </AIXPertArgs>
+        <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditstart" function="dodv7auditstart">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="47">Implements HIPAAv1 recommendations for AIX: AIX must start Audit at boot.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ldapaudit</AIXPertCommand>
+        <AIXPertArgs>/usr/sbin/audit start /etc/rc</AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_freespace" function="audit_freespace">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="48">Implements HIPAAv1 recommendations for AIX: AIX must be configured to generate an audit record when 75% of the audit file system is full.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_freespace</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_recording" function="audit_recording">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="49">Implements HIPAAv1 recommendations for AIX: AIX must produce audit records containing the full-text recording of privileged commands.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_command_recording</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audittrail" function="audittrail">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="50">Implements HIPAAv1 recommendations for AIX: Audit logs on AIX must be owned by root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/audit/trail</AIXPertArgs>
+        <AIXPertGroup>Ownership Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditselect" function="auditselect">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="51">Implements HIPAAv1 recommendations for AIX: AIX must provide auditselect command.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+        <AIXPertArgs>/usr/sbin/auditselect a dodv7_auditselect</AIXPertArgs>
+        <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_event_locations" function="audit_event_locations">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="52">Implements HIPAAv1 recommendations for AIX: AIX must produce audit records containing information to establish where the events occurred.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_event_locations</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_events" function="audit_events">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="53">Implements HIPAAv1 recommendations for AIX: AIX must provide audit record generation functionality for DoD-defined auditable events.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_events</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_auditspace" function="auditspace">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="54">Implements HIPAAv1 recommendations for AIX: AIX must produce audit records containing information for the events occured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/dodaudit</AIXPertCommand>
+        <AIXPertArgs>h dodaudit</AIXPertArgs>
+        <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_ntppperm" function="ntppperm">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="55">Implements HIPAAv1 recommendations for AIX: AIX time synchronization configuration file must have mode 0640 or less permissive.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0640 path:/etc/ntp.conf</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_wtmplink" function="wtmplink">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="56">Implements HIPAAv1 recommendations for AIX: AIX must monitor and record successful remote logins.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/symlink</AIXPertCommand>
+        <AIXPertArgs>/var/adm/wtmp dodv7_wtmplink</AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshdpermitrootlogin" function="sshdpermitrootlogin">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="57">Implements HIPAAv1 recommendations for AIX: AIX must not permit root login using remote access program ssh.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitRootLogin no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_failedloginlink" function="failedloginlink">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="58">Implements HIPAAv1 recommendations for AIX: AIX must monitor and record unsuccessful remote logins.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/symlink</AIXPertCommand>
+        <AIXPertArgs>/etc/security/failedlogin dodv7_failedloginlink</AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_audit_disk_full_action" function="audit_disk_full_action">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="59">Implements HIPAAv1 recommendations for AIX: AIX must be configured so that the audit system takes appropriate action when the audit storage volume is full.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/audit_fs_full</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_secureNFS" function="secureNFS">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="60">Implements HIPAAv1 recommendations for AIX: NFS - secure NFS.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/secureNFS</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshversionv" function="sshversion">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="61">Implements HIPAAv1 recommendations for AIX: Minimum version is 8.1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>VERSION 8.1 NA</AIXPertArgs>
+        <AIXPertGroup>Remote access settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_rmetchostsequiv" function="rmetchostsequiv">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="62">Implements HIPAAv1 recommendations for AIX: Disable or comment out entries from /etc/hosts.equiv file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+        <AIXPertArgs>cisv1_rmetchostsequiv</AIXPertArgs>
+        <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_shosts" function="shosts">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="63">Implements HIPAAv1 recommendations for AIX: Remove any existing .shosts files from all user home directories.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+        <AIXPertArgs>l cisv1_shosts</AIXPertArgs>
+        <AIXPertGroup>Remote access settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_permitrootlogin" function="sshd_permitrootlogin">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="64">Implements HIPAAv1 recommendations for AIX: PermitRootLogin is prohibit-password or no.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE PermitRootLogin prohibit-password forced-commands-only no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_banner" function="sshd_banner">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="65">Implements HIPAAv1 recommendations for AIX: Banner exists and message contains Only authorized users allowed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>Banner /etc/motd.ssh /etc/ssh/sshd_config HIPAA</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_hostbasedauthentication" function="sshd_hostbasedauthentication">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="66">Implements HIPAAv1 recommendations for AIX: HostbasedAuthentication is no.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>HostbasedAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_ignore_rhosts" function="sshd_ignore_rhosts">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="67">Implements HIPAAv1 recommendations for AIX: IgnoreRhosts is yes or shosts-only.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE IgnoreRhosts yes shosts-only /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_permit_empty_passwords" function="sshd_permit_empty_passwords">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="68">Implements HIPAAv1 recommendations for AIX: PermitEmptyPasswords is no.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitEmptyPasswords no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_log_level" function="sshd_log_level">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="69">Implements HIPAAv1 recommendations for AIX: LogLevel is INFO or VERBOSE.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE LogLevel INFO VERBOSE /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_sftp_server_args" function="sshd_sftp_server_args">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="70">Implements HIPAAv1 recommendations for AIX: sftp-server arguments include -u 027 -f AUTH -l INFO.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE Subsystem "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l VERBOSE" "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l DEBUG" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_max_auth_tries" function="sshd_max_auth_tries">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="71">Implements HIPAAv1 recommendations for AIX: MaxAuthTries is 4.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>LE MaxAuthTries 4 4 /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_permit_user_environment" function="sshd_permit_user_environment">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="72">Implements HIPAAv1 recommendations for AIX: PermitUserEnvironment is no.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitUserEnvironment no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_kex_algorithms" function="sshd_kex_algorithms">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="73">Implements HIPAAv1 recommendations for AIX: KexAlgorithms.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET KexAlgorithms "curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_ciphers" function="sshd_ciphers">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="74">Implements HIPAAv1 recommendations for AIX: Ciphers.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET Ciphers "aes128-ctr,aes192-ctr,aes256-ctr,chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_macs" function="sshd_macs">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="75">Implements HIPAAv1 recommendations for AIX: MACs - Message Authtification Codes.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET MACs "umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="hipaav1_sshd_rekey_limit" function="sshd_rekey_limit">
+        <AIXPertRuleType type="HIPAAv1"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="300" msgNum="76">Implements HIPAAv1 recommendations for AIX: ReKeyLimit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>RekeyLimit "1G 3600" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>Login policy rules</AIXPertGroup>
+    </AIXPertEntry>
+
+</AIXPertSecurityHardening>

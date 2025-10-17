@@ -1,0 +1,2578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROCKET_PROLOG_BEGIN_TAG                                                -->
+<!--                                                                        -->
+<!-- COPYRIGHT Rocket Software, Inc. 2024                                   -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- ROCKET_PROLOG_END_TAG                                                  -->
+
+<!--	%Z%%M%  %I%  %W% %G% %U%
+    RuleType PCIV4-->
+
+<AIXPertSecurityHardening>
+
+    <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqAIX72GE" function="prereqAIX72GE">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Prereq rule for AIX72: Checks whether AIX version is greater than or equal to 7.2.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqfsbyver</AIXPertCommand>
+        <AIXPertArgs>bos.mp64 ge 7.2</AIXPertArgs>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqcde" function="prereqcde">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="3">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+        <AIXPertArgs>a</AIXPertArgs>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqlft" function="prereqlft">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="4">Prereq rule for LFT: Checks whether LFT is configured.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+        <AIXPertArgs>a</AIXPertArgs>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqTE" function="prereqTE">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="5">Prereq rule for Trusted Execution: Checks whether the system has the Trusted Execution feature on.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqlh" function="prereqlh">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="207" msgNum="6">Prereq rule for loginherald: Checks whether herald value is set or not.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqlh</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="11">Prereq rule for non-TCB: Checks whether the system is non-TCB.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sysintegrity" function="sysintegrity">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="1">PCIV4 Rcatequirement 5: Protect All Systems and Networks from Malicious Software 5.1: Maintaining the system integrity by detecting, removing and protecting against known types of malicious software</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+        <AIXPertArgs>cisv2_sysintegrity</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_brokenlinks" function="brokenlinks">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="2">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.1: Remove Unused Symbolic Links.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell,prereqTE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>brokenlinks</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_clicrte" function="clicrte">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="3">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.2: Install clic.rte for EFS configuration.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>install like:clic.rte</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_umask" function="umask">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="4">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.3: Ensure default umask is 027 or more restrictive.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>umask=27 ALL cisv1_umask</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_find_groupwritables" function="find_groupwritables">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="5">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.4: Remove group write permission from default groups - exceptions must be in TSD and audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>groupwritables</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_find_stickybit" function="find_stickybit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="6">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.5: Application Data with requirement for world writable directories.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>stickybit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_find_worldwritables" function="find_worldwritables">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="7">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.6: Ensure there are no world writable files - exceptions must be in TSD and audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>worldwritables</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_find_staffwritables" function="find_staffwritables">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="8">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.7: Ensure there are no 'staff' writable files - exceptions must be in TSD and audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>staffwritables</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_find_ownerless" function="find_ownerless">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="9">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.8: Ensure all files and directories are owned by a user (uid) and assigned to a group (gid).</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>ownerless</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_writesrv" function="writesrv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="10">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.9: Comment the entry for writesrc in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>writesrv: /etc/inittab : d cisv2_writesrv</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_blocktalksrv" function="blocktalksrv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="11">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.10: Block attempts to use the talk and write command.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/bin/talk</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_blockwritesrv" function="blockwritesrv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="12">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.11: Block attempts to use the talk and write command.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/sbin/writesrc</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_dt" function="dt">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="13">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.12: Comment the entry for dt in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>dt: /etc/inittab : d cisv2_dt</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_piobe" function="piobe">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="14">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.13: Comment the entry for piobe in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>piobe: /etc/inittab : d cisv2_piobe</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_qdaemon" function="qdaemon">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="15">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.14: Comment the entry for piobe in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>qdaemon: /etc/inittab : d cisv2_qdaemon</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rcnfs" function="rcnfs">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="16">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.15: Comment the entry for rcnfs in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>rcnfs: /etc/inittab : d cisv2_rcnfs</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallcasagent" function="uninstallcasagent">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="17">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.16: Uninstall cas_agent.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:cas.agent</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_inetd" function="inetd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="18">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.17: Disable inetd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>inetd d cisv2_inetd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_aixmibd" function="aixmibd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="19">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.18: Disable aixmibd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>aixmibd d cisv2_aixmibd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_dhcpcd" function="dhcpcd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="20">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.19: Disable dhcpcd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>dhcpcd d cisv2_dhcpcd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_dhcprd" function="dhcprd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="21">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.20: Disable dhcprd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>dhcprd d cisv2_dhcprd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_dhcpsd" function="dhcpsd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="22">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.21: Disable dhcpsd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>dhcpsd d cisv2_dhcpsd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_dpid2" function="dpid2">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="23">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.22: Disable dpid2 daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>dpid2 d cisv2_dpid2</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_gated" function="gated">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="24">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.23: Disable gated daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>gated d cisv2_gated</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_hostmibd" function="hostmibd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="25">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.24: Disable hostmibd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>hostmibd d cisv2_hostmibd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_mrouted" function="mrouted">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="26">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.25: Disable mrouted daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>mrouted d cisv2_mrouted</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_named" function="named">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="27">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.26: Disable named daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>named d cisv2_named</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_portmap" function="portmap">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="28">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.27: Disable portmap daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>portmap d cisv2_portmap</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_routed" function="routed">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="29">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.28: Disable routed daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>routed d cisv2_routed</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rwhod" function="rwhod">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="30">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.29: Disable rwhod daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>rwhod d cisv2_rwhod</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sendmail" function="sendmail">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="31">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.30: Disable sendmail daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>sendmail d cisv2_sendmail</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_snmpd" function="snmpd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="32">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.31: Disable snmpd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>snmpd d cisv2_snmpd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_snmpmibd" function="snmpmibd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="33">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.32: Disable snmpmibd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>snmpmibd d cisv2snmpmibd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_timed" function="timed">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="34">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.33: Disable timed daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>timed d cisv2_timed</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_autoconf6" function="cisv2autoconf6">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="35">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.34: Disable autoconf6 daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>autoconf6 d cisv2_autoconf6</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ndpdhost" function="ndpdhost">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="36">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.35: Disable ndpd-host daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>ndpd-host d cisv2_ndpdhost</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ndpdrouter" function="ndpdrouter">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="37">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.36: Disable ndpd-router daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>ndpd-router d cisv2_ndpdrouter</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallNFSclient" function="uninstallNFSclient">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="38">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.37: NFS - de-install NFS client</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/uninstallNFSclient</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallNFSserver" function="uninstallNFSserver">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="39">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.38: NFS - de-install NFS server.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/uninstallNFSserver</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_disableNFSsuid" function="disableNFSsuid">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="40">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.39: NFS - enable both nosuid and nodev options on NFS client mounts</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/disableNFSsuid</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_disableNFSlocal" function="disableNFSlocal">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="41">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.40: NFS - localhost removal</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/disableNFSlocal</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_restrictNFSaccess" function="restrictNFSaccess">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="42">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.41: NFS - restrict NFS access.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/restrictNFSaccess</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rootsquashNFS" function="rootsquashNFS">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="43">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.42: NFS - no_root_squash option.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rootsquashNFS</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_secureNFS" function="secureNFS">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="44">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.43: NFS - secure NFS.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/secureNFS</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_bootps" function="bootps">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="45">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.44: Comment the entry for bootps service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>bootps udp d cisv2_bootps</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chargen" function="chargen">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="46">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.45: Comment the entry for chargen service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>chargen udp d cisv2_chargen</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_comsat" function="comsat">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="47">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.46: Comment the entry for comsat service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>comsat udp d cisv2_comsat</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_tcpdaytime" function="tcpdaytime">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="48">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.47: Comment the entry for daytime service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>daytime tcp d cisv2_tcpdaytime</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_udpdaytime" function="udpdaytime">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="49">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.48: Comment the entry for daytime service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>daytime udp d cisv2_tcpdaytime</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_discard" function="discard">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="50">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.49: Comment the entry for discard service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>discard udp d cisv2_discard</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_tcpecho" function="tcpecho">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="51">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.50: Comment the entry for echo service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>echo tcp d cisv2_tcpecho</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_udpecho" function="udpecho">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="52">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.51: Comment the entry for echo service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>echo udp d cisv2_udpecho</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_exec" function="exec">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="53">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.52: Comment the entry for exec service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>exec tcp6 d cisv2_exec</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_finger" function="finger">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="54">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.53: Comment the entry for finger service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>finger tcp d cisv2_finger</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ftp" function="ftp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="55">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.54: Comment the entry for ftp service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>ftp tcp6 d cisv2_ftp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_imap2" function="imap2">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="56">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.55: Comment the entry for imap2 service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>imap2 tcp d cisv2_imap2</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_instsrv" function="instsrv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="57">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.56: Comment the entry for instsrv service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>instsrv tcp d cisv2_instsrv</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_klogin" function="klogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="58">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.57: Comment the entry for klogin service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>klogin tcp d cisv2_klogin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_kshell" function="kshell">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="59">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.58: Comment the entry for kshell service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>kshell tcp d cisv2_kshell</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rlogin" function="rlogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="60">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.59: Comment the entry for rlogin service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rlogin tcp6 d cisv2_rlogin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_netstat" function="netstat">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="61">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.60: Comment the entry for netstat service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>netstat tcp d cisv2_netstat</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ntalk" function="ntalk">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="62">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.61: Comment the entry for ntalk service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>ntalk udp d cisv2_ntalk</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_pcnfsd" function="pcnfsd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="63">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.62: Comment the entry for pcnfsd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>pcnfsd udp d cisv2_pcnfsd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_pop3" function="pop3">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="64">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.63: Comment the entry for pop3d service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>pop3 tcp d cisv2_pop3</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rexd" function="rexd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="65">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.64: Comment the entry for rexd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rexd tcp d cisv2_rexd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rquotad" function="rquotad">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="66">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.65: Comment the entry for rquotad service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rquotad udp d cisv2_rquotad</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rstatd" function="rstatd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="67">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.66: Comment the entry for rstatd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rstatd udp d cisv2_rstatd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ruserd" function="ruserd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="68">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.67: Comment the entry for ruserd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>ruserd udp d cisv2_ruserd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rwalld" function="rwalld">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="69">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.68: Comment the entry for rwalld service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rwalld udp d cisv2_rwalld</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_shell" function="shell">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="70">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.69: Comment the entry for shell service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>shell tcp6 d cisv2_shell</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sprayd" function="sprayd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="71">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.70: Comment the entry for sprayd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>sprayd udp d cisv2_sprayd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_xmquery" function="xmquery">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="72">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.71: Comment the entry for xmquery service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>xmquery udp d cisv2_xmquery</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_talk" function="talk">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="73">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.72: Comment the entry for talk service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>talk udp d cisv2_talk</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_telnet" function="telnet">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="74">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.73: Comment the entry for telnet service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>telnet tcp6 d cisv2_telnet</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_tftp" function="tftp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="75">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.74: Comment the entry for tftp service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>tftp udp6 d cisv2_tftp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_tcptime" function="tcptime">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="76">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.75: Comment the entry for time service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>time tcp d cisv2_tcptime</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_udptime" function="udptime">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="77">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.76: Comment the entry for time service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>time udp d cisv2_udptime</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uucp" function="uucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="78">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.77: Comment the entry for uucp service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>uucp tcp d cisv2_uucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_clean_partial_conns" function="clean_partial_conns">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="79">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.1: Set the value of the network option clean_partial_conns to 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>clean_partial_conns=1 s cisv2_clean_partial_conns</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_bcastping" function="bcastping">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="80">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.2: Set the value of the network option bcastping to 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>bcastping=0 s cisv2_bcastping</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_directedbcast" function="directedbcast">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="81">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.3: Set the value of the network option directed_broadcast to 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>directed_broadcast=0 s cisv2_directedbcast</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_icmpaddrmask" function="icmpaddrmask">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="82">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.4: Set the value of the network option icmpaddressmask to 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>icmpaddressmask=0 s cisv2_icmpaddrmask</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipforwarding" function="ipforwarding">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="83">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.5: Set the value of the network option ipforwarding to 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipforwarding=0 s cisv2_ipforwarding</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipignoredirects" function="ipignoredirects">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="84">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.6: Set the value of the network option ipignoredirects 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipignoreredirects=1 s cisv2_ipignoredirects</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsendredirects" function="ipsendredirects">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="85">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.7: Set the value of the network option ipsendredirects 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsendredirects=0 s cisv2_ipsendredirects</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsrcrouteforward" function="ipsrcrouteforward">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="86">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.8: Set the value of the network option ipsrcrouteforward 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsrcrouteforward=0 s cisv2_ipsrcrouteforward</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsrcrouterecv" function="ipsrcrouterecv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="87">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.9: Set the value of the network option ipsrcrouterecv 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsrcrouterecv=0 s cisv2_ipsrcrouterecv</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsrcroutesend" function="ipsrcroutesend">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="88">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.10: Set the value of the network option ipsrcroutesend 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsrcroutesend=0 s cisv2_ipsrcroutesend</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ip6srcrouteforward" function="ip6srcrouteforward">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="89">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.11: Set the value of the network option ip6srcrouteforward 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ip6srcrouteforward=0 s cisv2_ip6srcrouteforward</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_nfsusereservedports" function="nfsusereservedports">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="90">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.12: Set the value of the network option nfs_use_reserved_ports 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkfsopts</AIXPertCommand>
+        <AIXPertArgs>nfs_use_reserved_ports=1 s cisv2_nfsusereservedports</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_nonlocsrcroute" function="nonlocsrcroute">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="91">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.13: Set the value of the network option nonlocsrcroute 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>nonlocsrcroute=0 s cisv2_nonlocsrcroute</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sockthresh" function="sockthresh">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="92">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.14: Set the value of the network option sockthresh 60.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>sockthresh=60 s cisv2_sockthresh</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_tcppmtudiscover" function="tcppmtudiscover">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="93">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.15: Set the value of the network option tcp_pmty_discover 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>tcp_pmtu_discover=0 s cisv2_tcppmtudiscover</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_tcpsecure" function="tcpsecure">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="94">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.16: Set the value of the network option tcp_tcpsecure to 7.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>tcp_tcpsecure=7 s cisv2_tcpsecure</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_udppmtudiscover" function="udppmtudiscover">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="95">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.17: Set the value of the network option tcp_pmty_discover 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>udp_pmtu_discover=0 s cisv2_udppmtudiscover</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ip6forwarding" function="ip6forwarding">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="96">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.18: Set the value of the network option ip6forwarding 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ip6forwarding=0 s cisv2_ip6forwarding</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsec" function="ipsec">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="97">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.19: Ensure that IP Security is available.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ipsec_config</AIXPertCommand>
+        <AIXPertArgs>enable</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsecloopbk" function="ipsecloopbk">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="98">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.20: Ensure loopback is blocked on external interfaces.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhostcis</AIXPertCommand>
+        <AIXPertArgs>cisv2_ipsecloopbk</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ipsecfilter" function="ipsecfilter">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="99">PCIV4 Requirement 1: Install and Maintain Network Security Controls 1.21: Ensure filters are active.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhostcis</AIXPertCommand>
+        <AIXPertArgs>cisv2_ipsecfilter</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallNISclient" function="uninstallNISclient">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="100">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.78: Make sure the NIS client is disabled and uninstalled if it is not used in the environment.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.nis.client</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallNISserver" function="uninstallNISserver">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="101">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.79: Make sure the NIS server is disabled and uninstalled if it is not used in the environment.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.nis.server</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_snmpgroup" function="snmpgroup">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="102">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.80: Remove the + (plus) markers from /etc/group file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmplusmarker</AIXPertCommand>
+        <AIXPertArgs>/etc/group cisv2_snmpgroup</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_snmppasswd" function="snmppasswd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="103">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.81: Remove the + (plus) markers from /etc/passwd file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmplusmarker</AIXPertCommand>
+        <AIXPertArgs>/etc/passwd cisv2_snmpgroup</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_nissubnet" function="nissubnet">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="104">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.82: Limit access to the NIS data to specific subnets if NIS must be used in the environment.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/checkdata</AIXPertCommand>
+        <AIXPertArgs>/var/yp/securenets "netmask netaddr" cisv2_nissubnet</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermrcp" function="chpermrcp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="105">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.83: Remove all permissions from the remote service command rcp.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/bin/rcp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermrlogin" function="chpermrlogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="106">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.84: Remove all permissions from the remote service command rlogin.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/bin/rlogin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermrsh" function="chpermrsh">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="107">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.85: Remove all permissions from the remote service command rsh.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/bin/rsh</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rmetchostsequiv" function="rmetchostsequiv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="108">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.86: Disable or comment out entries from /etc/hosts.equiv file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+        <AIXPertArgs>cisv2_rmetchostsequiv</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rmrhostsnetrc" function="rmrhostsnetrc">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="109">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.87: Remove .rhosts and .netrc files for all users.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+        <AIXPertArgs>h cisv1_rmrhostsnetrc</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermrlogind" function="chpermrlogind">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="110">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.88: Remove all permissions from the remote service daemon rlogind.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/sbin/rlogind</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermrshd" function="chpermrshd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="111">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.89: Remove all permissions from the remote service daemon rshd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/sbin/rshd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermtftpd" function="chpermtftpd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="112">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.90: Remove all permissions from the remote service daemon tftpd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0000 path:/usr/sbin/tftpd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallCDE" function="uninstallCDE">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="113">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.91: De-install CDE.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:CDE</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cmsd" function="cmsd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="114">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.92: Comment the entry for cmsd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>cmsd udp d cisv2_cmsd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cde_disable_dtlogin" function="cde_disable_dtlogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="115">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.93: CDE - disabling dtlogin.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/disableCDE</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_dtspc" function="dtspc">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="116">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.94: Comment the entry for dtspc service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>dtspc tcp d cisv2_dtspc</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermdtaction" function="chpermdtaction">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="117">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.95: Remove setuid/setgid bit from /usr/dt/bin/dtaction.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtaction</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermdtappgather" function="chpermdtappgather">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="118">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.96: Remove setuid/setgid bit from /usr/dt/bin/dtappgather.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtappgather</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermdtprintinfo" function="chpermdtprintinfo">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="119">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.97: Remove setuid/setgid bit from /usr/dt/bin/dtprintinfo.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtprintinfo</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermdtsession" function="chpermdtsession">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="120">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.98: Remove setuid/setgid bit from /usr/dt/bin/dtsession.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtsession</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cde_requestport" function="cde_requestport">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="121">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.99: CDE - remote GUI login disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>copy /etc/dt/config/Xconfig add Dtlogin.requestPort &quot;0&quot;</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cde_savertimeout" function="cde_savertimeout">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="122">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.100: CDE - screensaver lock.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>create /etc/dt/config/*/sys.resources add dtsession*saverTimeout 10</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cde_locktimeout" function="cde_locktimeout">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="123">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.101: CDE - screensaver lock.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>create /etc/dt/config/*/sys.resources add dtsession*lockTimeout 10</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cde_labelstring" function="cde_labelstring">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="124">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.102: CDE - login screen hostname masking.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>copy /etc/dt/config/*/Xresources add Dtlogin*greeting.labelString &quot;Authorized uses only. All activity may be monitored and reported.&quot;</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cde_perslabelstring" function="cde_perslabelstring">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="125">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.103: CDE - login screen hostname masking.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>copy /etc/dt/config/*/Xresources add Dtlogin*greeting.persLabelString &quot;Authorized uses only. All activity may be monitored and reported.&quot;</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermxconfig" function="chpermxconfig">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="126">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.104: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:g-w,o-w path:/etc/dt/config/Xconfig</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownxconfig" function="chownxconfig">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="127">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.105: Set the read-only group and other permissions for /etc/dt/config/Xconfig.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:bin path:/etc/dt/config/Xconfig</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermxservers" function="chpermxservers">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="128">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.106: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:g-w,o-w path:/etc/dt/config/Xservers</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownxservers" function="chownxservers">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="129">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.107: Set the read-only group and other permissions for /etc/dt/config/Xservers.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:bin path:/etc/dt/config/Xservers</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermxresources" function="chpermxresources">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="130">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.108: Set permissions for /etc/dt/config/*/Xresources.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0644 path:/etc/dt/config/*/Xresources</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownxresources" function="chownxresources">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="131">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.109: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:sys path:/etc/dt/config/*/Xresources</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chetcftpusers" function="chetcftpusers">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="132">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.110: Disable root access to ftpd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chetcftpusers</AIXPertCommand>
+        <AIXPertArgs>a cisv2_chetcftpusers</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ftpbanner" function="ftpbanner">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="133">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.111: Set an ftp login banner which displays the acceptable usage policy.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,bos.msg.en_US.net.tcp.client</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ftpbanner</AIXPertCommand>
+        <AIXPertArgs>cisv2_ftpbanner</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_ftpd_noworldaccess" function="ftpd_noworldaccess">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="134">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.112: FTPD - prevent world access and group write to files.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/inetd_config</AIXPertCommand>
+        <AIXPertArgs>ftp tcp ftpd -l -u 027</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshversionv" function="sshversion">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="135">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.113: Minimum version is 8.1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>VERSION 8.1 NA</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rmetchostsequiv" function="rmetchostsequiv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="136">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.114: Disable or comment out entries from /etc/hosts.equiv file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+        <AIXPertArgs>cisv1_rmetchostsequiv</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_shosts" function="shosts">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="137">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.115: Remove any existing .shosts files from all user home directories.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+        <AIXPertArgs>l cisv1_shosts</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_allowdeny_groups" function="sshd_allowdeny_groups">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="138">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.1: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>AllowDenyGroups /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_permitrootlogin" function="sshd_permitrootlogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="139">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.2: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE PermitRootLogin prohibit-password forced-commands-only no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_banner" function="sshd_banner">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="140">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.3: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>Banner /etc/motd.ssh /etc/ssh/sshd_config PCIV4</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_hostbasedauthentication" function="sshd_hostbasedauthentication">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="141">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.4: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>HostbasedAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_ignore_rhosts" function="sshd_ignore_rhosts">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="142">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.5: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE IgnoreRhosts yes shosts-only /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_permit_empty_passwords" function="sshd_permit_empty_passwords">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="143">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.6: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitEmptyPasswords no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_log_level" function="sshd_log_level">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="144">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.7: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE LogLevel INFO VERBOSE /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_sftp_server_args" function="sshd_sftp_server_args">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="145">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.8: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE Subsystem "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l INFO" "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l DEBUG" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_max_auth_tries" function="sshd_max_auth_tries">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="146">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.9: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>LE MaxAuthTries 4 4 /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_permit_user_environment" function="sshd_permit_user_environment">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="147">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.10: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitUserEnvironment no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_use_conditional_exceptions" function="sshd_use_conditional_exceptions">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="148">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.11: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>NOT Match /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_kex_algorithms" function="sshd_kex_algorithms">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="149">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.12: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET KexAlgorithms "curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_ciphers" function="sshd_ciphers">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="150">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.13: sshd_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET Ciphers "aes128-ctr,aes192-ctr,aes256-ctr,chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_macs" function="sshd_macs">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="151">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.14: ssh_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET MACs "umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sshd_rekey_limit" function="sshd_rekey_limit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="152">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.15: ssh_config</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>RekeyLimit "1G 3600" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sendmail_sgm" function="sendmail_sgm">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="153">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.116: Hide sendmail version information.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+        <AIXPertArgs>SmtpGreetingMessage mailerready</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sendmail_po" function="sendmail_po">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="154">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.117: Ensure that PrivacyOptions includes at least authwarnings, noexpn, and novrfy.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+        <AIXPertArgs>PrivacyOptions</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sendmail_dpo" function="sendmail_dpo">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="155">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.118: Ensure that sendmail in MTA mode supports only local applications that require legacy MTA.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+        <AIXPertArgs>DaemonPortOptions</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownsendmailcf" function="chownsendmailcf">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="156">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.119: Set the ownership root for /etc/mail/sendmail.cf.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/etc/mail/sendmail.cf</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsendmailcf" function="chpermsendmailcf">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="157">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.120: Set the permissions u=rw,g=r,o= for /etc/mail/sendmail.cf.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0640 path:/etc/mail/sendmail.cf</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownclientmqueue" function="chownclientmqueue">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="158">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.121: Set the ownership smmsp for /var/spool/clientmqueue.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>smmsp path:/var/spool/clientmqueue</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermclientmqueue" function="chpermclientmqueue">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="159">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.122: Set the permissions ug=rwx,o= for /var/spool/clientmqueue.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0770 path:/var/spool/clientmqueue</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownmqueue" function="chownmqueue">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="160">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.123: Set the ownership root for /var/spool/mqueue.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/var/spool/mqueue</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermmqueue" function="chpermmqueue">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="161">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.124: Set the permissions u=rwx,go= for /var/spool/mqueue.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0700 path:/var/spool/mqueue</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chsnmp" function="chsnmp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="162">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.125: Disable the private community string in /etc/snmpd.conf, disable the system community string in /etc/snmpd.conf, restrict community access in /etc/snmpd.conf.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv2/chsnmp</AIXPertCommand>
+        <AIXPertArgs>a</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallsnmp" function="uninstallsnmp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="163">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.126: Uninstall snmp and snmpd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:snmp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uninstallsendmail" function="uninstallsendmail">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="164">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.127: Uninstall sendmail.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:sendmail</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_logintimeout" function="logintimeout">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="165">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.16: Specifies the time interval (30 seconds) to type in a password.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/login.cfg logintimeout=30 usw cisv2_logintimeout</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_logindelay" function="logindelay">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="166">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.17: Specifies the delay between unsuccessful logins to 10 seconds.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/login.cfg logindelay=10 default cisv2_logindelay</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginherald" function="loginherald">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="167">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.128: Adds a default herald to /etc/security/login.cfg.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/loginherald</AIXPertCommand>
+        <AIXPertArgs>a cisv2_loginherald</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginretries" function="loginretries">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="168">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.129: Specifies the number of consecutive unsuccessful login attempts to 5, for each non-root user account before the account is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>loginretries=5 LESS NONROOT cisv2_loginretries</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_homedirs" function="homedirs">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="169">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.130: Home directory must exist and Home directory must be owned by account, or special account.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/homedirectories</AIXPertCommand>
+        <AIXPertArgs>users</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermhome" function="chpermhome">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="170">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.131: Set the permissions g-w,o-w for all user home directories.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0755 path:/home/*/</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownaudit" function="chownaudit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="171">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.1: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:audit path:/audit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermaudit" function="chpermaudit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="172">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.2: Set the permissions u=rwx,g=rs,o= for /audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:2750 path:/audit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermauditdirtree" function="chpermauditdirtree">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="173">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.3: Set the permissions u=rw,g=r,o= for all /audit/* objects and the children objects recursively.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0640 recursiveexcl:/audit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_securitydirsperms" function="securitydirsperms">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="174">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.132: SECURITY Subsystems</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/securitydirs</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermvaradmrasdirtree" function="chpermvaradmrasdirtree">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="175">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.133: Set the permissions o-rw for /var/adm/ras/*.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw recursiveexcl:/var/adm/ras</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownadmsa" function="chownadmsa">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="176">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.134: Set the ownership adm</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>adm:adm path:/var/adm/sa</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermadmsa" function="chpermadmsa">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="177">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.135: Set the permissions u=rwx,go=rx for /var/adm/sa.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0755 path:/var/adm/sa</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermcrontabsdirtree" function="chpermcrontabsdirtree">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="178">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.136: Set the group cron for all /var/spool/cron/crontabs directory tree objects.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rwx recursiveexcl:/var/spool/cron/crontabs</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chowncrontabs" function="chowncrontabs">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="179">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.137: Set the permissions o= for the children objects of /var/spool/cron/crontabs recursively.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:cron recursiveincl:/var/spool/cron/crontabs</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermpath" function="chpermpath">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="180">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.138: Set the permissions g-w,o-w for all the directories in root user PATH environment variable.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chpermpath</AIXPertCommand>
+        <AIXPertArgs>cisv1_chpermpath</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_roothomedir" function="roothomedir">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="181">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.139: Ensure root user has a dedicated home directory.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/homedirectories</AIXPertCommand>
+        <AIXPertArgs>root</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownsecurityaudit" function="chownsecurityaudit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="182">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.4: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:audit recursiveincl:/etc/security/audit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsecurityaudit" function="chpermsecurityaudit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="183">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.5: Set the permissions u=rwx,g=rx,o= for/etc/security/audit.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0750 path:/etc/security/audit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsecurityauditdirtree" function="chpermsecurityauditdirtree">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="184">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.6: Set the permissions u=rw,g=r,o= for all /etc/security/audit/* objects and the children objects recursively.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0640 recursiveexcl:/etc/security/audit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsubmitcf" function="chpermsubmitcf">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="185">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.140: New configuration file for sendmail /etc/mail/submit.cf.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0640 path:/etc/mail/submit.cf</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_find_setuid" function="find_setuid">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="186">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.141: Verify Trust of suid, sgid, acl, and trusted-bit files and programs.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>setuid</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rootcrnjobck" function="rootcrnjobck">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="187">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.142: Make sure the permissions of all the root crontab entries are owned and writable by the root user only.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rootcrnjobck</AIXPertCommand>
+        <AIXPertArgs>cisv1_rootcrnjobck</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermhomeconf" function="chpermhomeconf">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="188">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.143: Set the permissions g-w,o-w for all user configuration files in each home directory.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:g-w,o-w path:/home/*/.*/</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsmitlog" function="chpermsmitlog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="189">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.144: Set the permissions o-rw for /smit.log.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/{,root/}smit.log</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chowngroup" function="chowngroup">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="190">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.145: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:security path:/etc/group</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermgroup" function="chpermgroup">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="191">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.146: Set the permissions u=rw,go=r for /etc/group.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0644 path:/etc/group</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chperminetd" function="chperminetd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="192">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.147: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0644 path:/etc/inetd.conf</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chowninetd" function="chowninetd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="193">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.148: Set the permissions u=rw,go=r for /etc/inetd.conf.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/etc/inetd.conf</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownmotd" function="chownmotd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="194">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.149: Set the ownership bin</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>bin:bin path:/etc/motd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermmotd" function="chpermmotd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="195">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.150: Set the permissions u=rw,go=r for /etc/motd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0644 path:/etc/motd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownpasswd" function="chownpasswd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="196">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.151: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:security path:/etc/passwd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermpasswd" function="chpermpasswd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="197">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.152: Set the permissions u=rw,go=r for /etc/passwd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0644 path:/etc/passwd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsshconfig" function="chpermsshconfig">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="198">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.153: Set the permissions u=rw,go=r for /etc/ssh/ssh_config.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0644 path:/etc/ssh/ssh_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsshdconfig" function="chpermsshdconfig">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="199">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.154: Set the permissions u=rw,go= for /etc/ssh/sshd_config.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0600 path:/etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chownatallow" function="chownatallow">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="200">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.155: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:sys path:/var/adm/cron/at.allow</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermatallow" function="chpermatallow">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="201">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.156: Set the permissions u=r,go= for /var/adm/cron/at.allow.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0400 path:/var/adm/cron/at.allow</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chowncronallow" function="chowncronallow">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="202">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.157: Set the ownership root</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:sys path:/var/adm/cron/cron.allow</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermcronallow" function="chpermcronallow">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="203">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.158: Set the permissions u=r,go= for /var/adm/cron/cron.allow.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>num:0400 path:/var/adm/cron/cron.allow</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermRMstartlog" function="chpermRMstartlog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="204">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.7: Set the permissions o-rw for /var/ct/RMstart.log.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/ct/RMstart.log</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermcronlog" function="chpermcronlog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="205">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.8: Set the permissions o-rw for /var/adm/cron/log.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/adm/cron/log</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermdpid2log" function="chpermdpid2log">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="206">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.9: Set the permissions o-rw for /var/tmp/dpid2.log.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/tmp/dpid2.log</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermhostmibdlog" function="chpermhostmibdlog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="207">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.10: Set the permissions o-rw for /var/tmp/hostmibd.log.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/tmp/hostmibd.log</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chpermsnmpdlog" function="chpermsnmpdlog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="208">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.11: Set the permissions o-rw for /var/tmp/snmpd.log.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/tmp/snmpd.log</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rootsu" function="rootsu">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="209">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.18: Restrict access to root, via su, to members of a specific group by disabling console login for root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user su=true root cisv2_rootsu</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rootlogin" function="rootlogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="210">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.19: Restrict access to root, via su, to members of a specific group by disabling remote login for root.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false root cisv2_rootlogin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rootrlogin" function="rootrlogin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="211">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.20: Restrict access to root, via su, to members of a specific group by setting sugroups attribute to SUADMIN.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false root cisv2_rootrlogin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rootsugroups" function="rootsugroups">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="212">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.21: Restrict access to root, via su, to members of a specific group by setting su attribute to true.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user sugroups=SUADMIN root cisv2_rootsugroups</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_corelimit" function="corelimit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="213">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.159: Core Dumps</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/limits core=0 default cisv2_corelimit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_corehardlimit" function="corehardlimit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="214">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.160: Core Dumps</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/limits core_hard=0 default cisv2_corehardlimit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_disfullcore" function="disfullcore">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="215">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.161: Core Dumps</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdevattr</AIXPertCommand>
+        <AIXPertArgs>sys0 fullcore=false</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rmdotfrmpathetcenv" function="rmdotfrmpathetcenv">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="216">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.162: Removes the dot from the PATH variable in /etc/environment file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathetcenv</AIXPertCommand>
+        <AIXPertArgs>r cisv2_rmdotfrmpathetcenv</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_lockdaemon" function="lockdaemon">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="217">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.163: Lock historical user daemon.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true daemon cisv2_lockdaemon</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_lockbin" function="lockbin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="218">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.164: Lock historical user bin.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true bin cisv2_lockbin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_locksys" function="locksys">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="219">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.165: Lock historical user sys.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true sys cisv2_locksys</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_lockadm" function="lockadm">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="220">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.166: Lock historical user adm.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true adm cisv2_lockadm</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_lockuucp" function="lockuucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="221">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.167: Lock historical user uucp.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true uucp cisv2_lockuucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_locknobody" function="locknobody">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="222">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.168: Lock historical user nobody.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true nobody cisv2_locknobody</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_locklpd" function="locklpd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="223">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.169: Lock historical user lpd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true lpd cisv2_locklpd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_locklp" function="locklp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="224">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.170: Lock historical user lp.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true lp cisv2_locklp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_lockinvscout" function="lockinvscout">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="225">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.171: Lock historical user invscout.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true invscout cisv2_lockinvscout</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_lockipsec" function="lockipsec">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="226">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.172: Lock historical user ipsec.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true ipsec cisv2_lockipsec</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_locknuucp" function="locknuucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="227">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.173: Lock historical user nuucp.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true nuucp cisv2_locknuucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_locksshd" function="locksshd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="228">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.174: Lock historical user sshd.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true sshd cisv2_locksshd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rmdotfrmpathroot" function="rmdotfrmpathroot">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="229">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.175: Remove current working directory from root's PATH.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathroot</AIXPertCommand>
+        <AIXPertArgs>cisv2_rmdotfrmpathroot</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_chketcmotd" function="chketcmotd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="230">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.176: Create a /etc/motd file which displays, post initial logon, a statutory warning message.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/checkdata</AIXPertCommand>
+        <AIXPertArgs>/etc/motd "Authorized" cisv2_chketcmotd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_histexpire" function="histexpire">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="231">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.22: Specifies the number of weeks before a password can be reused to 52.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>histexpire=52 MORE ALL cisv2_histexpire</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_histsize" function="histsize">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="232">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.23: Specifies the number of previous passwords a user cannot reuse to 0.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>histsize=0 ALL cisv2_histsize</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minage" function="minage">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="233">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.24: Specifies the minimum number of weeks to 1 week, before a password can be changed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minage=1 MORE ALL cisv2_minage</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_hashedpasswords" function="hashedpasswords">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="234">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.25: All accounts must have a hashed password.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>hashed</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_checkuid" function="checkuid">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="235">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.26: Ensure all users have a unique UID and name on the system.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/checkuid</AIXPertCommand>
+        <AIXPertArgs>uid cisv2_checkuid</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_checkgid" function="checkgid">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="236">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.27: Ensure all groups have a unique GID and name on the system.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/checkgid</AIXPertCommand>
+        <AIXPertArgs>gid cisv2_checkgid</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_policy4all" function="policy4all">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="237">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.28: Ensure password policy is enforced for all users.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>policy</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_pwdalgorithm" function="pwdalgorithm">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="238">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.29: Set the system password algorithm to a stronger cryptographic hash algorithm.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/login.cfg pwd_algorithm=ssha256 usw cisv2_pwdalgorithm</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_nocrypt" function="nocrypt">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="239">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.30: Ensure passwords are not hashed using 'crypt'.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>nocrypt</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minlen" function="minlen">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="240">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.31: Specifies the minimum length of a password to 14 characters.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minlen=14 MORE ALL cisv2_minlen</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_mindiff" function="mindiff">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="241">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.32: Specifies the minimum number of characters that were present in the previous password that cannot be used in the new password to 4.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>mindiff=4 MORE ALL cisv1_mindiff</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minalpha" function="minalpha">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="242">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.33: Specifies the minimum number of alphabetic characters in a password to 3.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minalpha=3 MORE ALL cisv2_minalpha</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minother" function="minother">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="243">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.34: Specifies the minimum number of non-alphabetic characters in a password to 3.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minother=3 MORE ALL cisv2_minother</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_maxrepeats" function="maxrepeats">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="244">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.35: Specifies the maximum number of times a character can appear in a password to 4.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>maxrepeats=4 LESS ALL cisv2_maxrepeats</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_mindigit" function="mindigit">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="245">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.36: Specifies the minimum number of digits in a password to 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>mindigit=1 MORE ALL cisv2_mindigit</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minloweralpha" function="minloweralpha">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="246">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.37: Specifies the minimum number of lowercase alphabetic characters in a password to 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minloweralpha=1 MORE ALL cisv2_minloweralpha</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minupperalpha" function="minupperalpha">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="247">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.38: Specifies the minimum number of uppercase alphabetic characters in a password to 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minupperalpha=1 MORE ALL cisv2_minupperalpha</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_minspecialchar" function="minspecialchar">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="248">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.39: Specifies the minimum number of special characters in a password to 1.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minspecialchar=1 MORE ALL cisv3_minspecialchar</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginadm" function="loginadm">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="249">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.177: Set local login (login) for user adm to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false adm cisv2_loginadm</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginadm" function="rloginadm">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="250">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.178: Set remote login (rlogin) for user adm to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false adm cisv2_rloginadm</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginbin" function="loginbin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="251">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.179: Set local login (login) for user bin to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false bin cisv2_loginbin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginbin" function="rloginbin">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="252">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.180: Set remote login (rlogin) for user bin to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false bin cisv2_rloginbin</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_logindaemon" function="logindaemon">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="253">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.181: Set local login (login) for user daemon to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false daemon cisv2_logindaemon</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rlogindaemon" function="rlogindaemon">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="254">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.182: Set remote login (rlogin) for user daemon to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false daemon cisv2_rlogindaemon</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginguest" function="loginguest">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="255">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.183: Set local login (login) for user guest to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false guest cisv2_loginguest</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginguest" function="rloginguest">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="256">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.184: Set remote login (rlogin) for user guest to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false guest cisv2_rloginguest</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginlpd" function="loginlpd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="257">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.185: Set local login (login) for user lpd to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false lpd cisv2_loginlpd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginlpd" function="rloginlpd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="258">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.186: Set remote login (rlogin) for user lpd to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false lpd cisv2_rloginlpd</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginnobody" function="loginnobody">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="259">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.187: Set local login (login) for user nobody to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false nobody cisv2_loginnobody</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginnobody" function="rloginnobody">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="260">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.188: Set remote login (rlogin) for user nobody to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false nobody cisv2_rloginnobody</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginnuucp" function="loginnuucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="261">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.189: Set local login (login) for user nuucp to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false nuucp cisv2_loginnuucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginnuucp" function="rloginnuucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="262">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.190: Set remote login (rlogin) for user nuucp to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false nuucp cisv2_rloginnuucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginsys" function="loginsys">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="263">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.191: Set local login (login) for user sys to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false sys cisv2_loginsys</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginsys" function="rloginsys">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="264">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.192: Set remote login (rlogin) for user sys to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false sys cisv2_rloginsys</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_loginuucp" function="loginuucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="265">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.193: Set local login (login) for user uucp to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false uucp cisv2_loginuucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_rloginuucp" function="rloginuucp">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="266">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.194: Set remote login (rlogin) for user uucp to false.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false uucp cisv2_rloginuucp</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_uidftpusers" function="uidftpusers">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="267">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.195: Add all users with a UID less than 200 to /etc/ftpusers file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/uidftpusers</AIXPertCommand>
+        <AIXPertArgs>cisv2_uidftpusers</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_maxage" function="maxage">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="268">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.40: Specifies the maximum number of weeks (13 weeks) that a password is valid.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>maxage=13 LESS ALL cisv2_maxage</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_maxexpired" function="maxexpired">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="269">PCIV4 Requirement 8: Identify Users and Authenticate Access to System Components 8.41: Specifies the maximum time (in weeks) beyond the maxage value that a user can change an expired password to 4.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>maxexpired=4 LESS ALL cisv2_maxexpired</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sudo" function="sudo">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="270">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.196: Privilege escalation sudo.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+        <AIXPertArgs>/usr/bin/sudo a cisv2_sudo</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sudolog" function="sudolog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="271">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.12: Ensure sudo logging is active.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/sudoers</AIXPertCommand>
+        <AIXPertArgs>syslog_badpri</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_sudopty" function="sudopty">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="272">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.197: Ensure Sudo commands use pty.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/sudoers</AIXPertCommand>
+        <AIXPertArgs>use_pty</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_limitcissysacc" function="limitcissysacc">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="273">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.198: Review the current at/cron files and add any relevant users to the /var/adm/cron/at.allow and /var/adm/cron/cron.allow files.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/limitcissysacc</AIXPertCommand>
+        <AIXPertArgs>h cisv2_limiticissysacc</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_atallow" function="atallow">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="274">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.199: Ensure only root is included in at.allow file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chcronfilescis</AIXPertCommand>
+        <AIXPertArgs>a cisv2_atallow</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_cronallow" function="cronallow">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="275">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.200: Ensure only root is included in cron.allow file.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/limitsysacc</AIXPertCommand>
+        <AIXPertArgs>h cisv2_cronallow</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_flrt" function="flrt">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="276">PCIV4 Requirement 2: Apply Secure Configurations to All System Components 2.201: Install flrtvc tool.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+        <AIXPertArgs>flrtvc.ksh</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_justified_remote_syslog" function="justified_remote_syslog">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="277">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.13: AIX must only use remote syslog servers justified and documented using site-defined procedures.</AIXPertDescription>
+        <AIXPertPrereqList></AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/syslog</AIXPertCommand>
+        <AIXPertArgs>dodv7_justified_remote_syslog</AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="pciv4_disable_syslogd" function="disable_syslogd">
+        <AIXPertRuleType type="PCIV4"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="310" msgNum="278">PCIV4 Requirement 10: Log and Monitor All Access to System Components and Cardholder Data 10.14: Disallow the local syslogd daemon from accepting messages from other hosts on the network.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqbinaudit</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/disable_syslogd</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>PCIV4 Policy Recommendations</AIXPertGroup>
+    </AIXPertEntry>
+</AIXPertSecurityHardening>

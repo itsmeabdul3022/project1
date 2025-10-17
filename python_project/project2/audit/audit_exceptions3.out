@@ -1,0 +1,6 @@
+Total unique lines found in File A but not in File B: 4
+
+description  : "2.1.2 Ensure Unauthorized Applications are reported"
+description  : "2.2 Ensure system configuration is documented and verified regularly"
+description : "4.7.1.2 Ensure the cmsd service is not available"
+description : "4.7.1.3 Ensure dtlogin service is not available"

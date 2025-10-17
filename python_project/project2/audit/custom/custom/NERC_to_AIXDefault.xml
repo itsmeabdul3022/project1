@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IBM_PROLOG_BEGIN_TAG                                                   -->
+<!-- This is an automatically generated prolog.                             -->
+<!--                                                                        -->
+<!-- 61pscs114 src/powerscStd/ice/nerc/NERC_to_AIXDefault.xml               -->
+<!--                                                                        -->
+<!-- Licensed Materials - Property of IBM                                   -->
+<!--                                                                        -->
+<!-- Restricted Materials of IBM                                            -->
+<!--                                                                        -->
+<!-- COPYRIGHT International Business Machines Corp. 2015                   -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- US Government Users Restricted Rights - Use, duplication or            -->
+<!-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.      -->
+<!--                                                                        -->
+<!-- IBM_PROLOG_END_TAG                                                     -->
+<!--
+%Z%%M%  %I%  %W% %G% %U%
+-->
+
+
+<!--
+	RuleType NERC_DLS represents Default Level Security Rules
+
+	RuleType Prereq represents Analysis Rules
+
+	Rulenames begin with dls for Default Level Security rules
+-->
+
+<!--
+	Please do not Translate the contents of this file.
+-->
+
+<!-- Specifies NERC rules -->
+<!-- VERSION : NERC 1.0 -->
+<!-- FILE: 1.0 -->
+
+<AIXPertSecurityHardening>
+
+  <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="1">Prereq rule for non-TCB: Checks whether the system is non-TCB or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqlft" function="prereqlft">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="2">Prereq rule for LFT: Checks whether LFT is configured or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+    <AIXPertArgs> a </AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqcde" function="prereqcde">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="3">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+    <AIXPertArgs> a </AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="4">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="5">Prereq rule for Trusted Execution: Checks whether the system has Trusted Execution feature on or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dls_filepermgr" function="filepermgr">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="6">File Permissions Manager: Runs fpm command with default option to restore back the setuid and setgid on the privileged commands.</AIXPertDescription>
+    <AIXPertPrereqList>prereqnontcb,bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/filepermgr</AIXPertCommand>
+    <AIXPertArgs>d dls_filepermgr</AIXPertArgs>
+    <AIXPertGroup>Disable SUID of commands</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rmsuidfrmrcmds" function="rmsuidfrmrcmds">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="7">Set SUID of remote commands: Sets SUID of remote commands rcp, rdist, rexec, remsh, rlogin and rsh.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmsuidfrmrcmds</AIXPertCommand>
+    <AIXPertArgs>s dls_rmsuidfrmrcmds</AIXPertArgs>
+    <AIXPertGroup>Disable SUID of commands</AIXPertGroup>
+  </AIXPertEntry>
+
+<!--
+  No NERC_to_AIXDefault for "nerc_enableRbac"
+-->
+
+<!--
+  No NERC_to_AIXDefault for "nerc_sshstart"
+-->
+
+<!--
+  No NERC_to_AIXDefault for "nerc_dislpd"
+-->
+<!--
+  No NERC_to_AIXDefault for "nerc_discde"
+-->
+  <AIXPertEntry name="dls_distimedmn" function="distimedmn">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="8">Disable timed daemon: Stops timed daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d dls_distimedmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_disntpdmn" function="disntpdmn">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="9">Stops NTP daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>xntpd d dls_disntpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_disrwhoddmn" function="disrwhoddmn">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="10">Disable rwhod daemon: Stops rwhod daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d dls_disrwhoddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_disdpid2dmn" function="disdpid2dmn">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="11">Disable DPID2 daemon: Stops DPID2 daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d dls_disdpid2dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_shell" function="shell">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="13">Enable rshd daemon: Uncomments the entry for rshd daemon in /etc/inetd.conf and starts rshd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp a dls_shell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_disdhcpagent" function="disdhcpagent">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="12">Disable DHCP Agent: Stops DHCP relay agent and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d dls_disdhcpagent</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rexecd" function="rexecd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="15">Enable rexecd in /etc/inetd.conf: Uncomments the entry for rexecd daemon in /etc/inetd.conf and starts rexecd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp a dls_rexecd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rlogin" function="rlogin">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="14">Enable rlogin in /etc/inetd.conf: Uncomments the entry for rlogind daemon in /etc/inetd.conf and starts rlogind daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>login tcp a dls_rlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_comsat" function="comsat">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="16">Disable comsat in /etc/inetd.conf: Comments the entry for comsat daemon in /etc/inetd.conf and kills all instances of comsat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>comsat udp d dls_comsat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_fingerd" function="fingerd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="17">Disable fingerd in /etc/inetd.conf: Comments the entry for fingerd daemon in /etc/inetd.conf and kills all instances of fingerd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d dls_fingerd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_systat" function="systat">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="18">Disable systat in /etc/inetd.conf: Comments the entry for systat daemon in /etc/inetd.conf and kills all instances of systat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>systat tcp d dls_systat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tftp" function="tftp">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="19">Disable tftpd in /etc/inetd.conf: Comments the entry for tftpd daemon in /etc/inetd.conf and kills all instances of tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp d dls_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_talk" function="talk">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="20">Enable talkd in /etc/inetd.conf: Uncomments the entry for talkd daemon in /etc/inetd.conf and starts talkd service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp a dls_talk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_ntalk" function="ntalk">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="20">Enable talkd in /etc/inetd.conf: Uncomments the entry for talkd daemon in /etc/inetd.conf and starts talkd service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ntalk udp a dls_ntalk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rquotad" function="rquotad">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="21">Disable rquotad in /etc/inetd.conf: Comments the entry for rquotad daemon in /etc/inetd.conf and kills all instances of rquotad.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d dls_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rstatd" function="rstatd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="22">Disable rstatd in /etc/inetd.conf: Comments the entry for rstatd daemon in /etc/inetd.conf and kills all instances of rstatd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d dls_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rusersd" function="rusersd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="23">Disable rusersd in /etc/inetd.conf: Comments the entry for rusersd daemon in /etc/inetd.conf and kills all instances of rusersd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rusersd udp d dls_rusersd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_rwalld" function="rwalld">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="24">Disable rwalld in /etc/inetd.conf: Comments the entry for rwalld daemon in /etc/inetd.conf and kills all instances of rwalld.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d dls_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_sprayd" function="sprayd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="25">Disable sprayd in /etc/inetd.conf: Comments the entry for sprayd daemon in /etc/inetd.conf and kills all instances of sprayd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d dls_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_pcnfsd" function="pcnfsd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="26">Disable pcnfsd in /etc/inetd.conf: Comments the entry for pcnfsd daemon in /etc/inetd.conf and kills all instances of pcnfsd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d dls_pcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tcpecho" function="tcpecho">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="27">Disable TCP echo service in /etc/inetd.conf: Comments the entry for TCP echo service in /etc/inetd.conf and kills all instances of echo(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d dls_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tcpdiscard" function="tcpdiscard">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="28">Disable TCP discard service in /etc/inetd.conf: Comments the entry for TCP discard service in /etc/inetd.conf and kills all instances of discard(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard tcp d dls_tcpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tcpchargen" function="tcpchargen">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="29">Disable TCP chargen service in /etc/inetd.conf: Comments the entry for TCP chargen service in /etc/inetd.conf and kills all instances of chargen(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen tcp d dls_tcpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tcpdaytime" function="tcpdaytime">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="30">Enable TCP daytime service in /etc/inetd.conf: Uncomments the entry for TCP daytime service in /etc/inetd.conf and starts daytime(tcp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp a dls_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tcptime" function="tcptime">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="31">Enable TCP time service in /etc/inetd.conf: Uncomments the entry for TCP time service in /etc/inetd.conf and starts timed(tcp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp a dls_tcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_udpecho" function="udpecho">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="32">Disable UDP echo service in /etc/inetd.conf: Comments the entry for UDP echo service in /etc/inetd.conf and kills all instances of echo(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d dls_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_udpdiscard" function="udpdiscard">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="33">Disable UDP discard service in /etc/inetd.conf: Comments the entry for UDP discard service in /etc/inetd.conf and kills all instances of discard(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d dls_udpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_udpchargen" function="udpchargen">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="34">Disable UDP chargen service in /etc/inetd.conf: Comments the entry for UDP chargen service in /etc/inetd.conf and kills all instances of chargen(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d dls_udpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_udpdaytime" function="udpdaytime">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="35">Enable UDP daytime service in /etc/inetd.conf: Uncomments the entry for UDP daytime service in /etc/inetd.conf and starts the daytime(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp a dls_udpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_udptime" function="udptime">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="36">Enable UDP time service in /etc/inetd.conf: Uncomments the entry for UDP time service in /etc/inetd.conf and starts the time(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp a dls_udptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_ftp" function="ftp">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="37">Enable ftpd: Uncomments the entry for ftpd daemon in /etc/inetd.conf and starts ftpd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp a dls_ftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_telnet" function="telnet">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="38">Enable telnetd: Uncomments the entry for telnetd daemon in /etc/inetd.conf and starts telnetd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp a dls_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_dtspc" function="dtspc">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="39">Disable dtspcd: Comments the entry for dtspcd daemon in /etc/inetd.conf when LFT is not configured and CDE is disabled in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>dtspc tcp d dls_dtspc</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_ttdbserver" function="ttdbserver">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="40">Enable ttdbserver service in /etc/inetd.conf: Uncomments the entry for ttdbserver service in /etc/inetd.conf and starts ttdbserver service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ttdbserver tcp a dls_ttdbserver</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_cmsd" function="cmsd">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="41">Enable cmsd service in /etc/inetd.conf: Uncomments the entry for cmsd service in /etc/inetd.conf and starts cmsd service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>cmsd udp a dls_cmsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_tcptr" function="tcptr">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="42">Removes denial-of-service mitigation on popular ports.</AIXPertDescription>
+    <AIXPertPrereqList></AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/tcptr_aixpert</AIXPertCommand>
+    <AIXPertArgs>undo</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dls_pciaudit" function="pciaudit">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="43">Disable audit: Disables bin auditing.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pciaudit</AIXPertCommand>
+    <AIXPertArgs>d dls_pciaudit</AIXPertArgs>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+<!--
+  No NERC_to_AIXDefault for "nerc_tncmsg"
+-->
+
+  <AIXPertEntry name="dls_sysintegrity" function="sysintegrity">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="44">Stops Trusted Execution.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+    <AIXPertArgs>dls_sysintegrity d</AIXPertArgs>
+    <AIXPertGroup>System Integrity verification</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dls_lockacc_rlogin" function="lockacc_rlogin">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="45">Undo locking of all default accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/lockacc_rlogin</AIXPertCommand>
+    <AIXPertArgs>d</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dls_pwdchg" function="pwdchg">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="51">Remove password change requirement at first login for all unlocked user accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pwdchg</AIXPertCommand>
+    <AIXPertArgs>d</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dls_minlen" function="minlen">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="46">Minimum length for password: Changes the minimum length constraint on password to default.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=0 ALL dls_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_minalpha" function="minalpha">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="47">Minimum number of alphabetic chars: Changes the minimum number of alphabetic characters constraint in a password to default.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minalpha=0 ALL dls_minalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_mindigit" function="mindigit">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="48">Minimum number of digits: Changes the minimum number of digits constraint in a password to default.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>mindigit=0 ALL dls_mindigit</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_maxage" function="maxage">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="50">Maximum age for password: Changes the maximum number of weeks requirement that a password is valid to default.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxage=0 ALL dls_maxage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_minspecial" function="minspecial">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="49">Minimum number of special chars: Changes the minimum number of special characters constraint in a password to default.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minspecialchar=0 ALL dls_minspecial</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dls_minother" function="minother">
+    <AIXPertRuleType type="NERC_DLS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="213" msgNum="52">Minimum number of non-alphabetic characters: Changes the minimum number of non-alphabetic characters constraint in a password to default.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minother=0 ALL dls_minother</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+<!--
+  No NERC_to_AIXDefault for "nerc_efsmsg"
+-->
+
+<!--
+  No NERC_to_AIXDefault for "nerc_rtcmsg"
+-->
+
+</AIXPertSecurityHardening>

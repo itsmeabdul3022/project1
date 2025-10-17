@@ -1,0 +1,264 @@
+Rule
+2 Inventory and Control of Assets
+2.1 Ensure system configuration is documented and verified regularly 
+2.2 Ensure system Microcode Discovery Service 
+2.3 Ensure Trusted Execution Path is enabled 
+2.4 Ensure Trusted Execution 
+2.5 Ensure Unauthorized Applications are reported 
+2.6 Ensure Allowlist violations are enabled 
+2.7 Ensure regular scans for unauthorized applications 
+2.8 Ensure unused symbolic links are removed 
+3 Configure Data Protection
+3.1 Ensure default user umask is configured 
+3.2 Ensure world writable directories have the SVTX bit set 
+3.3 Ensure there are no system 'default group' writable files 
+3.4 Ensure world writable files are secured 
+3.5 Ensure there are no group staff writable files 
+3.6 Ensure no files or directories without an owner and a group exist 
+4 Secure Configuration of Enterprise Assets and Software
+4.1 Trusted Files and Directories
+4.1.1 Configure Trusted Files
+4.1.1.1 Ensure access on root user smit.log is configured 
+4.1.1.2 Ensure access on /etc/group is configured 
+4.1.1.3 Ensure access on /etc/inetd.conf is configured 
+4.1.1.4 Ensure access on /etc/motd is configured 
+4.1.1.5 Ensure access on /etc/passwd is configured 
+4.1.1.6 Ensure /etc/mail/submit.cf access is configured 
+4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured 
+4.1.1.8 Ensure access on /etc/ssh/ssh_config is configured 
+4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured 
+4.1.1.10 Ensure access on /var/adm/cron/at.allow is configured 
+4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured 
+4.1.1.12 Ensure access on /var/adm/cron/log is configured 
+4.1.1.13 Ensure access on /var/ct/RMstart.log is configured 
+4.1.1.14 Ensure access on /var/tmp/dpid2.log is configured 
+4.1.1.15 Ensure access on /var/tmp/hostmibd.log is configured 
+4.1.1.16 Ensure access on /var/tmp/snmpd.log is configured 
+4.1.1.17 Ensure crontab is restricted to authorized users 
+4.1.1.18 Ensure Home directory configuration file access is configured 
+4.1.1.19 Ensure SUID and SGID files are reviewed 
+4.1.2 Configure Trusted Directories
+4.1.2.1 Ensure local user Home directories exists 
+4.1.2.2 Ensure Home directories access is configured 
+4.1.2.3 Ensure Home directory write access is restricted to owner 
+4.1.2.4 Ensure access on /audit and /etc/security/audit is configured 
+4.1.2.5 Ensure access to /etc/security is configured 
+4.1.2.6 Ensure access on /var/adm/ras is configured 
+4.1.2.7 Ensure access on /var/adm/sa is configured 
+4.1.2.8 Ensure access on /var/spool/cron/crontabs is configured 
+4.1.2.9 Ensure all directories in root PATH access is configured 
+4.1.2.10 Ensure root user has a dedicated home directory 
+4.2 Configure Network Services
+4.2.1 Ensure sendmail is not in use 
+4.2.2 Ensure NIS client is not installed 
+4.2.3 Ensure NIS server services are not in use 
+4.2.4 Ensure legacy NIS markers are removed 
+4.2.5 Ensure all entries in /etc/hosts.equiv are removed 
+4.2.6 Ensure that host based authentication files are not present 
+4.2.7 Ensure legacy remote daemon support is not available 
+4.2.8 Ensure snmpd is not installed 
+4.3 Subsystems managing the system boot phases
+4.3.1 Configure processes managed by /etc/inittab
+4.3.1.1 Ensure writesrv service is not in use 
+4.3.1.2 Ensure dt service is not in use 
+4.3.1.3 Ensure piobe service is not in use 
+4.3.1.4 Ensure qdaemon service is not in use 
+4.3.1.5 Ensure rcnfs service is not in use 
+4.3.1.6 Ensure snapp is not installed 
+4.3.1.7 Ensure NIM master is not installed 
+4.3.2 Configure daemons managed by /etc/rc.tcpip
+4.3.2.1 Ensure inetd daemon is disabled when no additional services are required 
+4.3.2.2 Ensure dhcp client services are not in use 
+4.3.2.3 Ensure dhcprd is not in use 
+4.3.2.4 Ensure dhcpsd is not in use 
+4.3.2.5 Ensure gated is not in use 
+4.3.2.6 Ensure hostmibd is not in use 
+4.3.2.7 Ensure mrouted is not in use 
+4.3.2.8 Ensure named is not in use 
+4.3.2.9 Ensure portmap is not in use 
+4.3.2.10 Ensure routed is not in use 
+4.3.2.11 Ensure rwhod is not in use 
+4.3.2.12 Ensure sendmail is not in use 
+4.3.2.13 Ensure timed is not in use 
+4.3.3 Configure IPv6
+4.3.3.1 Ensure autoconf6 is not in use 
+4.3.3.2 Ensure ndpd-host is not in use 
+4.3.3.3 Ensure ndpd-router is not in use 
+4.3.4 Configure services managed by the inetd process
+4.3.4.1 Ensure bootps daemon is not in use 
+4.3.4.2 Ensure chargen daemon is not in use 
+4.3.4.3 Ensure comsat daemon is not in use 
+4.3.4.4 Ensure daytime daemon is not in use 
+4.3.4.5 Ensure discard daemon is not in use 
+4.3.4.6 Ensure echo daemon is not in use 
+4.3.4.7 Ensure exec daemon is not in use 
+4.3.4.8 Ensure finger daemon is not in use 
+4.3.4.9 Ensure ftpd daemon is not in use 
+4.3.4.10 Ensure imap2 daemon is not in use 
+4.3.4.11 Ensure instsrv daemon is not in use 
+4.3.4.12 Ensure klogin daemon is not in use 
+4.3.4.13 Ensure kshell daemon is not in use 
+4.3.4.14 Ensure rlogin daemon is not in use 
+4.3.4.15 Ensure netstat daemon is not in use 
+4.3.4.16 Ensure ntalk daemon is not in use 
+4.3.4.17 Ensure pcnfsd daemon is not in use 
+4.3.4.18 Ensure pop3 daemon is not in use 
+4.3.4.19 Ensure rexd daemon is not in use 
+4.3.4.20 Ensure rquotad daemon is not in use 
+4.3.4.21 Ensure rstatd daemon is not in use 
+4.3.4.22 Ensure rusersd daemon is not in use 
+4.3.4.23 Ensure rwalld daemon is not in use 
+4.3.4.24 Ensure shell daemon is not in use 
+4.3.4.25 Ensure sprayd daemon is not in use 
+4.3.4.26 Ensure xmquery daemon is not in use 
+4.3.4.27 Ensure talk daemon is not in use 
+4.3.4.28 Ensure telnetd daemon is not in use 
+4.3.4.29 Ensure tftpd daemon is not in use 
+4.3.4.30 Ensure time daemon is not in use 
+4.3.4.31 Ensure uucp daemon is not in use 
+4.4 Filesystem Configuration
+4.4.1 Configure Network Filesystem 
+4.4.1.1 Ensure NFS client mounts are disabled in /etc/filesystems 
+4.4.1.2 Ensure NFS server services are not in use 
+4.4.1.3 Ensure NFS client mounts include nosuid and nodev options 
+4.4.1.4 Ensure localhost aliases do not exist in /etc/exports 
+4.4.1.5 Ensure NFS exports use allow lists 
+4.4.1.6 Ensure access by root over nfs is disabled or blocked 
+4.4.1.7 Ensure secure RPC authentication is enabled 
+4.4.2 Configure Filesystem Encryption
+4.4.2.1 Ensure File System Level encryption is enabled 
+4.4.2.2 Ensure Filesystem Encryption via Encrypted Logical Volume is configured 
+4.4.3 Configure ROOTVG
+4.4.3.1 Ensure only / permits device files. 
+4.5 Configure Network Options
+4.5.1 Ensure sockthresh is configured 
+4.5.2 Ensure bcastping is disabled 
+4.5.3 Ensure clean_partial_conns is enabled 
+4.5.4 Ensure directed_broadcast is disabled 
+4.5.5 Ensure icmpaddressmask is disabled 
+4.5.6 Ensure ipforwarding is disabled 
+4.5.7 Ensure ip6forwarding is disabled 
+4.5.8 Ensure ipignoreredirects is enabled 
+4.5.9 Ensure ipsendredirects is disabled 
+4.5.10 Ensure ipsrcrouteforward is disabled 
+4.5.11 Ensure ipsrcrouterecv is disabled 
+4.5.12 Ensure ipsrcroutesend is disabled 
+4.5.13 Ensure ip6srcrouteforward is disabled 
+4.5.14 Ensure nfs_use_reserved_ports is enabled 
+4.5.15 Ensure nonlocsrcroute is disabled 
+4.5.16 Ensure tcp_pmtu_discover is disabled 
+4.5.17 Ensure tcp_tcpsecure is configured 
+4.5.18 Ensure udp_pmtu_discover is disabled 
+4.6 Standard Services and Applications
+4.6.1 Configure Common Desktop Environment
+4.6.1.1 Ensure CDE is not installed 
+4.6.1.2 Ensure the cmsd service is not available 
+4.6.1.3 Ensure dtlogin service is not available 
+4.6.1.4 Ensure dtspc is not available 
+4.6.1.5 Ensure CDE daemons have sgid and suid mode disabled 
+4.6.1.6 Ensure CDE remote GUI login is disabled 
+4.6.1.7 Ensure CDE screensaver lock is enabled 
+4.6.1.8 Ensure CDE login screen hostname is masked 
+4.6.1.9 Ensure access to /etc/dt/config/Xconfig is configured 
+4.6.1.10 Ensure the file /etc/dt/config/Xservers is configured 
+4.6.1.11 Ensure access to Xresources is configured 
+4.6.2 Configure FTPD
+4.6.2.1 Ensure root access to ftpd is disabled 
+4.6.2.2 Ensure ftpd login banner is configured 
+4.6.2.3 Ensure ftpd umask is configured 
+4.6.3 Configure OpenSSH
+4.6.3.1 Ensure latest version of openssh is installed 
+4.6.3.2 Ensure /etc/shosts.equiv and /etc/rhosts.equiv are removed 
+4.6.3.3 Ensure sftp-server arguments are configured 
+4.6.3.4 Ensure sshd access is configured 
+4.6.3.5 Ensure sshd Banner is configured 
+4.6.3.6 Ensure sshd Ciphers are configured 
+4.6.3.7 Ensure sshd HostbasedAuthentication is disabled 
+4.6.3.8 Ensure sshd IgnoreRhosts is enabled 
+4.6.3.9 Ensure sshd KexAlgorithms is configured 
+4.6.3.10 Ensure sshd LogLevel is configured 
+4.6.3.11 Ensure sshd MACs are configured 
+4.6.3.12 Ensure sshd MaxAuthTries is configured 
+4.6.3.13 Ensure sshd PermitEmptyPasswords is disabled 
+4.6.3.14 Ensure sshd PermitRootLogin is configured 
+4.6.3.15 Ensure sshd PermitRootLogin is disabled 
+4.6.3.16 Ensure sshd PermitUserEnvironment is disabled 
+4.6.3.17 Ensure sshd ReKeyLimit is configured 
+4.6.4 Configure Sendmail
+4.6.4.1 Ensure sendmail version information is hidden 
+4.6.4.2 Ensure sendmail PrivacyOptions is configured 
+4.6.4.3 Ensure sendmail DaemonPortOptions is configured 
+4.6.4.4 Ensure access to /etc/mail/sendmail.cf is configured 
+4.6.4.5 Ensure access to /var/spool/clientmqueue is configured 
+4.6.4.6 Ensure access to /var/spool/mqueue is configured 
+4.7 Configure Login Controls
+4.7.1 Ensure herald is configured 
+4.7.2 Ensure logindelay is configured 
+4.7.3 Ensure loginretries is configured 
+4.7.4 Ensure logintimeout is configured 
+4.7.5 Ensure administrative user accounts are locked 
+4.7.6 Ensure TMOUT is configured 
+4.7.7 Unattended terminal session timeout is 900 seconds 
+4.8 Verify Integrity of Installation Settings
+4.8.1 Ensure root access is controlled 
+4.8.2 Ensure root user default shell is ksh 
+4.8.3 Ensure core dumps are disabled 
+4.8.4 Ensure default path does not include current working directory 
+4.8.5 Ensure root user path does not include current working directory 
+4.8.6 Ensure motd is configured 
+5 Account Management
+5.1 Configure local accounts
+5.1.1 Ensure all local user accounts have a hashed password 
+5.1.2 Ensure usernames and UIDs are unique 
+5.1.3 Ensure group names and GIDs are unique 
+5.1.4 Ensure an Inventory of Administrator accounts is established and maintained 
+5.1.5 Ensure an Inventory of user accounts is established and maintained 
+5.1.6 Ensure all local user accounts have valid stanzas in /etc/security/passwd 
+5.2 Password Management and Controls
+5.2.1 Ensure histsize is configured 
+5.2.2 Ensure minimum password age is configured 
+5.2.3 Ensure password history expiry is configured 
+5.2.4 Ensure passwords are controlled by password attributes 
+5.2.5 Ensure maxexpired is configured 
+5.2.6 Ensure password expiration is configured 
+5.2.7 Ensure pwd_algorithm is configured 
+5.2.8 Ensure a strong password hashing algorithm is configured 
+5.2.9 Ensure minimum password length is configured 
+5.2.10 Ensure number of characters changed in new password is configured 
+5.2.11 Ensure minalpha is configured 
+5.2.12 Ensure minother is configured 
+5.2.13 Ensure password maximum repeated characters is configured 
+5.2.14 Ensure mindigit is configured 
+5.2.15 Ensure minloweralpha is configured 
+5.2.16 Ensure minupperalpha is configured 
+5.2.17 Ensure minspecialchar is configured 
+5.3 Configure System Accounts
+5.3.1 Ensure user adm is secured 
+5.3.2 Ensure user bin is secured 
+5.3.3 Ensure user daemon is secured 
+5.3.4 Ensure user guest is secured 
+5.3.5 Ensure user lpd is secured 
+5.3.6 Ensure user nobody is secured 
+5.3.7 Ensure user nuucp is secured 
+5.3.8 Ensure user sys is secured 
+5.3.9 Ensure user uucp is secured 
+5.3.10 Ensure System Accounts cannot access system using ftp. 
+6 Access Control Management
+6.1 Configure SUDO managed privilege escalation
+6.1.1 Ensure sudo is installed 
+6.1.2 Ensure sudo logging is active 
+6.1.3 Ensure sudo commands use pty 
+6.2 Configure Services Management
+6.2.1 Ensure at is restricted to authorized users 
+6.2.2 Ensure at.allow is configured 
+6.2.3 Ensure crontab is restricted authorized users 
+6.2.4 Ensure cron.allow is configured 
+7 Logging and Auditing
+7.1 Configure AIX Audit
+7.1.1 Ensure /audit filesystem has been created and configured 
+7.1.2 Ensure Audit bin
+7.1.3 Ensure modification to TE system is audited 
+7.2 Configure Syslog
+7.2.1 Ensure syslog local logging is configured 
+7.2.2 Ensure syslog is configured to send logs to a remote log host 
+7.2.3 Ensure syslog is not configured to receive logs from a remote client 

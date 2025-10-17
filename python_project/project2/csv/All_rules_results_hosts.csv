@@ -1,0 +1,391 @@
+2.4 Ensure unused symbolic links are removed: [ERROR],1
+2.4 Ensure unused symbolic links are removed: [FAILED],142
+2.4 Ensure unused symbolic links are removed: [PASSED],22
+3.7 Ensure no files or directories without an owner and a group exist: [ERROR],1
+3.7 Ensure no files or directories without an owner and a group exist: [FAILED],161
+3.7 Ensure no files or directories without an owner and a group exist: [PASSED],2
+4.1.1.1 Ensure access on /smit.log is configured: [FAILED],115
+4.1.1.1 Ensure access on /smit.log is configured: [PASSED],49
+4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured: [FAILED],4
+4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured: [PASSED],160
+4.1.1.13 Ensure access on /var/ct/RMstart.log is configured: [FAILED],9
+4.1.1.13 Ensure access on /var/ct/RMstart.log is configured: [PASSED],155
+4.1.1.14 Ensure access on /var/tmp/dpid2.log is configured: [FAILED],71
+4.1.1.14 Ensure access on /var/tmp/dpid2.log is configured: [PASSED],93
+4.1.1.15 Ensure access on /var/tmp/hostmibd.log is configured: [FAILED],132
+4.1.1.15 Ensure access on /var/tmp/hostmibd.log is configured: [PASSED],32
+4.1.1.16 Ensure access on /var/tmp/snmpd.log is configured: [FAILED],60
+4.1.1.16 Ensure access on /var/tmp/snmpd.log is configured: [PASSED],104
+4.1.1.17 Ensure crontab is restricted to authorized users: [ERROR],1
+4.1.1.17 Ensure crontab is restricted to authorized users: [FAILED],1
+4.1.1.17 Ensure crontab is restricted to authorized users: [PASSED],162
+4.1.1.2 Ensure access on /etc/group is configured: [FAILED],13
+4.1.1.2 Ensure access on /etc/group is configured: [PASSED],151
+4.1.1.3 Ensure access on /etc/inetd.conf is configured: [FAILED],136
+4.1.1.3 Ensure access on /etc/inetd.conf is configured: [PASSED],28
+4.1.1.4 Ensure access on /etc/motd is configured: [FAILED],21
+4.1.1.4 Ensure access on /etc/motd is configured: [PASSED],143
+4.1.1.5 Ensure access on /etc/passwd is configured: [FAILED],3
+4.1.1.5 Ensure access on /etc/passwd is configured: [PASSED],161
+4.1.1.6 Ensure /etc/mail/submit.cf access is configured: [FAILED],151
+4.1.1.6 Ensure /etc/mail/submit.cf access is configured: [PASSED],13
+4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured: [FAILED],2
+4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured: [PASSED],162
+4.1.1.8 Ensure access on /etc/ssh/ssh_config is configured: [FAILED],3
+4.1.1.8 Ensure access on /etc/ssh/ssh_config is configured: [PASSED],161
+4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured: [FAILED],3
+4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured: [PASSED],161
+4.1.2.1 Ensure local user Home directories exists: [ERROR],1
+4.1.2.1 Ensure local user Home directories exists: [FAILED],68
+4.1.2.1 Ensure local user Home directories exists: [PASSED],95
+4.1.2.10 Ensure root user has a dedicated home directory: [ERROR],1
+4.1.2.10 Ensure root user has a dedicated home directory: [FAILED],144
+4.1.2.10 Ensure root user has a dedicated home directory: [PASSED],19
+4.1.2.2 Ensure Home directories access is configured: [ERROR],1
+4.1.2.2 Ensure Home directories access is configured: [FAILED],128
+4.1.2.2 Ensure Home directories access is configured: [PASSED],35
+4.1.2.3 Ensure Home directory write access is restricted to owner: [ERROR],1
+4.1.2.3 Ensure Home directory write access is restricted to owner: [FAILED],80
+4.1.2.3 Ensure Home directory write access is restricted to owner: [PASSED],83
+4.1.2.4 Ensure access on /audit and /etc/security/audit is configured: [FAILED],30
+4.1.2.4 Ensure access on /audit and /etc/security/audit is configured: [PASSED],134
+4.1.2.5 Ensure access to /etc/security is configured: [ERROR],1
+4.1.2.5 Ensure access to /etc/security is configured: [FAILED],163
+4.1.2.6 Ensure access on /var/adm/ras is configured: [ERROR],1
+4.1.2.6 Ensure access on /var/adm/ras is configured: [FAILED],139
+4.1.2.6 Ensure access on /var/adm/ras is configured: [PASSED],24
+4.1.2.7 Ensure access on /var/adm/sa is configured: [FAILED],139
+4.1.2.7 Ensure access on /var/adm/sa is configured: [PASSED],25
+4.1.2.8 Ensure access on /var/spool/cron/crontabs is configured: [FAILED],137
+4.1.2.8 Ensure access on /var/spool/cron/crontabs is configured: [PASSED],27
+4.2.2 Ensure NIS client is not installed: [ERROR],1
+4.2.2 Ensure NIS client is not installed: [FAILED],135
+4.2.2 Ensure NIS client is not installed: [PASSED],28
+4.2.3 Ensure NIS server services are not in use: [ERROR],1
+4.2.3 Ensure NIS server services are not in use: [FAILED],38
+4.2.3 Ensure NIS server services are not in use: [PASSED],125
+4.2.4 Ensure legacy NIS markers are removed: [FAILED],1
+4.2.4 Ensure legacy NIS markers are removed: [PASSED],163
+4.2.5 Ensure all entries in /etc/hosts.equiv are removed: [FAILED],2
+4.2.5 Ensure all entries in /etc/hosts.equiv are removed: [PASSED],163
+4.2.7 Ensure legacy remote daemon support is not available: [ERROR],1
+4.2.7 Ensure legacy remote daemon support is not available: [FAILED],159
+4.2.7 Ensure legacy remote daemon support is not available: [PASSED],4
+4.3.1.1 Ensure writesrv service is not in use: [FAILED],140
+4.3.1.1 Ensure writesrv service is not in use: [PASSED],24
+4.3.1.2 Ensure dt service is not in use: [ERROR],1
+4.3.1.2 Ensure dt service is not in use: [FAILED],1
+4.3.1.2 Ensure dt service is not in use: [PASSED],162
+4.3.1.4 Ensure qdaemon service is not in use: [ERROR],1
+4.3.1.4 Ensure qdaemon service is not in use: [FAILED],54
+4.3.1.4 Ensure qdaemon service is not in use: [PASSED],109
+4.3.2.10 Ensure named is not in use: [FAILED],1
+4.3.2.10 Ensure named is not in use: [PASSED],163
+4.3.2.11 Ensure portmap is not in use: [ERROR],1
+4.3.2.11 Ensure portmap is not in use: [WARNING],163
+4.3.2.12 Ensure routed is not in use: [FAILED],1
+4.3.2.12 Ensure routed is not in use: [PASSED],163
+4.3.2.13 Ensure rwhod is not in use: [FAILED],1
+4.3.2.13 Ensure rwhod is not in use: [PASSED],163
+4.3.2.16 Ensure timed is not in use: [FAILED],3
+4.3.2.16 Ensure timed is not in use: [PASSED],161
+4.3.2.3 Ensure dhcpcd is not in use: [FAILED],1
+4.3.2.3 Ensure dhcpcd is not in use: [PASSED],163
+4.3.2.4 Ensure dhcprd is not in use: [FAILED],1
+4.3.2.4 Ensure dhcprd is not in use: [PASSED],163
+4.3.2.5 Ensure dhcpsd is not in use: [FAILED],1
+4.3.2.5 Ensure dhcpsd is not in use: [PASSED],163
+4.3.2.7 Ensure gated is not in use: [FAILED],1
+4.3.2.7 Ensure gated is not in use: [PASSED],163
+4.3.2.9 Ensure mrouted is not in use: [PASSED],165
+4.3.3.1 Ensure autoconf6 is not in use: [PASSED],164
+4.3.3.2 Ensure ndpd-host is not in use: [PASSED],164
+4.3.3.3 Ensure ndpd-router is not in use: [PASSED],164
+4.3.4.1 Ensure bootps daemon is not in use: [ERROR],1
+4.3.4.1 Ensure bootps daemon is not in use: [FAILED],5
+4.3.4.1 Ensure bootps daemon is not in use: [PASSED],158
+4.3.4.10 Ensure imap2 daemon is not in use: [ERROR],1
+4.3.4.10 Ensure imap2 daemon is not in use: [FAILED],2
+4.3.4.10 Ensure imap2 daemon is not in use: [PASSED],161
+4.3.4.11 Ensure instsrv daemon is not in use: [ERROR],1
+4.3.4.11 Ensure instsrv daemon is not in use: [FAILED],2
+4.3.4.11 Ensure instsrv daemon is not in use: [PASSED],161
+4.3.4.12 Ensure klogin daemon is not in use: [ERROR],1
+4.3.4.12 Ensure klogin daemon is not in use: [FAILED],97
+4.3.4.12 Ensure klogin daemon is not in use: [PASSED],66
+4.3.4.13 Ensure kshell daemon is not in use: [ERROR],1
+4.3.4.13 Ensure kshell daemon is not in use: [FAILED],97
+4.3.4.13 Ensure kshell daemon is not in use: [PASSED],66
+4.3.4.15 Ensure netstat daemon is not in use: [ERROR],1
+4.3.4.15 Ensure netstat daemon is not in use: [FAILED],2
+4.3.4.15 Ensure netstat daemon is not in use: [PASSED],161
+4.3.4.16 Ensure ntalk daemon is not in use: [ERROR],1
+4.3.4.16 Ensure ntalk daemon is not in use: [FAILED],109
+4.3.4.16 Ensure ntalk daemon is not in use: [PASSED],54
+4.3.4.17 Ensure pcnfsd daemon is not in use: [ERROR],1
+4.3.4.17 Ensure pcnfsd daemon is not in use: [FAILED],2
+4.3.4.17 Ensure pcnfsd daemon is not in use: [PASSED],161
+4.3.4.18 Ensure pop3 daemon is not in use: [FAILED],1
+4.3.4.18 Ensure pop3 daemon is not in use: [PASSED],163
+4.3.4.19 Ensure rexd daemon is not in use: [ERROR],1
+4.3.4.19 Ensure rexd daemon is not in use: [FAILED],2
+4.3.4.19 Ensure rexd daemon is not in use: [PASSED],161
+4.3.4.2 Ensure chargen daemon is not in use: [ERROR],1
+4.3.4.2 Ensure chargen daemon is not in use: [FAILED],3
+4.3.4.2 Ensure chargen daemon is not in use: [PASSED],160
+4.3.4.20 Ensure rquotad daemon is not in use: [ERROR],1
+4.3.4.20 Ensure rquotad daemon is not in use: [FAILED],2
+4.3.4.20 Ensure rquotad daemon is not in use: [PASSED],161
+4.3.4.21 Ensure rstatd daemon is not in use: [ERROR],1
+4.3.4.21 Ensure rstatd daemon is not in use: [FAILED],2
+4.3.4.21 Ensure rstatd daemon is not in use: [PASSED],161
+4.3.4.22 Ensure rusersd daemon is not in use: [ERROR],1
+4.3.4.22 Ensure rusersd daemon is not in use: [FAILED],2
+4.3.4.22 Ensure rusersd daemon is not in use: [PASSED],161
+4.3.4.23 Ensure rwalld daemon is not in use: [ERROR],1
+4.3.4.23 Ensure rwalld daemon is not in use: [FAILED],2
+4.3.4.23 Ensure rwalld daemon is not in use: [PASSED],161
+4.3.4.25 Ensure sprayd daemon is not in use: [ERROR],1
+4.3.4.25 Ensure sprayd daemon is not in use: [FAILED],2
+4.3.4.25 Ensure sprayd daemon is not in use: [PASSED],161
+4.3.4.26 Ensure xmquery daemon is not in use: [ERROR],1
+4.3.4.26 Ensure xmquery daemon is not in use: [FAILED],56
+4.3.4.26 Ensure xmquery daemon is not in use: [PASSED],107
+4.3.4.27 Ensure talk daemon is not in use: [ERROR],1
+4.3.4.27 Ensure talk daemon is not in use: [FAILED],109
+4.3.4.27 Ensure talk daemon is not in use: [PASSED],54
+4.3.4.28 Ensure telnetd daemon is not in use: [ERROR],1
+4.3.4.28 Ensure telnetd daemon is not in use: [FAILED],18
+4.3.4.28 Ensure telnetd daemon is not in use: [PASSED],145
+4.3.4.29 Ensure tftpd daemon is not in use: [ERROR],1
+4.3.4.29 Ensure tftpd daemon is not in use: [FAILED],6
+4.3.4.29 Ensure tftpd daemon is not in use: [PASSED],157
+4.3.4.3 Ensure comsat daemon is not in use: [ERROR],1
+4.3.4.3 Ensure comsat daemon is not in use: [FAILED],2
+4.3.4.3 Ensure comsat daemon is not in use: [PASSED],161
+4.3.4.30 Ensure time daemon is not in use: [ERROR],1
+4.3.4.30 Ensure time daemon is not in use: [FAILED],108
+4.3.4.30 Ensure time daemon is not in use: [PASSED],55
+4.3.4.31 Ensure uucp daemon is not in use: [ERROR],1
+4.3.4.31 Ensure uucp daemon is not in use: [FAILED],2
+4.3.4.31 Ensure uucp daemon is not in use: [PASSED],161
+4.3.4.4 Ensure daytime daemon is not in use: [ERROR],1
+4.3.4.4 Ensure daytime daemon is not in use: [FAILED],65
+4.3.4.4 Ensure daytime daemon is not in use: [PASSED],98
+4.3.4.5 Ensure discard daemon is not in use: [ERROR],1
+4.3.4.5 Ensure discard daemon is not in use: [FAILED],3
+4.3.4.5 Ensure discard daemon is not in use: [PASSED],160
+4.3.4.6 Ensure echo daemon is not in use: [ERROR],1
+4.3.4.6 Ensure echo daemon is not in use: [FAILED],2
+4.3.4.6 Ensure echo daemon is not in use: [PASSED],161
+4.3.4.7 Ensure exec daemon is not in use: [ERROR],1
+4.3.4.7 Ensure exec daemon is not in use: [FAILED],62
+4.3.4.7 Ensure exec daemon is not in use: [PASSED],101
+4.3.4.8 Ensure finger daemon is not in use: [ERROR],1
+4.3.4.8 Ensure finger daemon is not in use: [FAILED],2
+4.3.4.8 Ensure finger daemon is not in use: [PASSED],161
+4.3.4.9 Ensure ftpd daemon is not in use: [ERROR],1
+4.3.4.9 Ensure ftpd daemon is not in use: [FAILED],145
+4.3.4.9 Ensure ftpd daemon is not in use: [PASSED],18
+4.4.1.2 Ensure NFS server services are not in use: [ERROR],1
+4.4.1.2 Ensure NFS server services are not in use: [FAILED],62
+4.4.1.2 Ensure NFS server services are not in use: [PASSED],101
+4.4.1.3 Ensure NFS client mounts include nosuid and nodev options: [FAILED],28
+4.4.1.3 Ensure NFS client mounts include nosuid and nodev options: [PASSED],136
+4.4.1.4 Ensure localhost aliases do not exist in /etc/exports: [PASSED],120
+4.4.1.4 Ensure localhost aliases do not exist in /etc/exports: [WARNING],44
+4.4.1.5 Ensure NFS exports use allow lists: [ERROR],1
+4.4.1.5 Ensure NFS exports use allow lists: [FAILED],4
+4.4.1.5 Ensure NFS exports use allow lists: [PASSED],160
+4.4.1.6 Ensure root access is disabled or blocked.: [ERROR],1
+4.4.1.6 Ensure root access is disabled or blocked.: [PASSED],163
+4.4.1.7 Ensure secure RPC authentication is enabled: [FAILED],16
+4.4.1.7 Ensure secure RPC authentication is enabled: [PASSED],149
+4.4.2.1 Ensure File System Level encryption is enabled: [PASSED],165
+4.4.3.1 Ensure only / permits device files.: [FAILED],140
+4.4.3.1 Ensure only / permits device files.: [PASSED],24
+4.5.1 Ensure sockthresh is configured: [ERROR],1
+4.5.1 Ensure sockthresh is configured: [FAILED],134
+4.5.1 Ensure sockthresh is configured: [PASSED],29
+4.5.10 Ensure ipsrcrouteforward is disabled: [ERROR],1
+4.5.10 Ensure ipsrcrouteforward is disabled: [FAILED],61
+4.5.10 Ensure ipsrcrouteforward is disabled: [PASSED],102
+4.5.11 Ensure ipsrcrouterecv is disabled: [ERROR],1
+4.5.11 Ensure ipsrcrouterecv is disabled: [PASSED],163
+4.5.12 Ensure ipsrcroutesend is disabled: [ERROR],1
+4.5.12 Ensure ipsrcroutesend is disabled: [FAILED],58
+4.5.12 Ensure ipsrcroutesend is disabled: [PASSED],105
+4.5.13 Ensure ip6srcrouteforward is disabled: [ERROR],1
+4.5.13 Ensure ip6srcrouteforward is disabled: [FAILED],52
+4.5.13 Ensure ip6srcrouteforward is disabled: [PASSED],111
+4.5.14 Ensure nfs_use_reserved_ports is enabled: [FAILED],139
+4.5.14 Ensure nfs_use_reserved_ports is enabled: [PASSED],25
+4.5.15 Ensure nonlocsrcroute is disabled: [ERROR],1
+4.5.15 Ensure nonlocsrcroute is disabled: [PASSED],163
+4.5.16 Ensure tcp_pmtu_discover is disabled: [ERROR],1
+4.5.16 Ensure tcp_pmtu_discover is disabled: [FAILED],155
+4.5.16 Ensure tcp_pmtu_discover is disabled: [PASSED],8
+4.5.17 Ensure tcp_tcpsecure is configured: [ERROR],1
+4.5.17 Ensure tcp_tcpsecure is configured: [FAILED],137
+4.5.17 Ensure tcp_tcpsecure is configured: [PASSED],26
+4.5.18 Ensure udp_pmtu_discover is disabled: [ERROR],1
+4.5.18 Ensure udp_pmtu_discover is disabled: [FAILED],155
+4.5.18 Ensure udp_pmtu_discover is disabled: [PASSED],8
+4.5.2 Ensure bcastping is disabled: [ERROR],1
+4.5.2 Ensure bcastping is disabled: [PASSED],163
+4.5.3 Ensure clean_partial_conns is enabled: [ERROR],1
+4.5.3 Ensure clean_partial_conns is enabled: [FAILED],137
+4.5.3 Ensure clean_partial_conns is enabled: [PASSED],26
+4.5.4 Ensure directed_broadcast is disabled: [ERROR],1
+4.5.4 Ensure directed_broadcast is disabled: [PASSED],163
+4.5.5 Ensure icmpaddressmask is disabled: [ERROR],1
+4.5.5 Ensure icmpaddressmask is disabled: [PASSED],163
+4.5.6 Ensure ipforwarding is disabled: [ERROR],1
+4.5.6 Ensure ipforwarding is disabled: [PASSED],163
+4.5.7 Ensure ip6forwarding is disabled: [ERROR],1
+4.5.7 Ensure ip6forwarding is disabled: [PASSED],163
+4.5.8 Ensure ipignoreredirects is enabled: [ERROR],1
+4.5.8 Ensure ipignoreredirects is enabled: [FAILED],58
+4.5.8 Ensure ipignoreredirects is enabled: [PASSED],105
+4.5.9 Ensure ipsendredirects is disabled: [ERROR],1
+4.5.9 Ensure ipsendredirects is disabled: [FAILED],58
+4.5.9 Ensure ipsendredirects is disabled: [PASSED],105
+4.6.2 Ensure loopback traffic is blocked on external interfaces: [FAILED],136
+4.6.2 Ensure loopback traffic is blocked on external interfaces: [PASSED],28
+4.7.1.1 Ensure CDE is not installed: [ERROR],1
+4.7.1.1 Ensure CDE is not installed: [FAILED],38
+4.7.1.1 Ensure CDE is not installed: [PASSED],125
+4.7.1.10 Ensure the file /etc/dt/config/Xservers is configured: [PASSED],164
+4.7.1.11 Ensure access to Xresources is configured: [FAILED],38
+4.7.1.11 Ensure access to Xresources is configured: [PASSED],126
+4.7.1.2 Ensure the cmsd service is not available: [FAILED],2
+4.7.1.2 Ensure the cmsd service is not available: [PASSED],162
+4.7.1.3 Ensure dtlogin service is not available: [FAILED],1
+4.7.1.3 Ensure dtlogin service is not available: [PASSED],163
+4.7.1.4 Ensure dtspc is not available: [FAILED],2
+4.7.1.4 Ensure dtspc is not available: [PASSED],162
+4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled: [FAILED],19
+4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled: [PASSED],145
+4.7.1.6 Ensure CDE remote GUI login is disabled: [FAILED],38
+4.7.1.6 Ensure CDE remote GUI login is disabled: [PASSED],126
+4.7.1.7 Ensure CDE screensaver lock is enabled: [FAILED],38
+4.7.1.7 Ensure CDE screensaver lock is enabled: [PASSED],126
+4.7.1.8 Ensure CDE login screen hostname is masked: [FAILED],38
+4.7.1.8 Ensure CDE login screen hostname is masked: [PASSED],126
+4.7.1.9 Ensure access to /etc/dt/config/Xconfig is configured: [FAILED],38
+4.7.1.9 Ensure access to /etc/dt/config/Xconfig is configured: [PASSED],126
+4.7.2.1 Ensure root access to ftpd is disabled: [FAILED],136
+4.7.2.1 Ensure root access to ftpd is disabled: [PASSED],28
+4.7.2.2 Ensure ftpd login banner is configured: [FAILED],123
+4.7.2.2 Ensure ftpd login banner is configured: [PASSED],41
+4.7.2.3 Ensure ftpd umask is configured: [FAILED],136
+4.7.2.3 Ensure ftpd umask is configured: [PASSED],28
+4.7.3.1 Ensure latest version of openssh is installed: [ERROR],1
+4.7.3.1 Ensure latest version of openssh is installed: [FAILED],163
+4.7.3.10 Ensure sshd LogLevel is configured: [ERROR],1
+4.7.3.10 Ensure sshd LogLevel is configured: [PASSED],163
+4.7.3.11 Ensure sshd MACs are configured: [ERROR],1
+4.7.3.11 Ensure sshd MACs are configured: [PASSED],163
+4.7.3.12 Ensure sshd MaxAuthTries is configured: [FAILED],136
+4.7.3.12 Ensure sshd MaxAuthTries is configured: [PASSED],28
+4.7.3.13 Ensure sshd PermitEmptyPasswords is disabled: [FAILED],136
+4.7.3.13 Ensure sshd PermitEmptyPasswords is disabled: [PASSED],28
+4.7.3.14 Ensure sshd PermitRootLogin is configured: [FAILED],120
+4.7.3.14 Ensure sshd PermitRootLogin is configured: [PASSED],44
+4.7.3.15 Ensure sshd PermitRootLogin is disabled: [FAILED],138
+4.7.3.15 Ensure sshd PermitRootLogin is disabled: [PASSED],27
+4.7.3.2 Ensure /etc/shosts.equiv and /etc/rhosts.equiv are removed: [FAILED],2
+4.7.3.2 Ensure /etc/shosts.equiv and /etc/rhosts.equiv are removed: [PASSED],162
+4.7.3.3 Ensure sftp-server arguments are configured: [FAILED],136
+4.7.3.3 Ensure sftp-server arguments are configured: [PASSED],28
+4.7.3.5 Ensure sshd Banner is configured: [PASSED],164
+4.7.3.6 Ensure sshd Ciphers are configured: [ERROR],1
+4.7.3.6 Ensure sshd Ciphers are configured: [PASSED],163
+4.7.3.7 Ensure sshd HostbasedAuthentication is disabled: [FAILED],1
+4.7.3.7 Ensure sshd HostbasedAuthentication is disabled: [PASSED],163
+4.7.3.9 Ensure sshd KexAlgorithms is configured: [ERROR],1
+4.7.3.9 Ensure sshd KexAlgorithms is configured: [PASSED],163
+4.7.4.1 Ensure sendmail version information is hidden: [FAILED],134
+4.7.4.1 Ensure sendmail version information is hidden: [PASSED],30
+4.7.4.2 Ensure sendmail PrivacyOptions is configured: [FAILED],2
+4.7.4.2 Ensure sendmail PrivacyOptions is configured: [PASSED],162
+4.7.4.3 Ensure sendmail DaemonPortOptions is configured: [FAILED],134
+4.7.4.3 Ensure sendmail DaemonPortOptions is configured: [PASSED],30
+4.7.4.4 Ensure access to /etc/mail/sendmail.cf is configured: [FAILED],147
+4.7.4.4 Ensure access to /etc/mail/sendmail.cf is configured: [PASSED],17
+4.7.4.5 Ensure access to /var/spool/clientmqueue is configured: [FAILED],2
+4.7.4.5 Ensure access to /var/spool/clientmqueue is configured: [PASSED],162
+4.7.4.6 Ensure access to /var/spool/mqueue is configured: [FAILED],152
+4.7.4.6 Ensure access to /var/spool/mqueue is configured: [PASSED],12
+4.8.1 Ensure herald is configured: [ERROR],27
+4.8.1 Ensure herald is configured: [FAILED],109
+4.8.1 Ensure herald is configured: [PASSED],28
+4.8.3 Ensure loginretries is configured: [ERROR],1
+4.8.3 Ensure loginretries is configured: [FAILED],118
+4.8.3 Ensure loginretries is configured: [PASSED],45
+4.8.5 Ensure administrative user accounts are locked: [ERROR],1
+4.8.5 Ensure administrative user accounts are locked: [FAILED],60
+4.8.5 Ensure administrative user accounts are locked: [PASSED],103
+4.8.6 Ensure session timeout is configured: [FAILED],144
+4.8.6 Ensure session timeout is configured: [PASSED],20
+4.9.2 Ensure root user default shell is ksh: [ERROR],1
+4.9.2 Ensure root user default shell is ksh: [PASSED],163
+4.9.4 Ensure default path does not include current working directory: [FAILED],2
+4.9.4 Ensure default path does not include current working directory: [PASSED],162
+4.9.5 Ensure root user path does not include current working directory: [ERROR],1
+4.9.5 Ensure root user path does not include current working directory: [PASSED],163
+4.9.6 Ensure motd is configured: [FAILED],21
+4.9.6 Ensure motd is configured: [PASSED],143
+5.1.1 Ensure all local user accounts have a hashed password: [ERROR],1
+5.1.1 Ensure all local user accounts have a hashed password: [FAILED],5
+5.1.1 Ensure all local user accounts have a hashed password: [PASSED],158
+5.1.2 Ensure usernames and UIDs are unique: [FAILED],1
+5.1.2 Ensure usernames and UIDs are unique: [PASSED],163
+5.1.3 Ensure group names and GIDs are unique: [FAILED],11
+5.1.3 Ensure group names and GIDs are unique: [PASSED],153
+5.2.4 Ensure passwords are controlled by password attributes: [ERROR],1
+5.2.4 Ensure passwords are controlled by password attributes: [FAILED],13
+5.2.4 Ensure passwords are controlled by password attributes: [PASSED],150
+5.2.8 Ensure a strong password hashing algorithm is configured: [ERROR],1
+5.2.8 Ensure a strong password hashing algorithm is configured: [FAILED],82
+5.2.8 Ensure a strong password hashing algorithm is configured: [PASSED],81
+5.3.10 Ensure System Accounts cannot access system using ftp.: [PASSED],21
+5.3.10 Ensure System Accounts cannot access system using ftp.: [WARNING],143
+5.3.2 Ensure user bin is secured: [ERROR],1
+5.3.2 Ensure user bin is secured: [FAILED],135
+5.3.2 Ensure user bin is secured: [PASSED],28
+5.3.3 Ensure user daemon is secured: [ERROR],1
+5.3.3 Ensure user daemon is secured: [FAILED],136
+5.3.3 Ensure user daemon is secured: [PASSED],27
+5.3.4 Ensure user guest is secured: [ERROR],1
+5.3.4 Ensure user guest is secured: [FAILED],84
+5.3.4 Ensure user guest is secured: [PASSED],79
+5.3.5 Ensure user lpd is secured: [ERROR],1
+5.3.5 Ensure user lpd is secured: [FAILED],90
+5.3.5 Ensure user lpd is secured: [PASSED],73
+5.3.6 Ensure user nobody is secured: [ERROR],1
+5.3.6 Ensure user nobody is secured: [FAILED],135
+5.3.6 Ensure user nobody is secured: [PASSED],28
+5.3.7 Ensure user nuucp is secured: [ERROR],1
+5.3.7 Ensure user nuucp is secured: [FAILED],81
+5.3.7 Ensure user nuucp is secured: [PASSED],82
+5.3.8 Ensure user sys is secured: [ERROR],1
+5.3.8 Ensure user sys is secured: [FAILED],135
+5.3.8 Ensure user sys is secured: [PASSED],28
+5.3.9 Ensure user uucp is secured: [ERROR],1
+5.3.9 Ensure user uucp is secured: [FAILED],88
+5.3.9 Ensure user uucp is secured: [PASSED],75
+6.2.4 Ensure cron.allow is configured: [ERROR],1
+6.2.4 Ensure cron.allow is configured: [WARNING],163
+7.1.1 Ensure /audit filesystem has been created and configured: [FAILED],142
+7.1.1 Ensure /audit filesystem has been created and configured: [PASSED],23
+7.1.2 Ensure Audit configuration defines audit classes: [FAILED],142
+7.1.2 Ensure Audit configuration defines audit classes: [PASSED],23
+7.1.3 Ensure Audit creates audit processing commands: [FAILED],142
+7.1.3 Ensure Audit creates audit processing commands: [PASSED],23
+7.1.4 Ensure Audit bin(ary) audit event collection is configured: [WARNING],165
+7.2.1 Ensure syslog local logging is configured: [WARNING],164
+7.2.3 Ensure syslog is not configured to receive logs from a remote client: [FAILED],139
+7.2.3 Ensure syslog is not configured to receive logs from a remote client: [PASSED],26
+CIS_IBM_AIX_7_v1.0.0_L1.audit from CIS IBM AIX 7 Benchmark v1.0.0: [PASSED],165
+CIS_IBM_AIX_7_v1.0.0_L2.audit from CIS IBM AIX 7 Benchmark v1.0.0: [PASSED],165

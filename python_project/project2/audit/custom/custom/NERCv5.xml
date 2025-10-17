@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+%Z%%M%  %I%  %W% %G% %U%
+-->
+
+<!--
+	RuleType NERCv5 represents NERC v5 Standards
+
+	RuleType Prereq represents Analysis Rules
+
+	Rulenames begin with dls for Default Level Security rules
+-->
+
+<!--
+	Please do not Translate the contents of this file.
+-->
+
+<!-- Specifies NERCv5 rules -->
+<!-- VERSION : NERCv5 1.0 -->
+<!-- FILE: 1.0 -->
+
+<AIXPertSecurityHardening>
+
+  <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="1">Prereq rule for non-TCB: Checks whether the system is non-TCB or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqlft" function="prereqlft">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="2">Prereq rule for LFT: Checks whether LFT is configured or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqcde" function="prereqcde">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="3">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="4">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="5">Prereq rule for Trusted Execution: Checks whether the system has Trusted Execution feature on or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_dislpd" function="dislpd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="7">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable lpd daemon: Stops lpd daemon and comments the lpd entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>lpd: /etc/inittab : d nercv5_dislpd</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_discde" function="discde">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="8">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable CDE: Disables CDE when LFT is not configured.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.methods,prereqlft</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>dt: /etc/inittab : d nercv5_discde</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_distimedmn" function="distimedmn">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="9">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable timed daemon: Stops timed daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d nercv5_distimedmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_disntpdmn" function="disntpdmn">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="10">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable NTP daemon: Stops NTP daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>xntpd d nercv5_disntpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_disrwhoddmn" function="disrwhoddmn">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="11">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rwhod daemon: Stops rwhod daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d nercv5_disrwhoddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_disdpid2dmn" function="disdpid2dmn">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="12">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable DPID2 daemon: Stops DPID2 daemon and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d nercv5_disdpid2dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_disdhcpagent" function="disdhcpagent">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="13">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable DHCP Agent: Stops DHCP relay agent and comments it's entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d nercv5_disdhcpagent</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_shell" function="shell">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="14">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rshd daemon: Comments the entry for rshd daemon in /etc/inetd.conf and kills all instances of rshd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp d nercv5_shell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_rlogin" function="rlogin">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="15">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rlogind: Comments the entry for rlogind daemon in /etc/inetd.conf and kills all instances of rlogind.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>login tcp d nercv5_rlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_rexecd" function="rexecd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="16">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rexecd: Comments the entry for rexecd daemon in /etc/inetd.conf and kills all instances of rexecd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp d nercv5_rexecd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_comsat" function="comsat">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="17">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable comsat: Comments the entry for comsat daemon in /etc/inetd.conf and kills all instances of comsat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>comsat udp d nercv5_comsat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_fingerd" function="fingerd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="18">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable fingerd: Comments the entry for fingerd daemon in /etc/inetd.conf and kills all instances of fingerd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d nercv5_fingerd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_systat" function="systat">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="19">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable systat: Comments the entry for systat daemon in /etc/inetd.conf and kills all instances of systat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>systat tcp d nercv5_systat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tftp" function="tftp">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="20">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable tftpd: Comments the entry for tftpd daemon in /etc/inetd.conf and kills all instances of tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp d nercv5_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_talk" function="talk">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="21">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable talkd: Comments the entry for talkd daemon in /etc/inetd.conf and kills all instances of talkd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp d nercv5_talk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_ntalk" function="ntalk">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="21">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable talkd: Comments the entry for talkd daemon in /etc/inetd.conf and kills all instances of talkd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ntalk udp d nercv5_ntalk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_rquotad" function="rquotad">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="22">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rquotad: Comments the entry for rquotad daemon in /etc/inetd.conf and kills all instances of rquotad.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d nercv5_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_rstatd" function="rstatd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="23">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rstatd: Comments the entry for rstatd daemon in /etc/inetd.conf and kills all instances of rstatd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d nercv5_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_rusersd" function="rusersd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="24">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rusersd: Comments the entry for rusersd daemon in /etc/inetd.conf and kills all instances of rusersd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rusersd udp d nercv5_rusersd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_rwalld" function="rwalld">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="25">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable rwalld: Comments the entry for rwalld daemon in /etc/inetd.conf and kills all instances of rwalld.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d nercv5_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_sprayd" function="sprayd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="26">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable sprayd: Comments the entry for sprayd daemon in /etc/inetd.conf and kills all instances of sprayd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d nercv5_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_pcnfsd" function="pcnfsd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="27">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable pcnfsd: Comments the entry for pcnfsd daemon in /etc/inetd.conf and kills all instances of pcnfsd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d nercv5_pcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tcpecho" function="tcpecho">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="28">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable TCP echo service: Comments the entry for TCP echo service in /etc/inetd.conf and kills all instances of echo(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d nercv5_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tcpdiscard" function="tcpdiscard">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="29">Implements NERC Standard CIP-007-5 R1.1: Disable UNnecessary and insecure services: Disable TCP discard service: Comments the entry for TCP discard service in /etc/inetd.conf and kills all instances of discard(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard tcp d nercv5_tcpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tcpchargen" function="tcpchargen">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="30">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable TCP chargen service: Comments the entry for TCP chargen service in /etc/inetd.conf and kills all instances of chargen(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen tcp d nercv5_tcpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tcpdaytime" function="tcpdaytime">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="31">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable TCP daytime service: Comments the entry for TCP daytime service in /etc/inetd.conf and kills all instances of daytime(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp d nercv5_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tcptime" function="tcptime">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="32">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable TCP time service: Comments the entry for TCP time service in /etc/inetd.conf and kills all instances of timed(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp d nercv5_tcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_udpecho" function="udpecho">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="33">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable UDP echo service: Comments the entry for UDP echo service in /etc/inetd.conf and kills all instances of echo(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d nercv5_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_udpdiscard" function="udpdiscard">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="34">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services. Disable UDP discard service: Comments the entry for UDP discard service in /etc/inetd.conf and kills all instances of discard(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d nercv5_udpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_udpchargen" function="udpchargen">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="35">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable UDP chargen service: Comments the entry for UDP chargen service in /etc/inetd.conf and kills all instances of chargen(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d nercv5_udpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_udpdaytime" function="udpdaytime">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="36">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable UDP daytime service: Comments the entry for UDP daytime service in /etc/inetd.conf and stops the daytime(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp d nercv5_udpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_udptime" function="udptime">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="37">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable UDP time service: Comments the entry for UDP time service in /etc/inetd.conf and stops the time(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp d nercv5_udptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_ftp" function="ftp">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="38">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable ftpd: Comments the entry for ftpd daemon in /etc/inetd.conf and stops ftpd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp d nercv5_ftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_telnet" function="telnet">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="39">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable telnetd: Comments the entry for telnetd daemon in /etc/inetd.conf and stops telnetd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp d nercv5_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_dtspc" function="dtspc">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="40">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable dtspcd: Comments the entry for dtspcd daemon in /etc/inetd.conf when LFT is not configured and CDE is disabled in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>dtspc tcp d nercv5_dtspc</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_ttdbserver" function="ttdbserver">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="41">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable ttdbserver service: Comments the entry for ttdbserver service in /etc/inetd.conf and kills all instances of ttdbserver service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ttdbserver tcp d nercv5_ttdbserver</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_cmsd" function="cmsd">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="42">Implements NERC Standard CIP-007-5 R1.1: Disable unnecessary and insecure services: Disable cmsd service: Comments the entry for cmsd service in /etc/inetd.conf and kills all instances of cmsd service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>cmsd udp d nercv5_cmsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_tcptr" function="tcptr">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="43">Implements NERC Standard CIP-007-5 R1.1: TCP Traffic Regulation High: Enforces denial-of-service mitigation on popular ports.</AIXPertDescription>
+    <AIXPertPrereqList></AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/tcptr_aixpert</AIXPertCommand>
+    <AIXPertArgs>nercv5_tcptr</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_tncmsg" function="tncmsg">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="44">Implements NERC Standard CIP-007-5 R2.1: Display a message to enable Trusted Network Connect (TNC).</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/GeneralMsg</AIXPertCommand>
+    <AIXPertArgs>enableTNC</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_sysintegrity" function="sysintegrity">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="45">Implements NERC Standard CIP-007-5 R3.3: Maintaining the system integrity by detecting removing and protecting against known types of malicious software.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+    <AIXPertArgs>nercv5_sysintegrity</AIXPertArgs>
+    <AIXPertGroup>System Integrity verification</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_pciaudit" function="pciaudit">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="46">Implements NERC Standard CIP-007-5 R4.4: Enable audit: Enables bin auditing.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pciaudit</AIXPertCommand>
+    <AIXPertArgs>h nercv5_pciaudit</AIXPertArgs>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_minlen" function="minlen">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="48">Implements NERC Standard CIP-007-5 R5.5.1: Minimum length for password: Specifies the minimum length of password to 6 characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=8 MORE ALL nercv5_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_minalpha" function="minalpha">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="49">Implements NERC Standard CIP-007-5 R5.5.2: Minimum number of alphabetic chars: Specifies the minimum number of alphabetic characters in a password to 1 to ensure that the password contains alphabetic characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minalpha=1 MORE ALL nercv5_minalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_mindigit" function="mindigit">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="50">Implements NERC Standard CIP-007-5 R5.5.2: Minimum number of digits: Specifies the minimum number of digits in a password to 1 to ensure that the password contains digits.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>mindigit=1 MORE ALL nercv5_mindigit</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_minspecial" function="minspecial">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="51">Implements NERC Standard CIP-007-5 R5.5.2: Minimum number of special chars: Specifies the minimum number of special characters in a password to 1 to ensure that the password contains special characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minspecialchar=1 MORE ALL nercv5_minspecial</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_minother" function="minother">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="52">Implements NERC Standard CIP-007-5 R5.5.2: Minimum number of non-alphabetic characters: Specifies the minimum number of non-alphabetic characters in a password to 2.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minother=2 MORE ALL nercv5_minother</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="nercv5_maxage" function="maxage">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="53">Implements NERC Standard CIP-007-5 R5.6: Maximum age for password: Specifies the maximum number of weeks (52 weeks, at least annually) that a password is valid.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxage=52 LESS ALL nercv5_maxage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_loginretries" function="loginretries">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="54">Implements NERC Standard CIP-007-5 R5.7: Number of login attempts before locking the account: Specifies the number of consecutive unsuccessful login attempts to 6 for each non-root user account before the account is disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>loginretries=6 LESS NONROOT nercv5_loginretries</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="nercv5_rtcmsg" function="rtcmsg">
+    <AIXPertRuleType type="NERCv5"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="214" msgNum="55">Implements NERC Standard CIP-010-2 R2.1: Display a message to enable Real Time Compliance (RTC).</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/GeneralMsg</AIXPertCommand>
+    <AIXPertArgs>enableRTC</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+</AIXPertSecurityHardening>

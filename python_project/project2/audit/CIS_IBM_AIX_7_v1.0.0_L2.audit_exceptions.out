@@ -1,0 +1,15 @@
+Total unique lines found in File A but not in File B: 13
+
+description     : "6.1.3 Ensure sudo commands use pty"
+description : "2.1.1 Ensure Trusted Execution Path is enabled"
+description : "2.1.3 Ensure Allowlist violations are enabled"
+description : "2.1.4 Ensure Trusted Execution (TE) policies are locked"
+description : "2.3 Ensure regular scans for unauthorized applications"
+description : "3.4 Ensure there are no system 'default group' writable files (objects)"
+description : "4.2.6 Ensure that host based authentication files are not present"
+description : "5.2.2 Ensure minimum password age is configured"
+description : "6.1.1 Ensure sudo is installed"
+description : "6.1.2 Ensure sudo logging is active"
+description : "6.2.1 Ensure at is restricted to authorized users"
+description : "6.2.3 Ensure crontab is restricted authorized users"
+description : "7.2.2 Ensure syslog is configured to send logs to a remote log host"

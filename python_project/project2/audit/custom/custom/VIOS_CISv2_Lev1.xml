@@ -1,0 +1,2298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROCKET_PROLOG_BEGIN_TAG							-->
+<!--										-->
+<!-- COPYRIGHT Rocket Software, Inc. 2023					-->
+<!-- All Rights Reserved							-->
+<!--										-->
+<!-- ROCKET_PROLOG_END_TAG							-->
+
+<!--    %Z%%M%  %I%  %W% %G% %U%
+
+	RuleType VIOS_CISv2 represents CIS version 2
+
+	RuleType Prereq represents Analysis Rules -->
+
+<!-- Specifies VIOS_CISv2 rules -->
+
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqAIX72GE" function="prereqAIX72GE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Prereq rule for AIX72: Checks whether AIX version is greater than or equal to 7.2.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqfsbyver</AIXPertCommand>
+    <AIXPertArgs>bos.mp64 ge 7.2</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqcde" function="prereqcde">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="3">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlft" function="prereqlft">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="4">Prereq rule for LFT: Checks whether LFT is configured.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="5">Prereq rule for Trusted Execution: Checks whether the system has the Trusted Execution feature on.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlh" function="prereqlh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="207" msgNum="6">Prereq rule for loginherald: Checks whether herald value is set or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlh</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="11">Prereq rule for non-TCB: Checks whether the system is non-TCB.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sysintegrity" function="sysintegrity">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-2.3, AIX7.2-2.4, and AIX7.2-2.5 (Level 1): Maintaining the system integrity by detecting, removing and protecting against known types of malicious software.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+    <AIXPertArgs>cisv2_sysintegrity</AIXPertArgs>
+    <AIXPertGroup>System Integrity verification</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_brokenlinks" function="brokenlinks">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-2.7 (Level 1): Remove Unused Symbolic Links.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>brokenlinks</AIXPertArgs>
+    <AIXPertGroup>System Integrity verification</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_find_groupwritables" function="find_groupwritables">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-3.4 (Level 1): Remove group write permission from default groups - exceptions must be in TSD and audit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>groupwritables</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_find_stickybit" function="find_stickybit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-3.5 (Level 1): Application Data with requirement for world writable directories.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>stickybit</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_find_worldwritables" function="find_worldwritables">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-3.6 (Level 1): Ensure there are no world writable files - exceptions must be in TSD and audit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>worldwritables</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_find_staffwritables" function="find_staffwritables">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-3.7 (Level 1): Ensure there are no 'staff' writable files - exceptions must be in TSD and audit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>staffwritables</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_find_ownerless" function="find_ownerless">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-3.8 (Level 1): Ensure all files and directories are owned by a user (uid) and assigned to a group (gid).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>ownerless</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_uninstallCDE" function="uninstallCDE">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.1 (Level 1): De-install CDE.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+    <AIXPertArgs>uninstall like:CDE</AIXPertArgs>
+    <AIXPertGroup>Manage filesets</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermdtaction" function="chpermdtaction">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.5 (Level 1): Remove setuid/setgid bit from /usr/dt/bin/dtaction.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtaction</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermdtappgather" function="chpermdtappgather">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.5 (Level 1): Remove setuid/setgid bit from /usr/dt/bin/dtappgather.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtappgather</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermdtprintinfo" function="chpermdtprintinfo">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.5 (Level 1): Remove setuid/setgid bit from /usr/dt/bin/dtprintinfo.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtprintinfo</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermdtsession" function="chpermdtsession">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.5 (Level 1): Remove setuid/setgid bit from /usr/dt/bin/dtsession.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtsession</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_cde_savertimeout" function="cisv2_cde_savertimeout">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation 4.5.1.7: CDE - screensaver lock.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+    <AIXPertArgs>create /etc/dt/config/*/sys.resources add dtsession*saverTimeout 10</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_cde_locktimeout" function="cisv2_cde_locktimeout">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation 4.5.1.7: CDE - screensaver lock.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+    <AIXPertArgs>create /etc/dt/config/*/sys.resources add dtsession*lockTimeout 10</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_cde_labelstring" function="cisv2_cde_labelstring">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation 4.5.1.8: CDE - login screen hostname masking.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+    <AIXPertArgs>copy /etc/dt/config/*/Xresources add Dtlogin*greeting.labelString &quot;Authorized uses only. All activity may be monitored and reported.&quot;</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_cde_perslabelstring" function="cisv2_cde_perslabelstring">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation 4.5.1.8: CDE - login screen hostname masking.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+    <AIXPertArgs>copy /etc/dt/config/*/Xresources add Dtlogin*greeting.persLabelString &quot;Authorized uses only. All activity may be monitored and reported.&quot;</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermxconfig" function="chpermxconfig">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.9 (Level 1): Set the read-only group and other permissions for /etc/dt/config/Xconfig.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:g-w,o-w path:/etc/dt/config/Xconfig</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownxconfig" function="chownxconfig">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.9 (Level 1): Set the ownership root:bin for /etc/dt/config/Xconfig.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:bin path:/etc/dt/config/Xconfig</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermxservers" function="chpermxservers">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.10 (Level 1): Set the read-only group and other permissions for /etc/dt/config/Xservers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:g-w,o-w path:/etc/dt/config/Xservers</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownxservers" function="chownxservers">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.10 (Level 1): Set the ownership root:bin for /etc/dt/config/Xservers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:bin path:/etc/dt/config/Xservers</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermxresources" function="chpermxresources">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.11 (Level 1): Set permissions for /etc/dt/config/*/Xresources.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0644 path:/etc/dt/config/*/Xresources</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownxresources" function="chownxresources">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.1.11 (Level 1): Set the ownership root:sys for /etc/dt/config/*/Xresources.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:sys path:/etc/dt/config/*/Xresources</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chetcftpusers" function="chetcftpusers">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.2.1 (Level 1): Disable root access to ftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chetcftpusers</AIXPertCommand>
+    <AIXPertArgs>a cisv2_chetcftpusers</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_ftpbanner" function="ftpbanner">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.2.2 (Level 1): Set an ftp login banner which displays the acceptable usage policy.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,bos.msg.en_US.net.tcp.client</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ftpbanner</AIXPertCommand>
+    <AIXPertArgs>cisv2_ftpbanner</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_ftpd_noworldaccess" function="ftpd_noworldaccess">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.2.3 (Level 1): FTPD - prevent world access and group write to files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/inetd_config</AIXPertCommand>
+    <AIXPertArgs>ftp tcp ftpd -l -u 027</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_sshversionv" function="sshversion">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.1 (Level 1): Minimum version is 8.1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>VERSION 8.1 NA</AIXPertArgs>
+    <AIXPertGroup>Remote access settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_rmetchostsequiv" function="rmetchostsequiv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.2 (Level 1): Disable or comment out entries from /etc/hosts.equiv file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+    <AIXPertArgs>cisv1_rmetchostsequiv</AIXPertArgs>
+    <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_shosts" function="shosts">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.3 (Level 1): Remove any existing .shosts files from all user home directories.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+    <AIXPertArgs>l cisv1_shosts</AIXPertArgs>
+    <AIXPertGroup>Remote access settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_banner" function="sshd_banner">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.6 (Level 1): sshd_config: Banner exists and message contains Only
+      authorized users allowed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Banner /etc/motd.ssh /etc/ssh/sshd_config VIOS_CISv2</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_hostbasedauthentication" function="sshd_hostbasedauthentication">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.7 (Level 1): sshd_config: HostbasedAuthentication is no.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>HostbasedAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_ignore_rhosts" function="sshd_ignore_rhosts">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.8 (Level 1): sshd_config: IgnoreRhosts is yes or shosts-only.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MULTIPLE IgnoreRhosts yes shosts-only /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_permit_empty_passwords" function="sshd_permit_empty_passwords">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.9 (Level 1): sshd_config: PermitEmptyPasswords is no.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PermitEmptyPasswords no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_log_level" function="sshd_log_level">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.10 (Level 1): sshd_config: LogLevel is INFO or VERBOSE.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MULTIPLE LogLevel INFO VERBOSE /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_sftp_server_args" function="sshd_sftp_server_args">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.11 (Level 1): sshd_config: sftp-server arguments include -u 027 -f
+      AUTH -l INFO.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MULTIPLE Subsystem "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l INFO" "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l DEBUG" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_max_auth_tries" function="sshd_max_auth_tries">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.12 (Level 1): sshd_config: MaxAuthTries is 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>LE MaxAuthTries 4 4 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_permit_user_environment" function="sshd_permit_user_environment">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.13 (Level 1): sshd_config: PermitUserEnvironment is no.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PermitUserEnvironment no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_kex_algorithms" function="sshd_kex_algorithms">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.15 (Level 1): sshd_config: KexAlgorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>SET KexAlgorithms "curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_ciphers" function="sshd_ciphers">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.16 (Level 1): sshd_config: Ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>SET Ciphers "aes128-ctr,aes192-ctr,aes256-ctr,chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_macs" function="sshd_macs">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.17 (Level 1): ssh_config: MACs - Message Authtification Codes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>SET MACs "umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sshd_rekey_limit" function="sshd_rekey_limit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.3.18 (Level 1): ssh_config: ReKeyLimit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>RekeyLimit "1G 3600" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sendmail_sgm" function="sendmail_sgm">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.1 (Level 1): Hide sendmail version information.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+    <AIXPertArgs>SmtpGreetingMessage mailerready</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sendmail_po" function="sendmail_po">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.2 (Level 1): Ensure that PrivacyOptions includes at least authwarnings, noexpn, and novrfy.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+    <AIXPertArgs>PrivacyOptions</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sendmail_dpo" function="sendmail_dpo">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.3 (Level 1): Ensure that sendmail in MTA mode supports only local applications that require legacy MTA.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+    <AIXPertArgs>DaemonPortOptions</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownsendmailcf" function="chownsendmailcf">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.4 (Level 1): Set the ownership root for /etc/mail/sendmail.cf.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root path:/etc/mail/sendmail.cf</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsendmailcf" function="chpermsendmailcf">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.4 (Level 1): Set the permissions u=rw,g=r,o= for /etc/mail/sendmail.cf.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0640 path:/etc/mail/sendmail.cf</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownclientmqueue" function="chownclientmqueue">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.5 (Level 1): Set the ownership smmsp for /var/spool/clientmqueue.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>smmsp path:/var/spool/clientmqueue</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermclientmqueue" function="chpermclientmqueue">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.5 (Level 1): Set the permissions ug=rwx,o= for /var/spool/clientmqueue.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0770 path:/var/spool/clientmqueue</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownmqueue" function="chownmqueue">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.6 (Level 1): Set the ownership root for /var/spool/mqueue.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root path:/var/spool/mqueue</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermmqueue" function="chpermmqueue">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.4.6 (Level 1): Set the permissions u=rwx,go= for /var/spool/mqueue.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0700 path:/var/spool/mqueue</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_uninstallsnmp" function="uninstallsnmp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.6 (Level 1): Uninstall snmp and snmpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+    <AIXPertArgs>uninstall like:snmp</AIXPertArgs>
+    <AIXPertGroup>Manage filesets</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_uninstallsendmail" function="uninstallsendmail">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.5.7 (Level 1): Uninstall sendmail.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+    <AIXPertArgs>uninstall like:sendmail</AIXPertArgs>
+    <AIXPertGroup>Manage filesets</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_logintimeout" function="logintimeout">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.6.1 (Level 1): Specifies the time interval (30 seconds) to type in a password.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logintimeout=30 usw cisv2_logintimeout</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_logindelay" function="logindelay">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.6.2 (Level 1): Specifies the delay between unsuccessful logins to 10 seconds.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logindelay=10 default cisv2_logindelay</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginretries" function="loginretries">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.6.4 (Level 1): Specifies the number of consecutive unsuccessful login attempts to 5, for each non-root user account before the account is disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>loginretries=5 NONROOT cisv2_loginretries</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginherald" function="loginherald">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.6.3 (Level 1): Adds a default herald to /etc/security/login.cfg.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/loginherald</AIXPertCommand>
+    <AIXPertArgs>a cisv2_loginherald</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_homedirs" function="homedirs">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.1 and AIX7.2-4.7.1.2 (Level 1): Home directory must exist and Home directory must be owned by account, or special account.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/homedirectories</AIXPertCommand>
+    <AIXPertArgs>users</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermhome" function="chpermhome">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.3 (Level 1): Set the permissions g-w,o-w for all user home directories.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>add:0755 path:/home/*/</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownaudit" function="chownaudit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.4 (Level 1): Set the ownership root:audit for /audit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:audit path:/audit</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermaudit" function="chpermaudit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.4 (Level 1): Set the permissions u=rwx,g=rs,o= for /audit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:2750 path:/audit</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermauditdirtree" function="chpermauditdirtree">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.4 (Level 1): Set the permissions u=rw,g=r,o= for all /audit/* objects and the children objects recursively.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0640 recursiveexcl:/audit</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_securitydirsperms" function="securitydirsperms">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.5 (Level 1): SECURITY Subsystems: /etc/security.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/securitydirs</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermvaradmrasdirtree" function="chpermvaradmrasdirtree">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.6 (Level 1): Set the permissions o-rw for /var/adm/ras/*.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw recursiveexcl:/var/adm/ras</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownadmsa" function="chownadmsa">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.7 (Level 1): Set the ownership adm:adm for /var/adm/sa.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>adm:adm path:/var/adm/sa</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermadmsa" function="chpermadmsa">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.7 (Level 1): Set the permissions u=rwx,go=rx for /var/adm/sa.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0755 path:/var/adm/sa</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermcrontabsdirtree" function="chpermcrontabsdirtree">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.8 (Level 1): Set the permissions o= for the children objects of /var/spool/cron/crontabs recursively.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rwx recursiveexcl:/var/spool/cron/crontabs</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chowncrontabs" function="chowncrontabs">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.8 (Level 1): Set the group cron for all /var/spool/cron/crontabs directory tree objects.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>:cron recursiveincl:/var/spool/cron/crontabs</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermpath" function="chpermpath">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.9 (Level 1): Set the permissions g-w,o-w for all the directories in root user PATH environment variable.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chpermpath</AIXPertCommand>
+    <AIXPertArgs>cisv1_chpermpath</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_roothomedir" function="roothomedir">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.10 (Level 1): Ensure root user has a dedicated home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/homedirectories</AIXPertCommand>
+    <AIXPertArgs>root</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownsecurityaudit" function="chownsecurityaudit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.11 (Level 1): Set the ownership root:audit for all /etc/security/audit directory tree objects.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:audit recursiveincl:/etc/security/audit</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsecurityaudit" function="chpermsecurityaudit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.11 (Level 1): Set the permissions u=rwx,g=rx,o= for/etc/security/audit.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0750 path:/etc/security/audit</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsecurityauditdirtree" function="chpermsecurityauditdirtree">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.1.11 (Level 1): Set the permissions u=rw,g=r,o= for all /etc/security/audit/* objects and the children objects recursively.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0640 recursiveexcl:/etc/security/audit</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsubmitcf" function="chpermsubmitcf">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.1 (Level 1): New configuration file for sendmail /etc/mail/submit.cf.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0640 path:/etc/mail/submit.cf</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_find_setuid" function="find_setuid">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.2 (Level 1): Verify Trust of suid, sgid, acl, and trusted-bit files and programs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+    <AIXPertArgs>setuid</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rootcrnjobck" function="rootcrnjobck">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.3 (Level 1): Make sure the permissions of all the root crontab entries are owned and writable by the root user only.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rootcrnjobck</AIXPertCommand>
+    <AIXPertArgs>cisv1_rootcrnjobck</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Enhancements</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermhomeconf" function="chpermhomeconf">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.4 (Level 1): Set the permissions g-w,o-w for all user configuration files in each home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:g-w,o-w path:/home/*/.*/</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsmitlog" function="chpermsmitlog">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.5 (Level 1): Set the permissions o-rw for /smit.log.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw path:/{,root/}smit.log</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chowngroup" function="chowngroup">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.6 (Level 1): Set the ownership root:security for /etc/group.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:security path:/etc/group</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermgroup" function="chpermgroup">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.6 (Level 1): Set the permissions u=rw,go=r for /etc/group.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0644 path:/etc/group</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chperminetd" function="chperminetd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.7 (Level 1): Set the permissions u=rw,go=r for /etc/inetd.conf.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0644 path:/etc/inetd.conf</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chowninetd" function="chowninetd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.7 (Level 1): Set the ownership root:system for /etc/inetd.conf.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:system path:/etc/inetd.conf</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownmotd" function="chownmotd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.8 (Level 1): Set the ownership bin:bin for /etc/motd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>bin:bin path:/etc/motd</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermmotd" function="chpermmotd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.8 (Level 1): Set the permissions u=rw,go=r for /etc/motd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0644 path:/etc/motd</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownpasswd" function="chownpasswd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.9 (Level 1): Set the ownership root:security for /etc/passwd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:security path:/etc/passwd</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermpasswd" function="chpermpasswd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.9 (Level 1): Set the permissions u=rw,go=r for /etc/passwd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0644 path:/etc/passwd</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsshconfig" function="chpermsshconfig">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.10 (Level 1): Set the permissions u=rw,go=r for /etc/ssh/ssh_config.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0644 path:/etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsshdconfig" function="chpermsshdconfig">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.11 (Level 1): Set the permissions u=rw,go= for /etc/ssh/sshd_config.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0600 path:/etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chownatallow" function="chownatallow">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.12 (Level 1): Set the ownership root:sys for /var/adm/cron/at.allow.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:sys path:/var/adm/cron/at.allow</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermatallow" function="chpermatallow">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.12 (Level 1): Set the permissions u=r,go= for /var/adm/cron/at.allow.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0400 path:/var/adm/cron/at.allow</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chowncronallow" function="chowncronallow">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.13 (Level 1): Set the ownership root:sys for /var/adm/cron/cron.allow.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root:sys path:/var/adm/cron/cron.allow</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermcronallow" function="chpermcronallow">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.13 (Level 1): Set the permissions u=r,go= for /var/adm/cron/cron.allow.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0400 path:/var/adm/cron/cron.allow</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermRMstartlog" function="chpermRMstartlog">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.14 (Level 1): Set the permissions o-rw for /var/ct/RMstart.log.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw path:/var/ct/RMstart.log</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermcronlog" function="chpermcronlog">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.15 (Level 1): Set the permissions o-rw for /var/adm/cron/log.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw path:/var/adm/cron/log</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermdpid2log" function="chpermdpid2log">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.16 (Level 1): Set the permissions o-rw for /var/tmp/dpid2.log.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw path:/var/tmp/dpid2.log</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermhostmibdlog" function="chpermhostmibdlog">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.17 (Level 1): Set the permissions o-rw for /var/tmp/hostmibd.log.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw path:/var/tmp/hostmibd.log</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chpermsnmpdlog" function="chpermsnmpdlog">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.7.2.18 (Level 1): Set the permissions o-rw for /var/tmp/snmpd.log.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>sym:o-rw path:/var/tmp/snmpd.log</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rmdotfrmpathetcenv" function="rmdotfrmpathetcenv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.11 (Level 1): Removes the dot from the PATH variable in /etc/environment file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathetcenv</AIXPertCommand>
+    <AIXPertArgs>r cisv2_rmdotfrmpathetcenv</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Config</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_lockdaemon" function="lockdaemon">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true daemon cisv2_lockdaemon</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_lockbin" function="lockbin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user bin.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true bin cisv2_lockbin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_locksys" function="locksys">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user sys.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true sys cisv2_locksys</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_lockadm" function="lockadm">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user adm.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true adm cisv2_lockadm</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_lockuucp" function="lockuucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user uucp.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true uucp cisv2_lockuucp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_locknobody" function="locknobody">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user nobody.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true nobody cisv2_locknobody</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_locklpd" function="locklpd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user lpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true lpd cisv2_locklpd</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_locklp" function="locklp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user lp.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true lp cisv2_locklp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_lockinvscout" function="lockinvscout">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user invscout.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true invscout cisv2_lockinvscout</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_lockipsec" function="lockipsec">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user ipsec.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true ipsec cisv2_lockipsec</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_locknuucp" function="locknuucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user nuucp.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true nuucp cisv2_locknuucp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_locksshd" function="locksshd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.12 (Level 1): Lock historical user sshd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user account_locked=true sshd cisv2_locksshd</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rmdotfrmpathroot" function="rmdotfrmpathroot">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.13 (Level 1): Remove current working directory from root's PATH.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathroot</AIXPertCommand>
+    <AIXPertArgs>cisv2_rmdotfrmpathroot</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_histexpire" function="histexpire">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.1.1.1 (Level 1): Specifies the number of weeks before a password can be reused to 52.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histexpire=52 ALL cisv2_histexpire</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_histsize" function="histsize">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.1.1.2 (Level 1): Specifies the number of previous passwords a user cannot reuse to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histsize=0 ALL cisv2_histsize</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minage" function="minage">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.1.1.3 (Level 1): Specifies the minimum number of weeks to 1 week, before a password can be changed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minage=1 ALL cisv2_minage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_hashedpasswords" function="hashedpasswords">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.1.2 (Level 1): All accounts must have a hashed password.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+    <AIXPertArgs>hashed</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_checkuid" function="checkuid">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.1.3 (Level 1): Ensure all users have a unique UID and name on the system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkuid</AIXPertCommand>
+    <AIXPertArgs>uid cisv2_checkuid</AIXPertArgs>
+    <AIXPertGroup>Password Policy Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_checkgid" function="checkgid">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.1.4 (Level 1): Ensure all groups have a unique GID and name on the system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkgid</AIXPertCommand>
+    <AIXPertArgs>gid cisv2_checkgid</AIXPertArgs>
+    <AIXPertGroup>Password Policy Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_policy4all" function="policy4all">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.1 and AIX7.2-5.2.4 (Level 1): Ensure password policy is enforced for all users.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+    <AIXPertArgs>policy</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_pwdalgorithm" function="pwdalgorithm">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.2 (Level 1): Set the system password algorithm to a stronger cryptographic hash algorithm.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg pwd_algorithm=ssha256 usw cisv2_pwdalgorithm</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_nocrypt" function="nocrypt">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.3 (Level 1): Ensure passwords are not hashed using 'crypt'.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+    <AIXPertArgs>nocrypt</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minlen" function="minlen">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.5 (Level 1): Specifies the minimum length of a password to 14 characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=14 ALL cisv2_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_mindiff" function="mindiff">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.6 (Level 1): Specifies the minimum number of characters that were present in the previous password that cannot be used in the new password to 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>mindiff=4 ALL cisv1_mindiff</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minalpha" function="minalpha">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.7 (Level 1): Specifies the minimum number of alphabetic characters in a password to 3.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minalpha=3 ALL cisv2_minalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minother" function="minother">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.2.8 (Level 1): Specifies the minimum number of non-alphabetic characters in a password to 3.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minother=3 ALL cisv2_minother</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_maxrepeats" function="maxrepeats">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="12">Implements CIS Recommendations AIX7.2-5.2.9 (Level 1): Specifies the maximum number of times a character can appear in a password to 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxrepeats=4 ALL cisv2_maxrepeats</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_mindigit" function="mindigit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation AIX7.2-5.2.10 (Level 1): Specifies the minimum number of digits in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>mindigit=1 ALL cisv2_mindigit</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minloweralpha" function="minloweralpha">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation AIX7.2-5.2.11 (Level 1): Specifies the minimum number of lowercase alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minloweralpha=1 ALL cisv2_minloweralpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minupperalpha" function="minupperalpha">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation AIX7.2-5.2.12 (Level 1): Specifies the minimum number of uppercase alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minupperalpha=1 ALL cisv2_minupperalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_minspecialchar" function="minspecialchar">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendation AIX7.2-5.2.13 (Level 1): Specifies the minimum number of special characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minspecialchar=1 ALL cisv3_minspecialchar</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginadm" function="loginadm">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.1 (Level 1): Set local login (login) for user adm to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false adm cisv2_loginadm</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginadm" function="rloginadm">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.1 (Level 1): Set remote login (rlogin) for user adm to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false adm cisv2_rloginadm</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginbin" function="loginbin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.2 (Level 1): Set local login (login) for user bin to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false bin cisv2_loginbin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginbin" function="rloginbin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.2 (Level 1): Set remote login (rlogin) for user bin to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false bin cisv2_rloginbin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_logindaemon" function="logindaemon">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.3 (Level 1): Set local login (login) for user daemon to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false daemon cisv2_logindaemon</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rlogindaemon" function="rlogindaemon">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.3 (Level 1): Set remote login (rlogin) for user daemon to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false daemon cisv2_rlogindaemon</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginguest" function="loginguest">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.4 (Level 1): Set local login (login) for user guest to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false guest cisv2_loginguest</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginguest" function="rloginguest">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.4 (Level 1): Set remote login (rlogin) for user guest to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false guest cisv2_rloginguest</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+   <AIXPertEntry name="cisv2_loginlpd" function="loginlpd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.5 (Level 1): Set local login (login) for user lpd to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false lpd cisv2_loginlpd</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginlpd" function="rloginlpd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.5 (Level 1): Set remote login (rlogin) for user lpd to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false lpd cisv2_rloginlpd</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginnobody" function="loginnobody">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.6 (Level 1): Set local login (login) for user nobody to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false nobody cisv2_loginnobody</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginnobody" function="rloginnobody">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.6 (Level 1): Set remote login (rlogin) for user nobody to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false nobody cisv2_rloginnobody</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginnuucp" function="loginnuucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.7 (Level 1): Set local login (login) for user nuucp to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false nuucp cisv2_loginnuucp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginnuucp" function="rloginnuucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.7 (Level 1): Set remote login (rlogin) for user nuucp to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false nuucp cisv2_rloginnuucp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginsys" function="loginsys">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.8 (Level 1): Set local login (login) for user sys to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false sys cisv2_loginsys</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginsys" function="rloginsys">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.8 (Level 1): Set remote login (rlogin) for user sys to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false sys cisv2_rloginsys</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_loginuucp" function="loginuucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.9 (Level 1): Set local login (login) for user uucp to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false uucp cisv2_loginuucp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rloginuucp" function="rloginuucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.9 (Level 1): Set remote login (rlogin) for user uucp to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false uucp cisv2_rloginuucp</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_uidftpusers" function="uidftpusers">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.3.10 (Level 1): Add all users with a UID less than 200 to /etc/ftpusers file.</AIXPertDescription>
+     <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/uidftpusers</AIXPertCommand>
+    <AIXPertArgs>cisv2_uidftpusers</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_maxage" function="maxage">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.6 (Level 1): Specifies the maximum number of weeks (13 weeks) that a password is valid.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxage=13 ALL cisv2_maxage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_maxexpired" function="maxexpired">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-5.7 (Level 1): Specifies the maximum time (in weeks) beyond the maxage value that a user can change an expired password to 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxexpired=4 ALL cisv2_maxexpired</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_writesrv" function="cisv2_writesrv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.1: Comment the entry for writesrc in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>writesrv: /etc/inittab : d cisv2_writesrv</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_blocktalksrv" function="cisv2_blocktalksrv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.2: Block attempts to use the talk and write command.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0000 path:/usr/bin/talk</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_blockwritesrv" function="cisv2_blockwritesrv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.2: Block attempts to use the talk and write command.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0000 path:/usr/sbin/writesrc</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_dt" function="cisv2_dt">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.3: Comment the entry for dt in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>dt: /etc/inittab : d cisv2_dt</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_piobe" function="cisv2_piobe">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.4: Comment the entry for piobe in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>piobe: /etc/inittab : d cisv2_piobe</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_qdaemon" function="cisv2_qdaemon">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.5: Comment the entry for piobe in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>qdaemon: /etc/inittab : d cisv2_qdaemon</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rcnfs" function="cisv2_rcnfs">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.1.6: Comment the entry for rcnfs in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>rcnfs: /etc/inittab : d cisv2_rcnfs</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_uninstallcasagent" function="uninstallcasagent">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.1.1.7 (Level 1): Uninstall cas_agent.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+    <AIXPertArgs>uninstall like:cas.agent</AIXPertArgs>
+    <AIXPertGroup>Manage filesets</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_inetd" function="cisv2_inetd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.1: Disable inetd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>inetd d cisv2_inetd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_aixmibd" function="cisv2_aixmibd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.2: Disable aixmibd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>aixmibd d cisv2_aixmibd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_dhcpcd" function="cisv2_dhcpcd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.3: Disable dhcpcd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpcd d cisv2_dhcpcd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_dhcprd" function="cisv2_dhcprd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.4: Disable dhcprd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d cisv2_dhcprd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_dhcpsd" function="cisv2_dhcpsd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.5: Disable dhcpsd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpsd d cisv2_dhcpsd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_dpid2" function="cisv2_dpid2">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.6: Disable dpid2 daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d cisv2_dpid2</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_gated" function="cisv2_gated">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.7: Disable gated daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>gated d cisv2_gated</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_hostmibd" function="cisv2_hostmibd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.8: Disable hostmibd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>hostmibd d cisv2_hostmibd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_mrouted" function="cisv2_mrouted">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.9: Disable mrouted daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>mrouted d cisv2_mrouted</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_named" function="cisv2_named">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.10: Disable named daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>named d cisv2_named</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_portmap" function="cisv2_portmap">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.11: Disable portmap daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>portmap d cisv2_portmap</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_routed" function="cisv2_routed">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.12: Disable routed daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>routed d cisv2_routed</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rwhod" function="cisv2_rwhod">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.13: Disable rwhod daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d cisv2_rwhod</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_sendmail" function="cisv2_sendmail">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.14: Disable sendmail daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>sendmail d cisv2_sendmail</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_snmpd" function="cisv2_snmpd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.15: Disable snmpd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpd d cisv2_snmpd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_snmpmibd" function="cisv2_snmpmibd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.16: Disable snmpmibd daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpmibd d cisv2snmpmibd</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_timed" function="cisv2_timed">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.2.17: Disable timed daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d cisv2_timed</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_autoconf6" function="cisv2_autoconf6">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.3.1: Disable autoconf6 daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>autoconf6 d cisv2_autoconf6</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_ndpdhost" function="cisv2_ndpdhost">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.3.2: Disable ndpd-host daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>ndpd-host d cisv2_ndpdhost</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_ndpdrouter" function="cisv2_ndpdrouter">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.3.3: Disable ndpd-router daemon and comment its entry in /etc/rc/tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>ndpd-router d cisv2_ndpdrouter</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_uninstallNFSclient" function="uninstallNFSclient">
+    <AIXPertRuleType type="VIOS_CISv2" />
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendations AIX7.2-4.1.4.1 (Level 1): NFS - de-install NFS client</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/uninstallNFSclient</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_disableNFSsuid" function="disableNFSsuid">
+    <AIXPertRuleType type="VIOS_CISv2" />
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendations AIX7.2-4.1.4.3 (Level 1): NFS - enable both nosuid and nodev options on NFS
+      client mounts</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableNFSsuid</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_disableNFSlocal" function="disableNFSlocal">
+    <AIXPertRuleType type="VIOS_CISv2" />
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="193">Implements CIS Recommendations AIX7.2-4.1.4.4 (Level 1): NFS - localhost removal</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableNFSlocal</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv1_rootsquashNFS" function="rootsquashNFS">
+    <AIXPertRuleType type="VIOS_CISv2" />
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendations AIX7.2-4.1.4.6 (Level 1): NFS - no_root_squash option.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rootsquashNFS</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_bootps" function="cisv2_bootps">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.1: Comment the entry for bootps service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>bootps udp d cisv2_bootps</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_chargen" function="cisv2_chargen">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.2: Comment the entry for chargen service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d cisv2_chargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_comsat" function="cisv2_comsat">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.3: Comment the entry for comsat service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>comsat udp d cisv2_comsat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_tcpdaytime" function="cisv2_tcpdaytime">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.4: Comment the entry for daytime service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp d cisv2_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_udpdaytime" function="cisv2_udpdaytime">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.4: Comment the entry for daytime service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp d cisv2_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_discard" function="cisv2_discard">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.5: Comment the entry for discard service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d cisv2_discard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_tcpecho" function="cisv2_tcpecho">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.6: Comment the entry for echo service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d cisv2_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_udpecho" function="cisv2_udpecho">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.6: Comment the entry for echo service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d cisv2_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_exec" function="cisv2_exec">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.7: Comment the entry for exec service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp6 d cisv2_exec</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_finger" function="cisv2_finger">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.8: Comment the entry for finger service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d cisv2_finger</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ftp" function="cisv2_ftp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.9: Comment the entry for ftp service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp6 d cisv2_ftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_imap2" function="cisv2_imap2">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.10: Comment the entry for imap2 service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>imap2 tcp d cisv2_imap2</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_instsrv" function="cisv2_instsrv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.11: Comment the entry for instsrv service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>instsrv tcp d cisv2_instsrv</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_klogin" function="cisv2_klogin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.12: Comment the entry for klogin service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>klogin tcp d cisv2_klogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_kshell" function="cisv2_kshell">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.13: Comment the entry for kshell service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>kshell tcp d cisv2_kshell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_rlogin" function="cisv2_rlogin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.14: Comment the entry for rlogin service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rlogin tcp6 d cisv2_rlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_netstat" function="cisv2_netstat">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.15: Comment the entry for netstat service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>netstat tcp d cisv2_netstat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ntalk" function="cisv2_ntalk">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.16: Comment the entry for ntalk service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ntalk udp d cisv2_ntalk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_pcnfsd" function="cisv2_pcnfsd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.17: Comment the entry for pcnfsd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d cisv2_pcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_pop3" function="cisv2_pop3">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.18: Comment the entry for pop3d service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pop3 tcp d cisv2_pop3</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_rexd" function="cisv2_rexd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.19: Comment the entry for rexd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rexd tcp d cisv2_rexd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_rquotad" function="cisv2_rquotad">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.20: Comment the entry for rquotad service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d cisv2_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_rstatd" function="cisv2_rstatd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.21: Comment the entry for rstatd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d cisv2_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ruserd" function="cisv2_ruserd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.22: Comment the entry for ruserd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ruserd udp d cisv2_ruserd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_rwalld" function="cisv2_rwalld">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.23: Comment the entry for rwalld service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d cisv2_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_shell" function="cisv2_shell">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.24: Comment the entry for shell service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp6 d cisv2_shell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_sprayd" function="cisv2_sprayd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.25: Comment the entry for sprayd service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d cisv2_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_xmquery" function="cisv2_xmquery">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.26: Comment the entry for xmquery service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>xmquery udp d cisv2_xmquery</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_talk" function="cisv2_talk">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.27: Comment the entry for talk service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp d cisv2_talk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_telnet" function="cisv2_telnet">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.28: Comment the entry for telnet service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp6 d cisv2_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_tftp" function="cisv2_tftp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.29: Comment the entry for tftp service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp6 d cisv2_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_tcptime" function="cisv2_tcptime">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.30: Comment the entry for time service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp d cisv2_tcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_udptime" function="cisv2_udptime">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.30: Comment the entry for time service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp d cisv2_udptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_uucp" function="cisv2_uucp">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.1.5.31: Comment the entry for uucp service in /etc/inetd.conf and refresh inetd process.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>uucp tcp d cisv2_uucp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_clean_partial_conns" function="cisv2_clean_partial_conns">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.1: Set the value of the network option clean_partial_conns to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>clean_partial_conns=1 s cisv2_clean_partial_conns</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_bcastping" function="cisv2_bcastping">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.2: Set the value of the network option bcastping to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>bcastping=0 s cisv2_bcastping</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_directedbcast" function="cisv2_directedbcast">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.3: Set the value of the network option directed_broadcast to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>directed_broadcast=0 s cisv2_directedbcast</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_icmpaddrmask" function="cisv2_icmpaddrmask">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.4: Set the value of the network option icmpaddressmask to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>icmpaddressmask=0 s cisv2_icmpaddrmask</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipforwarding" function="cisv2_ipforwarding">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.5: Set the value of the network option ipforwarding to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipforwarding=0 s cisv2_ipforwarding</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipignoredirects" function="cisv2_ipignoredirects">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.6: Set the value of the network option ipignoredirects 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipignoreredirects=1 s cisv2_ipignoredirects</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipsendredirects" function="cisv2_ipsendredirects">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.7: Set the value of the network option ipsendredirects 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsendredirects=0 s cisv2_ipsendredirects</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipsrcrouteforward" function="cisv2_ipsrcrouteforward">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.8: Set the value of the network option ipsrcrouteforward 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsrcrouteforward=0 s cisv2_ipsrcrouteforward</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipsrcrouterecv" function="cisv2_ipsrcrouterecv">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.9: Set the value of the network option ipsrcrouterecv 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsrcrouterecv=0 s cisv2_ipsrcrouterecv</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipsrcroutesend" function="cisv2_ipsrcroutesend">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.10: Set the value of the network option ipsrcroutesend 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsrcroutesend=0 s cisv2_ipsrcroutesend</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ip6srcrouteforward" function="cisv2_ip6srcrouteforward">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.11: Set the value of the network option ip6srcrouteforward 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ip6srcrouteforward=0 s cisv2_ip6srcrouteforward</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_nfsusereservedports" function="cisv2_nfsusereservedports">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.12: Set the value of the network option nfs_use_reserved_ports 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkfsopts</AIXPertCommand>
+    <AIXPertArgs>nfs_use_reserved_ports=1 s cisv2_nfsusereservedports</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_nonlocsrcroute" function="cisv2_nonlocsrcroute">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.13: Set the value of the network option nonlocsrcroute 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>nonlocsrcroute=0 s cisv2_nonlocsrcroute</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_sockthresh" function="cisv2_sockthresh">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.14: Set the value of the network option sockthresh 60.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>sockthresh=60 s cisv2_sockthresh</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_tcppmtudiscover" function="cisv2_tcppmtudiscover">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.15: Set the value of the network option tcp_pmty_discover 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_pmtu_discover=0 s cisv2_tcppmtudiscover</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_tcpsecure" function="cisv2_tcpsecure">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.16: Set the value of the network option tcp_tcpsecure to 7.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_tcpsecure=7 s cisv2_tcpsecure</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_udppmtudiscover" function="cisv2_udppmtudiscover">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.17: Set the value of the network option tcp_pmty_discover 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>udp_pmtu_discover=0 s cisv2_udppmtudiscover</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ip6forwarding" function="cisv2_ip6forwarding">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.2.18: Set the value of the network option ip6forwarding 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ip6forwarding=0 s cisv2_ip6forwarding</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rootsu" function="rootsu">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.9 (Level 1): Restrict access to root, via su, to members of a specific group by setting su attribute to true.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user su=true root cisv2_rootsu</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rootlogin" function="rootlogin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.9 (Level 1): Restrict access to root, via su, to members of a specific group by disabling console login for root.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false root cisv2_rootlogin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rootrlogin" function="rootrlogin">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.9 (Level 1): Restrict access to root, via su, to members of a specific group by disabling remote login for root.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false root cisv2_rootrlogin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_rootsugroups" function="rootsugroups">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.9 (Level 1): Restrict access to root, via su, to members of a specific group by setting sugroups attribute to SUADMIN.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user sugroups=SUADMIN root cisv2_rootsugroups</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_corelimit" function="corelimit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.10 (Level 1): Core Dumps: Set the core limit in the default stanza to 0 in /etc/security/limits.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits core=0 default cisv2_corelimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_corehardlimit" function="corehardlimit">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.10 (Level 1): Core Dumps: Set the core_hard limit in the default stanza to 0 in /etc/security/limits.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits core_hard=0 default cisv2_corehardlimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_disfullcore" function="disfullcore">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.10 (Level 1): Core Dumps: Set the fullcore kernel parameter to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdevattr</AIXPertCommand>
+    <AIXPertArgs>sys0 fullcore=false</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_chketcmotd" function="chketcmotd">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-4.14 (Level 1): Create a /etc/motd file which displays, post initial logon, a statutory warning message.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkdata</AIXPertCommand>
+    <AIXPertArgs>/etc/motd "Authorized" cisv2_chketcmotd</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+<AIXPertEntry name="cisv2_umask" function="cisv2_umask">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 3.3: Ensure default umask is 027 or more restrictive.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>umask=27 ALL cisv1_umask</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_limitcissysacc" function="limitcissysacc">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="888">Implements CIS Recommendations AIX7.2-6.4 and AIX7.2-6.6 (Level 1): Review the current at/cron files and add any relevant users to the /var/adm/cron/at.allow and /var/adm/cron/cron.allow files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/limitcissysacc</AIXPertCommand>
+    <AIXPertArgs>h cisv2_limiticissysacc</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_flrt" function="cisv2_flrt">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 7.2: Install flrtvc tool.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>flrtvc.ksh</AIXPertArgs>
+    <AIXPertGroup>Manage filesets</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="cisv2_ipsec" function="cisv2_ipsec">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.3.1: Ensure that IP Security is available.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsec_config</AIXPertCommand>
+    <AIXPertArgs>enable</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipsecloopbk" function="cisv2_ipsecloopbk">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.3.2: Ensure loopback is blocked on external interfaces.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhostcis</AIXPertCommand>
+    <AIXPertArgs>cisv2_ipsecloopbk</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+ <AIXPertEntry name="cisv2_ipsecfilter" function="cisv2_ipsecfilter">
+    <AIXPertRuleType type="VIOS_CISv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Implements CIS Recommendation 4.3.3: Ensure filters are active.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhostcis</AIXPertCommand>
+    <AIXPertArgs>cisv2_ipsecfilter</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+</AIXPertSecurityHardening>

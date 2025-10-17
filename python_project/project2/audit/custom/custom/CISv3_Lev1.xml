@@ -1,0 +1,2191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROCKET_PROLOG_BEGIN_TAG -->
+<!-- -->
+<!-- COPYRIGHT Rocket Software, Inc. 2023 -->
+<!-- All Rights Reserved -->
+<!-- -->
+<!-- ROCKET_PROLOG_END_TAG -->
+<!-- %Z%%M% %I% %W% %G% %U%
+RuleType CISv2 represents CIS version 2
+RuleType Prereq represents Analysis Rules -->
+<!-- Specifies CISv2 rules -->
+<AIXPertSecurityHardening>
+    <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqAIX72GE" function="prereqAIX72GE">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="999">Prereq rule for AIX72: Checks whether AIX version is greater than or equal to 7.2.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqfsbyver</AIXPertCommand>
+        <AIXPertArgs>bos.mp64 ge 7.2</AIXPertArgs>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqcde" function="prereqcde">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="3">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+        <AIXPertArgs>a</AIXPertArgs>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqlft" function="prereqlft">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="4">Prereq rule for LFT: Checks whether LFT is configured.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+        <AIXPertArgs>a</AIXPertArgs>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqTE" function="prereqTE">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="5">Prereq rule for Trusted Execution: Checks whether the system has the Trusted Execution feature on.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqlh" function="prereqlh">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="207" msgNum="6">Prereq rule for loginherald: Checks whether herald value is set or not.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqlh</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+        <AIXPertRuleType type="Prereq"/>
+        <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="11">Prereq rule for non-TCB: Checks whether the system is non-TCB.</AIXPertDescription>
+        <AIXPertPrereqList/>
+        <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+        <AIXPertArgs/>
+        <AIXPertGroup/>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_brokenlinks" function="brokenlinks">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="5">Implements CIS Recommendation AIX7 2.4 Ensure unused symbolic links are removed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell,prereqTE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>brokenlinks</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_umask" function="cisv3_umask">
+        <AIXPertRuleType type="CISv3" />
+        <AIXPertDescription catalog="pscxpert.cat" setNum="325" msgNum="241">Implements CIS Recommendation AIX7 3.1 Ensure default user umask is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>umask=27 ALL cisv1_umask</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_find_ownerless" function="find_ownerless">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="7">Implements CIS Recommendation AIX7 3.7 Ensure no files or directories without an owner and a group exist.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/findperms</AIXPertCommand>
+        <AIXPertArgs>ownerless</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermsmitlog" function="chpermsmitlog">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="8">Implements CIS Recommendation AIX7 4.1.1.1 Ensure access on /smit.log is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/{,root/}smit.log</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chowngroup" function="chowngroup">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="9">Implements CIS Recommendation AIX7 4.1.1.2 Ensure access on /etc/group is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:security path:/etc/group</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermgroup" function="chpermgroup">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="9">Implements CIS Recommendation AIX7 4.1.1.2 Ensure access on /etc/group is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/group</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chperminetd" function="chperminetd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="10">Implements CIS Recommendation AIX7 4.1.1.3 Ensure access on /etc/inetd.conf is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/inetd.conf</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chowninetd" function="chowninetd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="10">Implements CIS Recommendation AIX7 4.1.1.3 Ensure access on /etc/inetd.conf is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/etc/inetd.conf</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownmotd" function="chownmotd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="11">Implements CIS Recommendation AIX7 4.1.1.4 Ensure access on /etc/motd is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>bin:bin path:/etc/motd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermmotd" function="chpermmotd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="11">Implements CIS Recommendation AIX7 4.1.1.4 Ensure access on /etc/motd is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/motd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownpasswd" function="chownpasswd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="12">Implements CIS Recommendation AIX7 4.1.1.5 Ensure access on /etc/passwd is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:security path:/etc/passwd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermpasswd" function="chpermpasswd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="12">Implements CIS Recommendation AIX7 4.1.1.5 Ensure access on /etc/passwd is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/passwd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermsubmitcf" function="chpermsubmitcf">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="13">Implements CIS Recommendation AIX7 4.1.1.6 Ensure /etc/mail/submit.cf access is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0640 path:/etc/mail/submit.cf</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownbanner" function="chownbanner">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="14">Implements CIS Recommendation AIX7 4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/etc/ssh/ssh_banner</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermbanner" function="chpermbanner">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="14">Implements CIS Recommendation AIX7 4.1.1.7 Ensure access to /etc/ssh/ssh_banner is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/ssh/ssh_banner</AIXPertArgs>
+        <AIXPertGroup>Permission Settings</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermsshconfig" function="chpermsshconfig">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="15">Implements CIS Recommendation AIX7 4.1.1.8 Ensure access on /etc/ssh/ssh_config is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/ssh/ssh_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermsshdconfig" function="chpermsshdconfig">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="16">Implements CIS Recommendation AIX7 4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownsshdconfig" function="chownsshdconfig">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="16">Implements CIS Recommendation AIX7 4.1.1.9 Ensure access on /etc/ssh/sshd_config is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownatallow" function="chownatallow">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="17">Implements CIS Recommendation AIX7 4.1.1.10 Ensure access on /var/adm/cron/at.allow is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/var/adm/cron/at.allow</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermatallow" function="chpermatallow">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="17">Implements CIS Recommendation AIX7 4.1.1.10 Ensure access on /var/adm/cron/at.allow is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0400 path:/var/adm/cron/at.allow</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chowncronallow" function="chowncronallow">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="18">Implements CIS Recommendation AIX7 4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/var/adm/cron/cron.allow</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermcronallow" function="chpermcronallow">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="18">Implements CIS Recommendation AIX7 4.1.1.11 Ensure access on /var/adm/cron/cron.allow is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0400 path:/var/adm/cron/cron.allow</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermcronlog" function="chpermcronlog">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="19">Implements CIS Recommendation AIX7 4.1.1.12 Ensure access on /var/adm/cron/log is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/adm/cron/log</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermRMstartlog" function="chpermRMstartlog">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="20">Implements CIS Recommendation AIX7 4.1.1.13 Ensure access on /var/ct/RMstart.log is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/ct/RMstart.log</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermdpid2log" function="chpermdpid2log">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="21">Implements CIS Recommendation AIX7 4.1.1.14 Ensure access on /var/tmp/dpid2.log is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/tmp/dpid2.log</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermhostmibdlog" function="chpermhostmibdlog">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="22">Implements CIS Recommendation AIX7 4.1.1.15 Ensure access on /var/tmp/hostmibd.log is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/tmp/hostmibd.log</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermsnmpdlog" function="chpermsnmpdlog">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="23">Implements CIS Recommendation AIX7 4.1.1.16 Ensure access on /var/tmp/snmpd.log is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw path:/var/tmp/snmpd.log</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rootcrnjobck" function="rootcrnjobck">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="24">Implements CIS Recommendation AIX7 4.1.1.17 Ensure crontab is restricted to authorized users.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rootcrnjobck</AIXPertCommand>
+        <AIXPertArgs>cisv1_rootcrnjobck</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermhomeconf" function="chpermhomeconf">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="25">Implements CIS Recommendation AIX7 4.1.1.18 Ensure Home directory configuration file access is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:g-w,o-w path:/home/*/.*/</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_homedirs" function="homedirs">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="26">Implements CIS Recommendation AIX7 4.1.2.1 Ensure local user Home directories exists.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/homedirectories</AIXPertCommand>
+        <AIXPertArgs>users</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermhome" function="chpermhome">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="28">Implements CIS Recommendation AIX7 4.1.2.3 Ensure Home directory write access is restricted to owner.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0755 path:/home/*/</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownaudit" function="chownaudit">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="29">Implements CIS Recommendation AIX7 4.1.2.4 Ensure access on /audit and /etc/security/audit is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:audit path:/audit</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermaudit" function="chpermaudit">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="29">Implements CIS Recommendation AIX7 4.1.2.4 Ensure access on /audit and /etc/security/audit is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:2750 path:/audit</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermauditdirtree" function="chpermauditdirtree">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="29">Implements CIS Recommendation AIX7 4.1.2.4 Ensure access on /audit and /etc/security/audit is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0640 recursiveexcl:/audit</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_securitydirsperms" function="securitydirsperms">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="30">Implements CIS Recommendation AIX7 4.1.2.5 Ensure access to /etc/security is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/securitydirs</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermvaradmrasdirtree" function="chpermvaradmrasdirtree">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="31">Implements CIS Recommendation AIX7 4.1.2.6 Ensure access on /var/adm/ras is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rw recursiveexcl:/var/adm/ras</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownadmsa" function="chownadmsa">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="32">Implements CIS Recommendation AIX7 4.1.2.7 Ensure access on /var/adm/sa is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>adm:adm path:/var/adm/sa</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermadmsa" function="chpermadmsa">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="32">Implements CIS Recommendation AIX7 4.1.2.7 Ensure access on /var/adm/sa is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0755 path:/var/adm/sa</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermcrontabsdirtree" function="chpermcrontabsdirtree">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="33">Implements CIS Recommendation AIX7 4.1.2.8 Ensure access on /var/spool/cron/crontabs is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:o-rwx recursiveexcl:/var/spool/cron/crontabs</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chowncrontabs" function="chowncrontabs">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="33">Implements CIS Recommendation AIX7 4.1.2.8 Ensure access on /var/spool/cron/crontabs is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>:cron recursiveincl:/var/spool/cron/crontabs</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermpath" function="chpermpath">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="34">Implements CIS Recommendation AIX7 4.1.2.9 Ensure all directories in root PATH access is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chpermpath</AIXPertCommand>
+        <AIXPertArgs>cisv1_chpermpath</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_roothomedir" function="roothomedir">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="35">Implements CIS Recommendation AIX7 4.1.2.10 Ensure root user has a dedicated home directory.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/homedirectories</AIXPertCommand>
+        <AIXPertArgs>root</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_uninstallsendmail" function="uninstallsendmail">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="36">Implements CIS Recommendation AIX7 4.2.1 Ensure sendmail in not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:sendmail</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_uninstallsnmp" function="uninstallsnmp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="43">Implements CIS Recommendation AIX7 4.2.8 Ensure snmpd is not available.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:snmp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_writesrv" function="writesrv">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="44">Implements CIS Recommendation AIX7 4.3.1.1 Ensure writesrv service is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>writesrv: /etc/inittab : d cisv2_writesrv</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_dt" function="dt">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="45">Implements CIS Recommendation AIX7 4.3.1.2 Ensure dt service is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>dt: /etc/inittab : d cisv2_dt</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_piobe" function="piobe">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="46">Implements CIS Recommendation AIX7 4.3.1.3 Ensure piobe service is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>piobe: /etc/inittab : d cisv2_piobe</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_qdaemon" function="qdaemon">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="47">Implements CIS Recommendation AIX7 4.3.1.4 Ensure qdaemon service is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>qdaemon: /etc/inittab : d cisv2_qdaemon</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rcnfs" function="rcnfs">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="48">Implements CIS Recommendation AIX7 4.3.1.5 Ensure rcnfs service is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+        <AIXPertArgs>rcnfs: /etc/inittab : d cisv2_rcnfs</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_inetd" function="inetd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="49">Implements CIS Recommendation AIX7 4.3.2.1 Ensure inetd daemon is disabled when no additional services are required.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>inetd d cisv2_inetd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_aixmibd" function="aixmibd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="50">Implements CIS Recommendation AIX7 4.3.2.2 Ensure aixmibd service is removed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.snmpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_dhcpcd" function="dhcpcd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="51">Implements CIS Recommendation AIX7 4.3.2.3 Ensure dhcpcd is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.dhcpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_dhcprd" function="dhcprd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="52">Implements CIS Recommendation AIX7 4.3.2.4 Ensure dhcprd is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.dhcpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_dhcpsd" function="dhcpsd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="53">Implements CIS Recommendation AIX7 4.3.2.5 Ensure dhcpsd is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.dhcpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_dpid2" function="dpid2">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="54">Implements CIS Recommendation AIX7 4.3.2.6 Ensure dpid2 is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.snmpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_gated" function="gated">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="55">Implements CIS Recommendation AIX7 4.3.2.7 Ensure gated is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.gated</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_hostmibd" function="hostmibd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="56">Implements CIS Recommendation AIX7 4.3.2.8 Ensure hostmibd is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.snmpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_mrouted" function="mrouted">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="57">Implements CIS Recommendation AIX7 4.3.2.9 Ensure mrouted is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>routed d cisv2_routed</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_named" function="named">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="58">Implements CIS Recommendation AIX7 4.3.2.10 Ensure named is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.bind</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_routed" function="routed">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="59">Implements CIS Recommendation AIX7 4.3.2.12 Ensure routed is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>routed d cisv2_routed</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rwhod" function="rwhod">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="60">Implements CIS Recommendation AIX7 4.3.2.13 Ensure rwhod is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.rcmd_server</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sendmail" function="sendmail">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="61">Implements CIS Recommendation AIX7 4.3.2.14 Ensure sendmail is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.sendmail</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_snmpd" function="snmpd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="62">Implements CIS Recommendation AIX7 4.3.2.15 Ensure snmpmib2 is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>snmpd d cisv2snmpmibd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_timed" function="timed">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="63">Implements CIS Recommendation AIX7 4.3.2.16 Ensure timed is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall exact:bos.net.tcp.timed</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ndpdhost" function="ndpdhost">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="65">Implements CIS Recommendation AIX7 4.3.3.2 Ensure ndpd-host is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>ndpd-host d cisv2_ndpdhost</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ndpdrouter" function="ndpdrouter">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="66">Implements CIS Recommendation AIX7 4.3.3.3 Ensure ndpd-router is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+        <AIXPertArgs>ndpd-router d cisv2_ndpdrouter</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_bootps" function="bootps">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="67">Implements CIS Recommendation AIX7 4.3.4.1 Ensure bootps daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>bootps udp d cisv2_bootps</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chargen" function="chargen">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="68">Implements CIS Recommendation AIX7 4.3.4.2 Ensure chargen daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>chargen udp d cisv2_chargen</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_comsat" function="comsat">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="69">Implements CIS Recommendation AIX7 4.3.4.3 Ensure comsat daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>comsat udp d cisv2_comsat</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_tcpdaytime" function="tcpdaytime">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="70">Implements CIS Recommendation AIX7 4.3.4.4 Ensure daytime daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>daytime tcp d cisv2_tcpdaytime</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_udpdaytime" function="udpdaytime">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="70">Implements CIS Recommendation AIX7 4.3.4.4 Ensure daytime daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>daytime udp d cisv2_tcpdaytime</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_discard" function="discard">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="71">Implements CIS Recommendation AIX7 4.3.4.5 Ensure discard daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>discard udp d cisv2_discard</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_tcpecho" function="tcpecho">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="72">Implements CIS Recommendation AIX7 4.3.4.6 Ensure echo daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>echo tcp d cisv2_tcpecho</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_udpecho" function="udpecho">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="72">Implements CIS Recommendation AIX7 4.3.4.6 Ensure echo daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>echo udp d cisv2_udpecho</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_exec" function="exec">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="73">Implements CIS Recommendation AIX7 4.3.4.7 Ensure exec daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>exec tcp6 d cisv2_exec</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_finger" function="finger">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="74">Implements CIS Recommendation AIX7 4.3.4.8 Ensure finger daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>finger tcp d cisv2_finger</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ftp" function="ftp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="75">Implements CIS Recommendation AIX7 4.3.4.9 Ensure ftpd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>ftp tcp6 d cisv2_ftp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_imap2" function="imap2">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="76">Implements CIS Recommendation AIX7 4.3.4.10 Ensure imap2 daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>imap2 tcp d cisv2_imap2</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_instsrv" function="instsrv">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="77">Implements CIS Recommendation AIX7 4.3.4.11 Ensure instsrv daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>instsrv tcp d cisv2_instsrv</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_klogin" function="klogin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="78">Implements CIS Recommendation AIX7 4.3.4.12 Ensure klogin daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>klogin tcp d cisv2_klogin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_kshell" function="kshell">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="79">Implements CIS Recommendation AIX7 4.3.4.13 Ensure kshell daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>kshell tcp d cisv2_kshell</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rlogin" function="rlogin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="80">Implements CIS Recommendation AIX7 4.3.4.14 Ensure rlogin daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>login tcp6 d cisv2_rlogin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_netstat" function="netstat">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="81">Implements CIS Recommendation AIX7 4.3.4.15 Ensure netstat daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>netstat tcp d cisv2_netstat</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ntalk" function="ntalk">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="82">Implements CIS Recommendation AIX7 4.3.4.16 Ensure ntalk daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>ntalk udp d cisv2_ntalk</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_pcnfsd" function="pcnfsd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="83">Implements CIS Recommendation AIX7 4.3.4.17 Ensure pcnfsd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>pcnfsd udp d cisv2_pcnfsd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_pop3" function="pop3">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="84">Implements CIS Recommendation AIX7 4.3.4.18 Ensure pop3 daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>pop3 tcp d cisv2_pop3</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rexd" function="rexd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="85">Implements CIS Recommendation AIX7 4.3.4.19 Ensure rexd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rexd tcp d cisv2_rexd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rquotad" function="rquotad">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="86">Implements CIS Recommendation AIX7 4.3.4.20 Ensure rquotad daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rquotad udp d cisv2_rquotad</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rstatd" function="rstatd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="87">Implements CIS Recommendation AIX7 4.3.4.21 Ensure rstatd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rstatd udp d cisv2_rstatd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ruserd" function="ruserd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="88">Implements CIS Recommendation AIX7 4.3.4.22 Ensure rusersd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>ruserd udp d cisv2_ruserd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rwalld" function="rwalld">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="89">Implements CIS Recommendation AIX7 4.3.4.23 Ensure rwalld daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>rwalld udp d cisv2_rwalld</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_shell" function="shell">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="90">Implements CIS Recommendation AIX7 4.3.4.24 Ensure shell daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>shell tcp6 d cisv2_shell</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sprayd" function="sprayd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="91">Implements CIS Recommendation AIX7 4.3.4.25 Ensure sprayd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>sprayd udp d cisv2_sprayd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_xmquery" function="xmquery">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="92">Implements CIS Recommendation AIX7 4.3.4.26 Ensure xmquery daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>xmquery udp d cisv2_xmquery</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_talk" function="talk">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="93">Implements CIS Recommendation AIX7 4.3.4.27 Ensure talk daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>talk udp d cisv2_talk</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_telnet" function="telnet">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="94">Implements CIS Recommendation AIX7 4.3.4.28 Ensure telnetd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>telnet tcp6 d cisv2_telnet</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_tftp" function="tftp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="95">Implements CIS Recommendation AIX7 4.3.4.29 Ensure tftpd daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>tftp udp6 d cisv2_tftp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_tcptime" function="tcptime">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="96">Implements CIS Recommendation AIX7 4.3.4.30 Ensure time daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>time tcp d cisv2_tcptime</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_udptime" function="udptime">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="96">Implements CIS Recommendation AIX7 4.3.4.30 Ensure time daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>time udp d cisv2_udptime</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_uucp" function="uucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="97">Implements CIS Recommendation AIX7 4.3.4.31 Ensure uucp daemon is not in use.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+        <AIXPertArgs>uucp tcp d cisv2_uucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_uninstallNFSclient" function="uninstallNFSclient">
+        <AIXPertRuleType type="CISv3" />
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="98">Implements CIS Recommendation AIX7 4.4.1.1 Ensure NFS client mounts are disabled in /etc/filesystems.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/uninstallNFSclient</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_disableNFSsuid" function="disableNFSsuid">
+        <AIXPertRuleType type="CISv3" />
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="100">Implements CIS Recommendation AIX7 4.4.1.3 Ensure NFS client mounts include nosuid and nodev options.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/disableNFSsuid</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_disableNFSlocal" function="disableNFSlocal">
+        <AIXPertRuleType type="CISv3" />
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="101">Implements CIS Recommendation AIX7 4.4.1.4 Ensure localhost aliases do not exist in /etc/exports.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/disableNFSlocal</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_rootsquashNFS" function="rootsquashNFS">
+        <AIXPertRuleType type="CISv3" />
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="103">Implements CIS Recommendation AIX7 4.4.1.6 Ensure root access is disabled or blocked..</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rootsquashNFS</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sockthresh" function="sockthresh">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="106">Implements CIS Recommendation AIX7 4.5.1 Ensure sockthresh is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>sockthresh=60 s cisv2_sockthresh</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_bcastping" function="bcastping">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="107">Implements CIS Recommendation AIX7 4.5.2 Ensure bcastping is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>bcastping=0 s cisv2_bcastping</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_clean_partial_conns" function="clean_partial_conns">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="108">Implements CIS Recommendation AIX7 4.5.3 Ensure clean_partial_conns is enabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>clean_partial_conns=1 s cisv2_clean_partial_conns</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_directedbcast" function="directedbcast">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="109">Implements CIS Recommendation AIX7 4.5.4 Ensure directed_broadcast is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>directed_broadcast=0 s cisv2_directedbcast</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_icmpaddrmask" function="icmpaddrmask">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="110">Implements CIS Recommendation AIX7 4.5.5 Ensure icmpaddressmask is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>icmpaddressmask=0 s cisv2_icmpaddrmask</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipforwarding" function="ipforwarding">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="111">Implements CIS Recommendation AIX7 4.5.6 Ensure ipforwarding is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipforwarding=0 s cisv2_ipforwarding</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ip6forwarding" function="ip6forwarding">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="112">Implements CIS Recommendation AIX7 4.5.7 Ensure ip6forwarding is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ip6forwarding=0 s cisv2_ip6forwarding</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipignoredirects" function="ipignoredirects">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="113">Implements CIS Recommendation AIX7 4.5.8 Ensure ipignoreredirects is enabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipignoreredirects=1 s cisv2_ipignoredirects</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsendredirects" function="ipsendredirects">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="114">Implements CIS Recommendation AIX7 4.5.9 Ensure ipsendredirects is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsendredirects=0 s cisv2_ipsendredirects</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsrcrouteforward" function="ipsrcrouteforward">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="115">Implements CIS Recommendation AIX7 4.5.10 Ensure ipsrcrouteforward is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsrcrouteforward=0 s cisv2_ipsrcrouteforward</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsrcrouterecv" function="ipsrcrouterecv">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="116">Implements CIS Recommendation AIX7 4.5.11 Ensure ipsrcrouterecv is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsrcrouterecv=0 s cisv2_ipsrcrouterecv</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsrcroutesend" function="ipsrcroutesend">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="117">Implements CIS Recommendation AIX7 4.5.12 Ensure ipsrcroutesend is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ipsrcroutesend=0 s cisv2_ipsrcroutesend</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ip6srcrouteforward" function="ip6srcrouteforward">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="118">Implements CIS Recommendation AIX7 4.5.13 Ensure ip6srcrouteforward is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>ip6srcrouteforward=0 s cisv2_ip6srcrouteforward</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_nfsusereservedports" function="nfsusereservedports">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="119">Implements CIS Recommendation AIX7 4.5.14 Ensure nfs_use_reserved_ports is enabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkfsopts</AIXPertCommand>
+        <AIXPertArgs>nfs_use_reserved_ports=1 s cisv2_nfsusereservedports</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_nonlocsrcroute" function="nonlocsrcroute">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="120">Implements CIS Recommendation AIX7 4.5.15 Ensure nonlocsrcroute is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>nonlocsrcroute=0 s cisv2_nonlocsrcroute</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_tcppmtudiscover" function="tcppmtudiscover">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="121">Implements CIS Recommendation AIX7 4.5.16 Ensure tcp_pmtu_discover is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>tcp_pmtu_discover=0 s cisv2_tcppmtudiscover</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_tcpsecure" function="tcpsecure">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="122">Implements CIS Recommendation AIX7 4.5.17 Ensure tcp_tcpsecure is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>tcp_tcpsecure=7 s cisv2_tcpsecure</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_udppmtudiscover" function="udppmtudiscover">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="123">Implements CIS Recommendation AIX7 4.5.18 Ensure udp_pmtu_discover is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+        <AIXPertArgs>udp_pmtu_discover=0 s cisv2_udppmtudiscover</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsec" function="ipsec">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="124">Implements CIS Recommendation AIX7 4.6.1 Ensure that IP Security is available.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ipsec_config</AIXPertCommand>
+        <AIXPertArgs>enable</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsecloopbk" function="ipsecloopbk">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="125">Implements CIS Recommendation AIX7 4.6.2 Ensure loopback traffic is blocked on external interfaces.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhostcis</AIXPertCommand>
+        <AIXPertArgs>cisv2_ipsecloopbk</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ipsecfilter" function="ipsecfilter">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="126">Implements CIS Recommendation AIX7 4.6.3 Ensure that IPsec filters are active.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhostcis</AIXPertCommand>
+        <AIXPertArgs>cisv2_ipsecfilter</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_uninstallCDE" function="uninstallCDE">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="127">Implements CIS Recommendation AIX7 4.7.1.1 Ensure CDE is not installed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+        <AIXPertArgs>uninstall like:CDE</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermdtaction" function="chpermdtaction">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="131">Implements CIS Recommendation AIX7 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtaction</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermdtappgather" function="chpermdtappgather">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="131">Implements CIS Recommendation AIX7 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtappgather</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermdtprintinfo" function="chpermdtprintinfo">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="131">Implements CIS Recommendation AIX7 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtprintinfo</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermdtsession" function="chpermdtsession">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="131">Implements CIS Recommendation AIX7 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:ug-s path:/usr/dt/bin/dtsession</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_cde_savertimeout" function="cde_savertimeout">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="133">Implements CIS Recommendation AIX7 4.7.1.7 Ensure CDE screensaver lock is enabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>create /etc/dt/config/*/sys.resources add dtsession*saverTimeout 10</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_cde_locktimeout" function="cde_locktimeout">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="133">Implements CIS Recommendation AIX7 4.7.1.7 Ensure CDE screensaver lock is enabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>create /etc/dt/config/*/sys.resources add dtsession*lockTimeout 10</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_cde_labelstring" function="cde_labelstring">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="134">Implements CIS Recommendation AIX7 4.7.1.8 Ensure CDE login screen hostname is masked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>copy /etc/dt/config/*/Xresources add Dtlogin*greeting.labelString &quot;Authorized uses only. All activity may be monitored and reported.&quot;</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_cde_perslabelstring" function="cde_perslabelstring">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="134">Implements CIS Recommendation AIX7 4.7.1.8 Ensure CDE login screen hostname is masked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/cde_config</AIXPertCommand>
+        <AIXPertArgs>copy /etc/dt/config/*/Xresources add Dtlogin*greeting.persLabelString &quot;Authorized uses only. All activity may be monitored and reported.&quot;</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermxconfig" function="chpermxconfig">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="135">Implements CIS Recommendation AIX7 4.7.1.9 Ensure access to /etc/dt/config/Xconfig is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:g-w,o-w path:/etc/dt/config/Xconfig</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownxconfig" function="chownxconfig">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="135">Implements CIS Recommendation AIX7 4.7.1.9 Ensure access to /etc/dt/config/Xconfig is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:bin path:/etc/dt/config/Xconfig</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermxservers" function="chpermxservers">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="136">Implements CIS Recommendation AIX7 4.7.1.10 Ensure the file /etc/dt/config/Xservers is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>sym:g-w,o-w path:/etc/dt/config/Xservers</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownxservers" function="chownxservers">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="136">Implements CIS Recommendation AIX7 4.7.1.10 Ensure the file /etc/dt/config/Xservers is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:bin path:/etc/dt/config/Xservers</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermxresources" function="chpermxresources">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="137">Implements CIS Recommendation AIX7 4.7.1.11 Ensure access to Xresources is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0644 path:/etc/dt/config/*/Xresources</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownxresources" function="chownxresources">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="137">Implements CIS Recommendation AIX7 4.7.1.11 Ensure access to Xresources is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.commands,bos.rte.date,bos.rte.shell,X11.Dt</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root:system path:/etc/dt/config/*/Xresources</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chetcftpusers" function="chetcftpusers">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="138">Implements CIS Recommendation AIX7 4.7.2.1 Ensure root access to ftpd is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chetcftpusers</AIXPertCommand>
+        <AIXPertArgs>a cisv2_chetcftpusers</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ftpbanner" function="ftpbanner">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="139">Implements CIS Recommendation AIX7 4.7.2.2 Ensure ftpd login banner is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,bos.msg.en_US.net.tcp.client</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ftpbanner</AIXPertCommand>
+        <AIXPertArgs>cisv2_ftpbanner</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_ftpd_noworldaccess" function="ftpd_noworldaccess">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="140">Implements CIS Recommendation AIX7 4.7.2.3 Ensure ftpd umask is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/inetd_config</AIXPertCommand>
+        <AIXPertArgs>ftp tcp ftpd -l -u 027</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_sshversionv" function="sshversion">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="141">Implements CIS Recommendation AIX7 4.7.3.1 Ensure latest version of openssh is installed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>VERSION 8.1 NA</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_rmetchostsequiv" function="rmetchostsequiv">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="142">Implements CIS Recommendation AIX7 4.7.3.2 Ensure /etc/shosts.equiv and /etc/rhosts.equiv are removed.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+        <AIXPertArgs>cisv1_rmetchostsequiv</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_sftp_server_args" function="sshd_sftp_server_args">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="143">Implements CIS Recommendation AIX7 4.7.3.3 Ensure sftp-server arguments are configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE Subsystem "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l INFO" "sftp /usr/sbin/sftp-server -u 027 -f AUTH -l DEBUG" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv1_shosts" function="shosts">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="144">Implements CIS Recommendation AIX7 4.7.3.4 Ensure sshd access is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+        <AIXPertArgs>l cisv1_shosts</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_banner" function="sshd_banner">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="145">Implements CIS Recommendation AIX7 4.7.3.5 Ensure sshd Banner is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>Banner /etc/ssh/ssh_banner /etc/ssh/sshd_config CISv2</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_ciphers" function="sshd_ciphers">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="146">Implements CIS Recommendation AIX7 4.7.3.6 Ensure sshd Ciphers are configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET Ciphers "aes128-ctr,aes192-ctr,aes256-ctr,chacha20-poly1305@openssh.com,aes128-gcm@openssh.com,aes256-gcm@openssh.com" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_hostbasedauthentication" function="sshd_hostbasedauthentication">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="147">Implements CIS Recommendation AIX7 4.7.3.7 Ensure sshd HostbasedAuthentication is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>HostbasedAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_ignore_rhosts" function="sshd_ignore_rhosts">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="148">Implements CIS Recommendation AIX7 4.7.3.8 Ensure sshd IgnoreRhosts is enabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE IgnoreRhosts yes shosts-only /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_kex_algorithms" function="sshd_kex_algorithms">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="149">Implements CIS Recommendation AIX7 4.7.3.9 Ensure sshd KexAlgorithms is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET KexAlgorithms "curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_log_level" function="sshd_log_level">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="150">Implements CIS Recommendation AIX7 4.7.3.10 Ensure sshd LogLevel is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE LogLevel INFO VERBOSE /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_macs" function="sshd_macs">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="151">Implements CIS Recommendation AIX7 4.7.3.11 Ensure sshd MACs are configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>SET MACs "umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_max_auth_tries" function="sshd_max_auth_tries">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="152">Implements CIS Recommendation AIX7 4.7.3.12 Ensure sshd MaxAuthTries is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>LE MaxAuthTries 4 4 /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_permit_empty_passwords" function="sshd_permit_empty_passwords">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="153">Implements CIS Recommendation AIX7 4.7.3.13 Ensure sshd PermitEmptyPasswords is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitEmptyPasswords no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_permitrootlogin" function="sshd_permitrootlogin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="154">Implements CIS Recommendation AIX7 4.7.3.14 Ensure sshd PermitRootLogin is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>MULTIPLE PermitRootLogin prohibit-password forced-commands-only no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_permit_user_environment" function="sshd_permit_user_environment">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="156">Implements CIS Recommendation AIX7 4.7.3.16 Ensure sshd PermitUserEnvironment is disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>PermitUserEnvironment no /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sshd_rekey_limit" function="sshd_rekey_limit">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="157">Implements CIS Recommendation AIX7 4.7.3.17 Ensure sshd ReKeyLimit is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+        <AIXPertArgs>RekeyLimit "1G 3600" /etc/ssh/sshd_config</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sendmail_sgm" function="sendmail_sgm">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="158">Implements CIS Recommendation AIX7 4.7.4.1 Ensure sendmail version information is hidden.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+        <AIXPertArgs>SmtpGreetingMessage mailerready</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sendmail_po" function="sendmail_po">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="159">Implements CIS Recommendation AIX7 4.7.4.2 Ensure sendmail PrivacyOptions is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+        <AIXPertArgs>PrivacyOptions</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_sendmail_dpo" function="sendmail_dpo">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="160">Implements CIS Recommendation AIX7 4.7.4.3 Ensure sendmail DaemonPortOptions is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/sendmailcis</AIXPertCommand>
+        <AIXPertArgs>DaemonPortOptions</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownsendmailcf" function="chownsendmailcf">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="161">Implements CIS Recommendation AIX7 4.7.4.4 Ensure access to /etc/mail/sendmail.cf is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/etc/mail/sendmail.cf</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermsendmailcf" function="chpermsendmailcf">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="161">Implements CIS Recommendation AIX7 4.7.4.4 Ensure access to /etc/mail/sendmail.cf is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0640 path:/etc/mail/sendmail.cf</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownclientmqueue" function="chownclientmqueue">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="162">Implements CIS Recommendation AIX7 4.7.4.5 Ensure access to /var/spool/clientmqueue is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>smmsp path:/var/spool/clientmqueue</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermclientmqueue" function="chpermclientmqueue">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="162">Implements CIS Recommendation AIX7 4.7.4.5 Ensure access to /var/spool/clientmqueue is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0770 path:/var/spool/clientmqueue</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chownmqueue" function="chownmqueue">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="163">Implements CIS Recommendation AIX7 4.7.4.6 Ensure access to /var/spool/mqueue is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+        <AIXPertArgs>root path:/var/spool/mqueue</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chpermmqueue" function="chpermmqueue">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="163">Implements CIS Recommendation AIX7 4.7.4.6 Ensure access to /var/spool/mqueue is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+        <AIXPertArgs>add:0700 path:/var/spool/mqueue</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginherald" function="loginherald">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="164">Implements CIS Recommendation AIX7 4.8.1 Ensure herald is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/loginherald</AIXPertCommand>
+        <AIXPertArgs>a cisv2_loginherald</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_logindelay" function="logindelay">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="165">Implements CIS Recommendation AIX7 4.8.2 Ensure logindelay is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/login.cfg logindelay=10 default cisv2_logindelay</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginretries" function="loginretries">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="166">Implements CIS Recommendation AIX7 4.8.3 Ensure loginretries is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>loginretries=5 LESS NONROOT cisv2_loginretries</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_logintimeout" function="logintimeout">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="167">Implements CIS Recommendation AIX7 4.8.4 Ensure logintimeout is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/login.cfg logintimeout=30 usw cisv2_logintimeout</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_lockdaemon" function="lockdaemon">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true daemon cisv2_lockdaemon</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_lockbin" function="lockbin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true bin cisv2_lockbin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_locksys" function="locksys">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true sys cisv2_locksys</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_lockadm" function="lockadm">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true adm cisv2_lockadm</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_lockuucp" function="lockuucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true uucp cisv2_lockuucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_locknobody" function="locknobody">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true nobody cisv2_locknobody</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_locklpd" function="locklpd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true lpd cisv2_locklpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_locklp" function="locklp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true lp cisv2_locklp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_lockinvscout" function="lockinvscout">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true invscout cisv2_lockinvscout</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_lockipsec" function="lockipsec">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true ipsec cisv2_lockipsec</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_locknuucp" function="locknuucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true nuucp cisv2_locknuucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_locksshd" function="locksshd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="168">Implements CIS Recommendation AIX7 4.8.5 Ensure administrative user accounts are locked.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user account_locked=true sshd cisv2_locksshd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_profiletimeout" function="profiletimeout">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="169">Implements CIS Recommendation AIX7 4.8.6 Ensure session timeout is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqlh</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/autologoff</AIXPertCommand>
+        <AIXPertArgs>900 cisv3_autologoff</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rootsu" function="rootsu">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="170">Implements CIS Recommendation AIX7 4.9.1 Ensure root access is controlled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user su=true root cisv2_rootsu</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rootlogin" function="rootlogin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="170">Implements CIS Recommendation AIX7 4.9.1 Ensure root access is controlled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false root cisv2_rootlogin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rootrlogin" function="rootrlogin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="170">Implements CIS Recommendation AIX7 4.9.1 Ensure root access is controlled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false root cisv2_rootrlogin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rootsugroups" function="rootsugroups">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="170">Implements CIS Recommendation AIX7 4.9.1 Ensure root access is controlled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user sugroups=SUADMIN root cisv2_rootsugroups</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rootksh" function="rootksh">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="171">Implements CIS Recommendation AIX7 4.9.2 Ensure root user default shell is ksh.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/root_ksh</AIXPertCommand>
+        <AIXPertArgs></AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_corelimit" function="corelimit">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="172">Implements CIS Recommendation AIX7 4.9.3 Ensure core dumps are disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/limits core=0 default cisv2_corelimit</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_corehardlimit" function="corehardlimit">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="172">Implements CIS Recommendation AIX7 4.9.3 Ensure core dumps are disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/limits core_hard=0 default cisv2_corehardlimit</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_disfullcore" function="disfullcore">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="172">Implements CIS Recommendation AIX7 4.9.3 Ensure core dumps are disabled.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdevattr</AIXPertCommand>
+        <AIXPertArgs>sys0 fullcore=false</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rmdotfrmpathetcenv" function="rmdotfrmpathetcenv">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="173">Implements CIS Recommendation AIX7 4.9.4 Ensure default path does not include current working directory.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathetcenv</AIXPertCommand>
+        <AIXPertArgs>r cisv2_rmdotfrmpathetcenv</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rmdotfrmpathroot" function="rmdotfrmpathroot">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="174">Implements CIS Recommendation AIX7 4.9.5 Ensure root user path does not include current working directory.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathroot</AIXPertCommand>
+        <AIXPertArgs>cisv2_rmdotfrmpathroot</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_chketcmotd" function="chketcmotd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="175">Implements CIS Recommendation AIX7 4.9.6 Ensure motd is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/dodv7/checkdata</AIXPertCommand>
+        <AIXPertArgs>/etc/motd "Authorized" cisv2_chketcmotd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_hashedpasswords" function="hashedpasswords">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="176">Implements CIS Recommendation AIX7 5.1.1 Ensure all local user accounts have a hashed password.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>hashed</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_checkuid" function="checkuid">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="177">Implements CIS Recommendation AIX7 5.1.2 Ensure usernames and UIDs are unique.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/checkuid</AIXPertCommand>
+        <AIXPertArgs>uid cisv2_checkuid</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_checkgid" function="checkgid">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="178">Implements CIS Recommendation AIX7 5.1.3 Ensure group names and GIDs are unique.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/checkgid</AIXPertCommand>
+        <AIXPertArgs>gid cisv2_checkgid</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_histsize" function="histsize">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="179">Implements CIS Recommendation AIX7 5.2.1 Ensure histsize is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>histsize=0 ALL cisv2_histsize</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minage" function="minage">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="180">Implements CIS Recommendation AIX7 5.2.2 Ensure minimum password age is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minage=1 MORE ALL cisv2_minage</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_histexpire" function="histexpire">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="181">Implements CIS Recommendation AIX7 5.2.3 Ensure password history expiry is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>histexpire=52 MORE ALL cisv2_histexpire</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_policy4all" function="policy4all">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="182">Implements CIS Recommendation AIX7 5.2.4 Ensure passwords are controlled by password attributes.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>policy</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_maxexpired" function="maxexpired">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="183">Implements CIS Recommendation AIX7 5.2.5 Ensure maxexpired is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>maxexpired=4 LESS ALL cisv2_maxexpired</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_maxage" function="maxage">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="184">Implements CIS Recommendation AIX7 5.2.6 Ensure maxage is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>maxage=13 LESS ALL cisv2_maxage</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_pwdalgorithm" function="pwdalgorithm">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="185">Implements CIS Recommendation AIX7 5.2.7 Ensure pwd_algorithm is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/login.cfg pwd_algorithm=ssha256 usw cisv2_pwdalgorithm</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_nocrypt" function="nocrypt">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="186">Implements CIS Recommendation AIX7 5.2.8 Ensure a strong password hashing algorithm is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chksecpasswd</AIXPertCommand>
+        <AIXPertArgs>nocrypt</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minlen" function="minlen">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="187">Implements CIS Recommendation AIX7 5.2.9 Ensure minimum password length is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minlen=14 MORE ALL cisv2_minlen</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_mindiff" function="mindiff">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="188">Implements CIS Recommendation AIX7 5.2.10 Ensure password number of changed characters is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>mindiff=4 MORE ALL cisv1_mindiff</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minalpha" function="minalpha">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="189">Implements CIS Recommendation AIX7 5.2.11 Ensure minalpha is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minalpha=3 MORE ALL cisv2_minalpha</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minother" function="minother">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="190">Implements CIS Recommendation AIX7 5.2.12 Ensure minother is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minother=3 MORE ALL cisv2_minother</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_maxrepeats" function="maxrepeats">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="191">Implements CIS Recommendation AIX7 5.2.13 Ensure password maximum repeated characters is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>maxrepeats=4 LESS ALL cisv2_maxrepeats</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_mindigit" function="mindigit">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="192">Implements CIS Recommendation AIX7 5.2.14 Ensure mindigit is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>mindigit=1 MORE ALL cisv2_mindigit</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minloweralpha" function="minloweralpha">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="193">Implements CIS Recommendation AIX7 5.2.15 Ensure minloweralpha is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minloweralpha=1 MORE ALL cisv2_minloweralpha</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minupperalpha" function="minupperalpha">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="194">Implements CIS Recommendation AIX7 5.2.16 Ensure minupperalpha is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minupperalpha=1 MORE ALL cisv2_minupperalpha</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_minspecialchar" function="minspecialchar">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="195">Implements CIS Recommendation AIX7 5.2.17 Ensure minspecialchar is configured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqAIX72GE</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+        <AIXPertArgs>minspecialchar=1 MORE ALL cisv3_minspecialchar</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginadm" function="loginadm">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="196">Implements CIS Recommendation AIX7 5.3.1 Ensure user adm is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false adm cisv2_loginadm</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginadm" function="rloginadm">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="196">Implements CIS Recommendation AIX7 5.3.1 Ensure user adm is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false adm cisv2_rloginadm</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginbin" function="loginbin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="197">Implements CIS Recommendation AIX7 5.3.2 Ensure user bin is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false bin cisv2_loginbin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginbin" function="rloginbin">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="197">Implements CIS Recommendation AIX7 5.3.2 Ensure user bin is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false bin cisv2_rloginbin</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_logindaemon" function="logindaemon">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="198">Implements CIS Recommendation AIX7 5.3.3 Ensure user daemon is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false daemon cisv2_logindaemon</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rlogindaemon" function="rlogindaemon">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="198">Implements CIS Recommendation AIX7 5.3.3 Ensure user daemon is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false daemon cisv2_rlogindaemon</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginguest" function="loginguest">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="199">Implements CIS Recommendation AIX7 5.3.4 Ensure user guest is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false guest cisv2_loginguest</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginguest" function="rloginguest">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="199">Implements CIS Recommendation AIX7 5.3.4 Ensure user guest is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false guest cisv2_rloginguest</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginlpd" function="loginlpd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="200">Implements CIS Recommendation AIX7 5.3.5 Ensure user lpd is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false lpd cisv2_loginlpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginlpd" function="rloginlpd">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="200">Implements CIS Recommendation AIX7 5.3.5 Ensure user lpd is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false lpd cisv2_rloginlpd</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginnobody" function="loginnobody">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="201">Implements CIS Recommendation AIX7 5.3.6 Ensure user nobody is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false nobody cisv2_loginnobody</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginnobody" function="rloginnobody">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="201">Implements CIS Recommendation AIX7 5.3.6 Ensure user nobody is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false nobody cisv2_rloginnobody</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginnuucp" function="loginnuucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="202">Implements CIS Recommendation AIX7 5.3.7 Ensure user nuucp is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false nuucp cisv2_loginnuucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginnuucp" function="rloginnuucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="202">Implements CIS Recommendation AIX7 5.3.7 Ensure user nuucp is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false nuucp cisv2_rloginnuucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginsys" function="loginsys">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="203">Implements CIS Recommendation AIX7 5.3.8 Ensure user sys is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false sys cisv2_loginsys</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginsys" function="rloginsys">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="203">Implements CIS Recommendation AIX7 5.3.8 Ensure user sys is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false sys cisv2_rloginsys</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_loginuucp" function="loginuucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="204">Implements CIS Recommendation AIX7 5.3.9 Ensure user uucp is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user login=false uucp cisv2_loginuucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_rloginuucp" function="rloginuucp">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="204">Implements CIS Recommendation AIX7 5.3.9 Ensure user uucp is secured.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+        <AIXPertArgs>/etc/security/user rlogin=false uucp cisv2_rloginuucp</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+    <AIXPertEntry name="cisv3_uidftpusers" function="uidftpusers">
+        <AIXPertRuleType type="CISv3"/>
+        <AIXPertDescription catalog="pscxpert.cat" setNum="326" msgNum="205">Implements CIS Recommendation AIX7 5.3.10 Ensure System Accounts cannot access system using ftp.</AIXPertDescription>
+        <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+        <AIXPertCommand>/etc/security/pscexpert/bin/uidftpusers</AIXPertCommand>
+        <AIXPertArgs>cisv2_uidftpusers</AIXPertArgs>
+        <AIXPertGroup>CISV3 rules</AIXPertGroup>
+    </AIXPertEntry>
+
+</AIXPertSecurityHardening>

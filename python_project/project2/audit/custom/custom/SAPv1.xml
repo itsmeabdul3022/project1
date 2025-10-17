@@ -1,0 +1,1251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROCKET_PROLOG_BEGIN_TAG                                                -->
+<!--                                                                        -->
+<!-- COPYRIGHT Rocket Software, Inc. 2019                                   -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- ROCKET_PROLOG_END_TAG                                                  -->
+
+<!--	%Z%%M%  %I%  %W% %G% %U%
+
+	RuleType SAPv1 represents SAP version 1
+
+	RuleType Prereq represents Analysis Rules -->
+
+<!-- Specifies SAPv1 rules -->
+
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="prereqcde" function="prereqcde">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="1">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlft" function="prereqlft">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="2">Prereq rule for LFT: Checks whether LFT is configured.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqssh" function="prereqssh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="3">Prereq rule for SSHConfig: Checks whether the ssh version is at 7.0 or greater.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqfsbyver</AIXPertCommand>
+    <AIXPertArgs>openssh.base.client 7</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_logindisable" function="logindisable">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="4">Disable login after unsuccessful login attempts: Specifies 10 as the number of unsuccessful login attempts on a port before the port is locked.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logindisable=10 default sapv1_logindisable</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_loginreenable" function="loginreenable">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="5">Reenable login after locking: Specifies the time interval (360 minutes) after which a port is unlocked after being disabled by logindisable.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg loginreenable=360 default sapv1_loginreenable</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_logindelay" function="logindelay">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="6">Delay between unsuccessful logins: Specifies the delay between unsuccessful logins to 5 seconds.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logindelay=5 default sapv1_logindelay</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_logintimeout" function="logintimeout">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="7">Login timeout: Specifies the time interval (60 seconds) to type in a password.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logintimeout=5 usw sapv1_logintimeout</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_logininterval" function="logininterval">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="8">Interval between unsuccessful logins: Specifies the time interval (300 seconds) for a port in which the unsuccessful login attempts must occur before the port is disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logininterval=300 default sapv1_logininterval</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_corelimit" function="corelimit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="9">Core Dumps: Set the core limit in the default stanza to 0 in /etc/security/limits.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits core=0 default sapv1_corelimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_corehardlimit" function="corehardlimit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="10">Core Dumps: Set the core_hard limit in the default stanza to 0 in /etc/security/limits.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits core_hard=0 default sapv1_corehardlimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rsslimit" function="rsslimit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="11">Resource Limits: Limit the system default of soft real memory usage in blocks (rss) to 65535.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits rss=65535 default sapv1_rsslimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rsshardlimit" function="rsshardlimit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="12">Resource Limits: Limit the system default of hard real memory usage in blocks (rss_hard) to 65535.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits rss_hard=65535 default sapv1_rsshardlimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_stacklimit" function="stacklimit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="13">Resource Limits: Limit the system default of soft stack segment size in blocks (stack) to 65535.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits stack=65535 default sapv1_stacklimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_stackhardlimit" function="stackhardlimit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="14">Resource Limits: Limit the system default of hard stack segment size in blocks (stack_hard) to 65535.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/limits stack_hard=65535 default sapv1_stackhardlimit</AIXPertArgs>
+    <AIXPertGroup>Resource limits recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_pwdintchk" function="pwdintchk">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="15">Password Integrity Check: Ensures that users password being set is not weak.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user dictionlist=/etc/security/aixpert/dictionary/English default sapv1_pwdintchk</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rootumask" function="rootumask">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="16">Object creation permissions: Specifies root object creation permissions (umask) to 077.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user umask=77 root sapv1_rootumask</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rlogindaemon" function="rlogindaemon">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="17">Login restrictions: Set remote login (rlogin) for user daemon to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false daemon sapv1_rlogindaemon</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_logindaemon" function="logindaemon">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="18">Login restrictions: Set local login (login) for user daemon to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false daemon sapv1_logindaemon</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rloginsys" function="rloginsys">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="19">Login restrictions: Set remote login (rlogin) for user sys to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false sys sapv1_rloginsys</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_loginsys" function="loginsys">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="20">Login restrictions: Set local login (login) for user sys to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false sys sapv1_loginsys</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rloginbin" function="rloginbin">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="21">Login restrictions: Set remote login (rlogin) for user bin to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false bin sapv1_rloginbin</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_loginbin" function="loginbin">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="22">Login restrictions: Set local login (login) for user bin to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false bin sapv1_loginbin</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rloginadm" function="rloginadm">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="23">Login restrictions: Set remote login (rlogin) for user adm to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false adm sapv1_rloginadm</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_loginadm" function="loginadm">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="24">Login restrictions: Set local login (login) for user adm to false.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=false adm sapv1_loginadm</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_clean_partial_conns" function="clean_partial_conns">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="25">Network option clean_partial_conns: Set the value of the network option clean_partial_conns to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>clean_partial_conns=1 s sapv1_clean_partial_conns</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ipsrcrouteforward" function="ipsrcrouteforward">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="26">Network option ipsrcrouteforward: Set the value of the network option ipsrcrouteforward to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsrcrouteforward=0 s sapv1_ipsrcrouteforward</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ipsrcroutesend" function="ipsrcroutesend">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="27">Network option ipsrcroutesend: Set the value of the network option ipsrcroutesend to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsrcroutesend=0 s sapv1_ipsrcroutesend</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ipsrcrouterecv" function="ipsrcrouterecv">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="28">Network option ipsrcrouterecv: Set the value of the network option ipsrcrouterecv to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsrcrouterecv=0 s sapv1_ipsrcrouterecv</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_nonlocsrcroute" function="nonlocsrcroute">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="29">Network option nonlocsrcroute: Set the value of the network option nonlocsrcroute to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>nonlocsrcroute=0 s sapv1_nonlocsrcroute</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ip6srcrouteforward" function="ip6srcrouteforward">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="30">Network option ip6srcrouteforward: Set the value of the network option ip6srcrouteforward to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ip6srcrouteforward=0 s sapv1_ip6srcrouteforward</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ipsendredirects" function="ipsendredirects">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="31">Network option ipsendredirects: Set the value of the network option ipsendredirects to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipsendredirects=0 s sapv1_ipsendredirects</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ipignoreredirects" function="ipignoreredirects">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="32">Network option ipignoreredirects: Set the value of the network option ipignoreredirects to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipignoreredirects=1 s sapv1_ipignoreredirects</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ipforwarding" function="ipforwarding">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="33">Network option ipforwarding: Set the value of the network option ipforwarding to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ipforwarding=0 s sapv1_ipforwarding</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_directed_broadcast" function="directed_broadcast">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="34">Network option directed_broadcast: Set the value of the network option directed_broadcast to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>directed_broadcast=0 s sapv1_directed_broadcast</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_icmpaddressmask" function="icmpaddressmask">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="35">Network option icmpaddressmask: Set the value of the network option icmpaddressmask to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>icmpaddressmask=0 s sapv1_icmpaddressmask</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_bcastping" function="bcastping">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="36">Network option bcastping: Set the value of the network option bcastping to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>bcastping=0 s sapv1_bcastping</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcp_pmtu_discover" function="tcp_pmtu_discover">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="37">Network option tcp_pmtu_discover: Set the value of the network option tcp_pmtu_discover to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_pmtu_discover=0 s sapv1_tcp_pmtu_discover</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_udp_pmtu_discover" function="udp_pmtu_discover">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="38">Network option udp_pmtu_discover: Set the value of the network option udp_pmtu_discover to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>udp_pmtu_discover=0 s sapv1_udp_pmtu_discover</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcp_mssdflt" function="tcp_mssdflt">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="39">Network option tcp_mssdflt: Set the value of the network option tcp_mssdflt to 1448.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_mssdflt=1448 s sapv1_tcp_mssdflt</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcp_tcpsecure" function="tcp_tcpsecure">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="40">Network option tcp_tcpsecure: Set the value of the network option tcp_tcpsecure to 7.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_tcpsecure=7 s sapv1_tcp_tcpsecure</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sockthresh" function="sockthresh">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="41">Network option sockthresh: Set the value of the network option sockthresh to 60.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>sockthresh=60 s sapv1_sockthresh</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshdaemonprotocol" function="sshdaemonprotocol">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="42">The SSH daemon must be configured to only use the SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshUsePrivilege" function="sshUsePrivilege">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="43">The SSH daemon must use privilege separation.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>UsePrivilegeSeparation yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshBanner" function="sshBanner">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="44">The SSH daemon must use a banner message for login.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Banner /etc/motd /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshStrictMode" function="sshStrictMode">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="45">The SSH daemon must perform strict mode checking of home directory configuration files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>StrictModes yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshIgnoreRhosts" function="sshIgnoreRhosts">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="46">The SSH daemon must ignore .rhosts and .shosts files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>IgnoreRhosts yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshPermitEmptyPasswords" function="sshPermitEmptyPasswords">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="47">The SSH daemon should not allow login for accounts with empty passwords.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PermitEmptyPasswords no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshPubkeyAuthentication" function="sshPubkeyAuthentication">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="48">The SSH daemon must allow public key authentication.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PubkeyAuthentication yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshPasswordAuthentication" function="sshPasswordAuthentication">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="49">The SSH daemon should not allow password authentication.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PasswordAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshHostbasedAuthentication" function="sshHostbasedAuthentication">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="50">The SSH daemon should not allow host-based authentication.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>HostbasedAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshLogLevel" function="sshLogLevel">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="51">The SSH daemon syslog severity should be set to INFO.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MULTIPLE LogLevel INFO VERBOSE /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshMaxAuthTries" function="sshMaxAuthTries">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="52">The SSH daemon should permit a maximum of 4 authentication attempts per connection.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>LE MaxAuthTries 4 4 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshClientAliveCountMax" function="sshClientAliveCountMax">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="53">The SSH daemon should permit a maximum of 300 client keep alive messages without answer before disconnecting the session.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>ClientAliveCountMax 0 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshClientAliveInterval" function="sshClientAliveInterval">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="54">The SSH daemon should disable sending of client alive messages.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>LE ClientAliveInterval 600 600 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshPermitUserEnvironment" function="sshPermitUserEnvironment">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="55">The SSH daemon should not allow user environment processing specified in ~/.ssh/environment and environment= options in ~/.ssh/authorized_keys.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PermitUserEnvironment no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshAllowTcpForwarding" function="sshAllowTcpForwarding">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="56">The SSH daemon should allow TCP forwarding due to usage of VNC.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>AllowTcpForwarding yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshX11Forwarding" function="sshX11Forwarding">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="57">The SSH daemon should not allow X11 forwarding.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>X11Forwarding no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sshclientprotocol" function="sshclientprotocol">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="58">The SSH client must be configured to only use SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rmdotfrmpathroot" function="rmdotfrmpathroot">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="59">Remove dot from root path: Removes the dot from the PATH environment variable in files .profile, .kshrc, .cshrc, and .login in the root home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.security</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathroot</AIXPertCommand>
+    <AIXPertArgs>sapv1_rmdotfrmpathroot</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dtspc" function="dtspc">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="60">Minimal Machine: Disable dtspc in /etc/inetd.conf: Comments the entry for dtspc daemon in /etc/inetd.conf when LFT is not configured and CDE is disabled in /etc/inittab, and kills all instances of dtspc daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>dtspc tcp d exceptfile:sapv1_service.exception sapv1_dtspc</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_comsat" function="comsat">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="61">Minimal Machine: Disable comsat in /etc/inetd.conf: Comments the entry for comsat daemon in /etc/inetd.conf and kills all instances of comsat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>comsat udp d exceptfile:sapv1_service.exception sapv1_comsat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_uucp" function="uucp">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="62">Minimal Machine: Disable uucp in /etc/inetd.conf: Comments the entry for uucp daemon in /etc/inetd.conf and kills all instances of uucpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>uucp tcp d exceptfile:sapv1_service.exception sapv1_uucp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_bootps" function="bootps">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="63">Minimal Machine: Disable bootps in /etc/inetd.conf: Comments the entry for bootps daemon in /etc/inetd.conf and kills all instances of bootpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>bootps udp d exceptfile:sapv1_service.exception sapv1_bootps</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_fingerd" function="fingerd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="64">Minimal Machine: Disable finger in /etc/inetd.conf: Comments the entry for finger daemon in /etc/inetd.conf and kills all instances of fingerd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d exceptfile:sapv1_service.exception sapv1_fingerd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_systat" function="systat">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="65">Minimal Machine: Disable systat in /etc/inetd.conf: Comments the entry for systat daemon in /etc/inetd.conf and kills all instances of systat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>systat tcp d exceptfile:sapv1_service.exception sapv1_systat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_netstat" function="netstat">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="66">Minimal Machine: Disable netstat in /etc/inetd.conf: Comments the entry for netstat daemon in /etc/inetd.conf and kills all instances of netstat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>netstat tcp d exceptfile:sapv1_service.exception sapv1_netstat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tftp" function="tftp">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="67">Minimal Machine: Disable tftp in /etc/inetd.conf: Comments the entry for tftp daemon in /etc/inetd.conf and kills all instances of tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp d exceptfile:sapv1_service.exception sapv1_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ftp" function="ftp">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="68">Minimal Machine: Disable ftp in /etc/inetd.conf: Comments the entry for ftp daemon in /etc/inetd.conf and kills all instances of ftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp d exceptfile:sapv1_service.exception sapv1_ftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_telnet" function="telnet">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="69">Minimal Machine: Disable telnet in /etc/inetd.conf: Comments the entry for telnet daemon in /etc/inetd.conf and kills all instances of telnetd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp d exceptfile:sapv1_service.exception sapv1_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_shell" function="shell">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="70">Minimal Machine: Disable shell in /etc/inetd.conf: Comments the entry for shell daemon in /etc/inetd.conf and kills all instances of rshd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp d exceptfile:sapv1_service.exception sapv1_shell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_kshell" function="kshell">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="71">Minimal Machine: Disable kshell in /etc/inetd.conf: Comments the entry for kshell daemon in /etc/inetd.conf and kills all instances of krshd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>kshell tcp d exceptfile:sapv1_service.exception sapv1_kshell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rlogin" function="rlogin">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="72">Minimal Machine: Disable login in /etc/inetd.conf: Comments the entry for login daemon in /etc/inetd.conf and kills all instances of rlogind.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>login tcp d exceptfile:sapv1_service.exception sapv1_rlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_krlogin" function="krlogin">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="73">Minimal Machine: Disable klogin in /etc/inetd.conf: Comments the entry for klogin daemon in /etc/inetd.conf and kills all instances of krlogind.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>klogin tcp d exceptfile:sapv1_service.exception sapv1_krlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rexecd" function="rexecd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="74">Minimal Machine: Disable exec in /etc/inetd.conf: Comments the entry for exec daemon in /etc/inetd.conf and kills all instances of rexecd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp d exceptfile:sapv1_service.exception sapv1_rexecd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_instsrv" function="instsrv">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="75">Minimal Machine: Disable instsrv in /etc/inetd.conf: Comments the entry for instsrv daemon in /etc/inetd.conf and kills all instances of instsrv.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>instsrv tcp d exceptfile:sapv1_service.exception sapv1_instsrv</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_talk" function="talk">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="76">Minimal Machine: Disable talk in /etc/inetd.conf: Comments the entry for talk daemon in /etc/inetd.conf and kills all instances of talkd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp d exceptfile:sapv1_service.exception sapv1_talk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ntalk" function="ntalk">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="77">Minimal Machine: Disable ntalk in /etc/inetd.conf: Comments the entry for ntalk daemon in /etc/inetd.conf and kills all instances of ntalkd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ntalk udp d exceptfile:sapv1_service.exception sapv1_ntalk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rquotad" function="rquotad">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="78">Minimal Machine: Disable rquotad in /etc/inetd.conf: Comments the entry for rquotad daemon in /etc/inetd.conf and kills all instances of rquotad.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d exceptfile:sapv1_service.exception sapv1_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rexd" function="rexd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="79">Minimal Machine: Disable rexd in /etc/inetd.conf: Comments the entry for rexd daemon in /etc/inetd.conf and kills all instances of rexd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rexd tcp d exceptfile:sapv1_service.exception sapv1_rexd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rstatd" function="rstatd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="80">Minimal Machine: Disable rstatd in /etc/inetd.conf: Comments the entry for rstatd daemon in /etc/inetd.conf and kills all instances of rstatd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d exceptfile:sapv1_service.exception sapv1_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rusersd" function="rusersd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="81">Minimal Machine: Disable rusersd in /etc/inetd.conf: Comments the entry for rusersd daemon in /etc/inetd.conf and kills all instances of rusersd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rusersd udp d exceptfile:sapv1_service.exception sapv1_rusersd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_rwalld" function="rwalld">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="82">Minimal Machine: Disable rwalld in /etc/inetd.conf: Comments the entry for rwalld daemon in /etc/inetd.conf and kills all instances of rwalld.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d exceptfile:sapv1_service.exception sapv1_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_sprayd" function="sprayd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="83">Minimal Machine: Disable sprayd in /etc/inetd.conf: Comments the entry for sprayd daemon in /etc/inetd.conf and kills all instances of sprayd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d exceptfile:sapv1_service.exception sapv1_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_pcnfsd" function="pcnfsd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="84">Minimal Machine: Disable pcnfsd in /etc/inetd.conf: Comments the entry for pcnfsd daemon in /etc/inetd.conf and kills all instances of pcnfsd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d exceptfile:sapv1_service.exception sapv1_pcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcpecho" function="tcpecho">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="85">Minimal Machine: Disable TCP echo service in /etc/inetd.conf: Comments the entry for TCP echo service in /etc/inetd.conf and kills all instances of echo(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d exceptfile:sapv1_service.exception sapv1_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_udpecho" function="udpecho">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="86">Minimal Machine: Disable UDP echo service in /etc/inetd.conf: Comments the entry for UDP echo service in /etc/inetd.conf and kills all instances of echo(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d exceptfile:sapv1_service.exception sapv1_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcpdiscard" function="tcpdiscard">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="87">Minimal Machine: Disable TCP discard service in /etc/inetd.conf: Comments the entry for TCP discard service in /etc/inetd.conf and kills all instances of discard(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard tcp d exceptfile:sapv1_service.exception sapv1_tcpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_udpdiscard" function="udpdiscard">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="88">Minimal Machine: Disable UDP discard service in /etc/inetd.conf: Comments the entry for UDP discard service in /etc/inetd.conf and kills all instances of discard(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d exceptfile:sapv1_service.exception sapv1_udpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcpchargen" function="tcpchargen">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="89">Minimal Machine: Disable TCP chargen service in /etc/inetd.conf: Comments the entry for TCP chargen service in /etc/inetd.conf and kills all instances of chargen(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen tcp d exceptfile:sapv1_service.exception sapv1_tcpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_udpchargen" function="udpchargen">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="90">Minimal Machine: Disable UDP chargen service in /etc/inetd.conf: Comments the entry for UDP chargen service in /etc/inetd.conf and kills all instances of chargen(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d exceptfile:sapv1_service.exception sapv1_udpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcpdaytime" function="tcpdaytime">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="91">Minimal Machine: Disable TCP daytime service in /etc/inetd.conf: Comments the entry for TCP daytime service in /etc/inetd.conf and kills all instances of daytime(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp d exceptfile:sapv1_service.exception sapv1_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_udpdaytime" function="udpdaytime">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="92">Minimal Machine: Disable UDP daytime service in /etc/inetd.conf: Comments the entry for UDP daytime service in /etc/inetd.conf and kills all instances of daytime(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp d exceptfile:sapv1_service.exception sapv1_udpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_tcptime" function="tcptime">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="93">Minimal Machine: Disable TCP time service in /etc/inetd.conf: Comments the entry for TCP time service in /etc/inetd.conf and kills all instances of time(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp d exceptfile:sapv1_service.exception sapv1_tcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_udptime" function="udptime">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="94">Minimal Machine: Disable UDP time service in /etc/inetd.conf: Comments the entry for UDP time service in /etc/inetd.conf and kills all instances of time(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp d exceptfile:sapv1_service.exception sapv1_udptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_imapd" function="imapd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="95">Minimal Machine: Disable imapd in /etc/inetd.conf: Comments the entry for imapd daemon in /etc/inetd.conf and kills all instances of imapd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>imap2 tcp d exceptfile:sapv1_service.exception sapv1_imapd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_pop3d" function="pop3d">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="96">Minimal Machine: Disable pop3d in /etc/inetd.conf: Comments the entry for pop3d daemon in /etc/inetd.conf and kills all instances of pop3d.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pop3d tcp d exceptfile:sapv1_service.exception sapv1_pop3d</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_cmsd" function="cmsd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="97">Minimal Machine: Disable cmsd in /etc/inetd.conf: Comments the entry for cmsd service in /etc/inetd.conf and kills all instances of cmsd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>cmsd udp d exceptfile:sapv1_service.exception sapv1_cmsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_ttdbserver" function="ttdbserver">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="98">Minimal Machine: Disable ttdbserver in /etc/inetd.conf: Comments the entry for ttdbserver service in /etc/inetd.conf and kills all instances of ttdbserver.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ttdbserver tcp d exceptfile:sapv1_service.exception sapv1_ttdbserver</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dissnmpdmn" function="dissnmpdmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="99">Minimal Machine: Disable SNMP daemon: Stops SNMP daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpd d exceptfile:sapv1_service.exception sapv1_dissnmpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disaixmibddmn" function="disaixmibddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="100">Minimal Machine: Disable AIXMIBD daemon: Stops AIXMIBD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>aixmibd d exceptfile:sapv1_service.exception sapv1_disaixmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dishostmibddmn" function="dishostmibddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="101">Minimal Machine: Disable HOSTMIBD daemon: Stops HOSTMIBD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>hostmibd d exceptfile:sapv1_service.exception sapv1_dishostmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dissnmpmibddmn" function="dissnmpmibddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="102">Minimal Machine: Disable SNMPMIBD daemon: Stops SNMPMIBD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpmibd d exceptfile:sapv1_service.exception sapv1_dissnmpmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disdpid2dmn" function="disdpid2dmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="103">Minimal Machine: Disable DPID2 daemon: Stops DPID2 daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d exceptfile:sapv1_service.exception sapv1_disdpid2dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dissendmaildmn" function="dissendmaildmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="104">Minimal Machine: Disable SENDMAIL daemon: Stops SENDMAIL daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>sendmail d exceptfile:sapv1_service.exception sapv1_dissendmaildmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disdhcpcddmn" function="disdhcpcddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="105">Minimal Machine: Disable DHCPCD daemon: Stops DHCPCD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpcd d exceptfile:sapv1_service.exception sapv1_disdhcpcddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disdhcprddmn" function="disdhcprddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="106">Minimal Machine: Disable DHCPRD daemon: Stops DHCPRD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d exceptfile:sapv1_service.exception sapv1_disdhcprddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disdhcpsddmn" function="disdhcpsddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="107">Minimal Machine: Disable DHCPSD daemon: Stops DHCPSD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpsd d exceptfile:sapv1_service.exception sapv1_disdhcpsddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disautoconf6dmn" function="disautoconf6dmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="108">Minimal Machine: Disable AUTOCONF6 daemon: Stops AUTOCONF6 daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>autoconf6 d exceptfile:sapv1_service.exception sapv1_disautoconf6dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disgateddmn" function="disgateddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="109">Minimal Machine: Disable GATED daemon: Stops GATED daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>gated d exceptfile:sapv1_service.exception sapv1_disgateddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dismrouteddmn" function="dismrouteddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="110">Minimal Machine: Disable MROUTED daemon: Stops MROUTED daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>mrouted d exceptfile:sapv1_service.exception sapv1_dismrouteddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disnameddmn" function="disnameddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="111">Minimal Machine: Disable NAMED daemon: Stops NAMED daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>named d exceptfile:sapv1_service.exception sapv1_disnameddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disrouteddmn" function="disrouteddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="112">Minimal Machine: Disable ROUTED daemon: Stops ROUTED daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>routed d exceptfile:sapv1_service.exception sapv1_disrouteddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disrwhoddmn" function="disrwhoddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="113">Minimal Machine: Disable RWHOD daemon: Stops RWHOD daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d exceptfile:sapv1_service.exception sapv1_disrwhoddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_distimeddmn" function="distimeddmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="114">Minimal Machine: Disable TIMED daemon: Stops TIMED daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d exceptfile:sapv1_service.exception sapv1_distimeddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disndpdhostdmn" function="disndpdhostdmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="115">Minimal Machine: Disable NDPD-HOST daemon: Stops NDPD-HOST daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>ndpd-host d exceptfile:sapv1_service.exception sapv1_disndpdhostdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disndpdrouterdmn" function="disndpdrouterdmn">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="116">Minimal Machine: Disable NDPD-ROUTER daemon: Stops NDPD-ROUTER daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>ndpd-router d exceptfile:sapv1_service.exception sapv1_disndpdrouterdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disqdaemon" function="disqdaemon">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="117">Minimal Machine: Disable qdaemon: Stops qdaemon and comments its entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>qdaemon: /etc/inittab : d exceptfile:sapv1_service.exception sapv1_disqdaemon</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disrcnfs" function="disrcnfs">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="118">Minimal Machine: Disable rcnfs: Stops rcnfs and comments its entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>rcnfs: /etc/inittab : d exceptfile:sapv1_service.exception sapv1_disrcnfs</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_disdt" function="disdt">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="119">Minimal Machine: Disable dt: Stops dt and comments its entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>dt: /etc/inittab : d exceptfile:sapv1_service.exception sapv1_disdt</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dislpd" function="dislpd">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="120">Minimal Machine: Disable lpd daemon: Stops lpd daemon and comments its entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>lpd: /etc/inittab : d exceptfile:sapv1_service.exception sapv1_dislpd</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_dispiobe" function="dispiobe">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="121">Minimal Machine: Disable piobe daemon: Stops piobe daemon and comments its entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>piobe: /etc/inittab : d exceptfile:sapv1_service.exception sapv1_dispiobe</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_maxage" function="maxage">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="122">Local Accounts: Maximum age for password: Specifies the maximum number of weeks (24 weeks) that a password is valid.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxage=24 LESS ALL exceptfile:sapv1_account.exception sapv1_maxage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minage" function="minage">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="123">Local Accounts: Minimum age for password: Specifies the minimum number of weeks to 1 week, before a password can be changed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minage=1 MORE ALL exceptfile:sapv1_account.exception sapv1_minage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minlen" function="minlen">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="124">Local Accounts: Minimum length for password: Specifies the minimum length of a password to 10 characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=10 MORE ALL exceptfile:sapv1_account.exception sapv1_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minalpha" function="minalpha">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="125">Local Accounts: Minimum number of alphabetic characters: Specifies the minimum number of alphabetic characters in a password to 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minalpha=4 MORE ALL exceptfile:sapv1_account.exception sapv1_minalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minloweralpha" function="minloweralpha">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="126">Local Accounts: Minimum number of lowercase alphabetic characters: Specifies the minimum number of lowercase alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minloweralpha=1 MORE ALL exceptfile:sapv1_account.exception sapv1_minloweralpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minupperalpha" function="minupperalpha">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="127">Local Accounts: Minimum number of uppercase alphabetic characters: Specifies the minimum number of uppercase alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minupperalpha=1 MORE ALL exceptfile:sapv1_account.exception sapv1_minupperalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_mindigit" function="mindigit">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="128">Local Accounts: Minimum number of digits: Specifies the minimum number of digits in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>mindigit=1 MORE ALL exceptfile:sapv1_account.exception sapv1_mindigit</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minspecialchar" function="minspecialchar">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="129">Local Accounts: Minimum number of special characters: Specifies the minimum number of special characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minspecialchar=1 MORE ALL exceptfile:sapv1_account.exception sapv1_minspecialchar</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_minother" function="minother">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="130">Local Accounts: Minimum number of non-alphabetic characters: Specifies the minimum number of non-alphabetic characters in a password to 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minother=4 MORE ALL exceptfile:sapv1_account.exception sapv1_minother</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_mindiff" function="mindiff">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="131">Local Accounts: Minimum number of characters: Specifies the minimum number of characters that were present in the previous password that cannot be used in the new password to 4.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>mindiff=4 MORE ALL exceptfile:sapv1_account.exception sapv1_mindiff</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_maxrepeats" function="maxrepeats">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="132">Local Accounts: Maximum times a character can appear in a password: Specifies the maximum number of times a character can appear in a password to 3.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxrepeats=3 LESS ALL exceptfile:sapv1_account.exception sapv1_maxrepeats</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_histexpire" function="histexpire">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="133">Local Accounts: Password reuse: Specifies the number of weeks before a password can be reused to 24.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histexpire=24 MORE ALL exceptfile:sapv1_account.exception sapv1_histexpire</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_histsize" function="histsize">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="134">Local Accounts: Password reuse limit: Specifies the number of previous passwords a user cannot reuse to 24.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histsize=24 LESS ALL exceptfile:sapv1_account.exception sapv1_histsize</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_maxexpired" function="maxexpired">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="135">Local Accounts: Time to change password after the expiration: Specifies the maximum time (in weeks) beyond the maxage value that a user can change an expired password to 3.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxexpired=3 LESS ALL exceptfile:sapv1_account.exception sapv1_maxexpired</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_pwdwarntime" function="pwdwarntime">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="136">Local Accounts: Password expiration warning time: Specifies the number of days to 20 days, before the system issues a warning that a password change is required.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>pwdwarntime=20 ALL exceptfile:sapv1_account.exception sapv1_pwdwarntime</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="sapv1_loginretries" function="loginretries">
+    <AIXPertRuleType type="SAPv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="216" msgNum="137">Local Accounts: Number of login attempts before locking the account: Specifies the number of consecutive unsuccessful login attempts to 3, for each non-root user account before the account is disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>loginretries=3 LESS NONROOT exceptfile:sapv1_account.exception sapv1_loginretries</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+</AIXPertSecurityHardening>

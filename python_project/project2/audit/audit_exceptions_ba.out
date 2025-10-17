@@ -1,0 +1,11 @@
+Total unique lines found in File A but not in File B: 9
+
+description : "2.1.2 Ensure Unauthorized Applications are reported"
+description : "2.2 Ensure system configuration is documented and verified regularly"
+description : "3.3 Ensure world writable directories have the SVTX bit set"
+description : "3.5 Ensure world writable files are secured"
+description : "3.6 Ensure there are no group \"staff\" writable files"
+description : "4.1.1.19 Ensure SUID and SGID files are reviewed"
+description : "4.8.4 Ensure logintimeout is configured"
+description : "5.1.5 Ensure an Inventory of user accounts is established and maintained"
+description : "5.2.1 Ensure histsize is configured"

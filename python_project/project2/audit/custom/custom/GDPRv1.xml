@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IBM_PROLOG_BEGIN_TAG                                                   -->
+<!-- This is an automatically generated prolog.                             -->
+<!--                                                                        -->
+<!-- Licensed Materials - Property of IBM                                   -->
+<!--                                                                        -->
+<!-- Restricted Materials of IBM                                            -->
+<!--                                                                        -->
+<!-- COPYRIGHT International Business Machines Corp. 2014,2015              -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- COPYRIGHT Rocket Software, Inc. 2018                                   -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- US Government Users Restricted Rights - Use, duplication or            -->
+<!-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.      -->
+<!--                                                                        -->
+<!-- IBM_PROLOG_END_TAG                                                     -->
+
+<!--	%Z%%M%  %I%  %W% %G% %U%
+
+	RuleType GDPRv1 represents GDPR version 1
+
+	RuleType Prereq represents Analysis Rules -->
+
+<!-- Specifies GDPRv1 rules -->
+<!-- VERSION : GDPR 1.0 -->
+
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqcde" function="prereqcde">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="2">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqgated" function="prereqgated">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="3">Prereq rule for gated: Checks whether the system is configured to be a router.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqgated</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqipsec" function="prereqipsec">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="4">Prereq rule for IPSec: Checks whether IPSec is enabled.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqipsec</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlft" function="prereqlft">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="5">Prereq rule for LFT: Checks whether LFT is configured.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlh" function="prereqlh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="6">Prereq rule for loginherald: Checks whether herald value is set.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlh</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqnosyn" function="prereqnosyn">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="7">Prereq rule for NoSyn: Checks whether IPSec is enabled. If it is not, then IPSec is enabled.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnosyn</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqrl" function="prereqrl">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="8">Prereq rule for root login: Checks whether any non-root user that has login privileges exists.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqrl</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqrrl" function="prereqrrl">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="9">Prereq rule for remote root login: Checks whether any non-root user with privileges to login remotely exists.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqrrl</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqsed" function="prereqsed">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="10">Prereq rule for SED: Checks whether the machine has 64 bit kernel support.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqsed</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="11">Prereq rule for non-TCB: Checks whether the system is non-TCB.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqda" function="prereqda">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="12">Prereq rule for disableacct: Adds /bin/false to shells in login.cfg, if it does not exist.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqda</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="13">Prereq rule for Trusted Execution: Checks whether the system has the Trusted Execution feature on.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqssh" function="prereqssh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="14">Prereq rule for SSHPCIConfig: Checks whether the ssh version is at 7.0 or greater.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqfsbyver</AIXPertCommand>
+    <AIXPertArgs>openssh.base.client 7</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_ipsecshunhost" function="ipsecshunhost">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="15">Shun host for 5 minutes: Shuns the hosts that try to access unused ports for 5 minutes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhosthls</AIXPertCommand>
+    <AIXPertArgs>gdprv1_ipsecshunhost</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_ipsecshunports" function="ipsecshunports">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="16">Guard host against port scans: Shuns vulnerable ports for 5 minutes to guard the host against port scans.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunports</AIXPertCommand>
+    <AIXPertArgs>gdprv1_ipsecshunport</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcptr" function="tcptr">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="17">TCP Traffic Regulation High: Enforces denial-of-service mitigation on popular ports.</AIXPertDescription>
+    <AIXPertPrereqList></AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/tcptr_aixpert</AIXPertCommand>
+    <AIXPertArgs>gdprv1</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_SecureLPM" function="SecureLPM">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="18">Enable automated IPSEC Tunnel creation between VIO servers during live partition migration.</AIXPertDescription>
+    <AIXPertPrereqList>clic.rte.kernext,bos.net.ipsec.rte,bos.net.ipsec.keymgt,ios.cli.rte</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cfgsecmig</AIXPertCommand>
+    <AIXPertArgs>on</AIXPertArgs>
+    <AIXPertGroup>IPSEC Secure Partition Migration Group</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_ipsecpermit" function="ipsecpermit">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="19">Allow the packets from HMC restricting inbound and outbound traffic to that which is necessary for the cardholder data environment.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecpermithostorport</AIXPertCommand>
+    <AIXPertArgs>PermitHost_IPSEC</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_maxexpired" function="maxexpired">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="21">Always change vendor-supplied defaults before installing a system on the network. Specifies the maximum time (in weeks) beyond the maxage value that a user can change an expired password to 8.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxexpired=8 LESS ALL gdprv1_maxexpired</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_maxrepeats" function="maxrepeats">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="22">Always change vendor-supplied defaults before installing a system on the network. For example include passwords, include simple network management protocol(snmp) community strings, and eliminate unnecessary accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxrepeats=2 LESS ALL gdprv1_maxrepeats</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_netstat" function="netstat">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="23">Disable netstat: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>netstat tcp d gdprv1_netstat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_dissnmpdmn" function="dissnmpdmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="24">Disable SNMP daemon: Change vendor supplied defaults. Stops SNMP daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpd a gdprv1_dissnmpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_dissnmpmibddmn" function="dissnmpmibddmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="25">Disable SNMPMIBD daemon: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpmibd a gdprv1_dissnmpmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disaixmibddmn" function="disaixmibddmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="26">Disable AIXMIBD daemon: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>aixmibd d gdprv1_disaixmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_hostmibddmn" function="dishostmibddmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="27">Disable HOSTMIBD daemon: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>hostmibd d gdprv1_dishostmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_dislpd" function="dislpd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="28">Disable unnecessary and insecure services: Disable lpd daemon: Stops lpd daemon and comments the lpd entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>lpd: /etc/inittab : d gdprv1_dislpd</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_discde" function="discde">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="29">Disable unnecessary and insecure services: Disable CDE: Disables CDE when LFT is not configured.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.methods,prereqlft</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>"dt:" "/etc/inittab" ":" d gdprv1_discde</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_distimedmn" function="distimedmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="30">Disable unnecessary and insecure services: Disable timed daemon: Stops timed daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d gdprv1_distimedmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disrwhoddmn" function="disrwhoddmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="31">Disable unnecessary and insecure services: Disable rwhod daemon: Stops rwhod daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d gdprv1_disrwhoddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disdpid2dmn" function="disdpid2dmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="32">Disable unnecessary and insecure services: Disable DPID2 daemon: Stops DPID2 daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d gdprv1_disdpid2dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disdhcpserv" function="disdhcpserv">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="33">Disable DHCP Server: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpsd d gdprv1_disdhcpserv</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disdhcpagent" function="disdhcpagent">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="34">Disable unnecessary and insecure services: Disable DHCP Agent: Stops DHCP relay agent and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d gdprv1_disdhcpagent</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_shell" function="shell">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="35">Disable unnecessary and insecure services: Disable rshd daemon: Comments the entry for rshd daemon in /etc/inetd.conf and kills all instances of rshd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp d gdprv1_shell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rlogin" function="rlogin">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="36">Disable unnecessary and insecure services: Disable rlogin in /etc/inetd.conf: Comments the entry for rlogind daemon in /etc/inetd.conf and kills all instances of rlogind.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>login tcp d gdprv1_rlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rexecd" function="rexecd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="37">Disable unnecessary and insecure services: Disable rexecd in /etc/inetd.conf: Comments the entry for rexecd daemon in /etc/inetd.conf and kills all instances of rexecd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp d gdprv1_rexecd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_comsat" function="comsat">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="38">Disable unnecessary and insecure services: Disable comsat in /etc/inetd.conf: Comments the entry for comsat daemon in /etc/inetd.conf and kills all instances of comsat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>comsat udp d gdprv1_comsat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_fingerd" function="fingerd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="39">Disable unnecessary and insecure services: Disable fingerd in /etc/inetd.conf: Comments the entry for fingerd daemon in /etc/inetd.conf and kills all instances of fingerd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d gdprv1_fingerd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_systat" function="systat">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="40">Disable unnecessary and insecure services: Disable systat in /etc/inetd.conf: Comments the entry for systat daemon in /etc/inetd.conf and kills all instances of systat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>systat tcp d gdprv1_systat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tftp" function="tftp">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="41">Disable unnecessary and insecure services: Disable tftpd in /etc/inetd.conf: Comments the entry for tftpd daemon in /etc/inetd.conf and kills all instances of tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp d gdprv1_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_talk" function="talk">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="42">Disable unnecessary and insecure services: Disable talkd in /etc/inetd.conf: Comments the entry for talkd daemon in /etc/inetd.conf and kills all instances of talkd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp d gdprv1_talk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rquotad" function="rquotad">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="43">Disable unnecessary and insecure services: Disable rquotad in /etc/inetd.conf: Comments the entry for rquotad daemon in /etc/inetd.conf and kills all instances of rquotad.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d gdprv1_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rstatd" function="rstatd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="44">Disable unnecessary and insecure services: Disable rstatd in /etc/inetd.conf: Comments the entry for rstatd daemon in /etc/inetd.conf and kills all instances of rstatd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d gdprv1_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rusersd" function="rusersd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="45">Disable unnecessary and insecure services: Disable rusersd in /etc/inetd.conf: Comments the entry for rusersd daemon in /etc/inetd.conf and kills all instances of rusersd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rusersd udp d gdprv1_rusersd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rwalld" function="rwalld">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="46">Disable unnecessary and insecure services: Disable rwalld in /etc/inetd.conf: Comments the entry for rwalld daemon in /etc/inetd.conf and kills all instances of rwalld.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d gdprv1_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sprayd" function="sprayd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="47">Disable unnecessary and insecure services: Disable sprayd in /etc/inetd.conf: Comments the entry for sprayd daemon in /etc/inetd.conf and kills all instances of sprayd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d gdprv1_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_pcnfsd" function="pcnfsd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="48">Disable unnecessary and insecure services: Disable pcnfsd in /etc/inetd.conf: Comments the entry for pcnfsd daemon in /etc/inetd.conf and kills all instances of pcnfsd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d gdprv1_pcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcpecho" function="tcpecho">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="49">Disable unnecessary and insecure services: Disable TCP echo service in /etc/inetd.conf: Comments the entry for TCP echo service in /etc/inetd.conf and kills all instances of echo(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d gdprv1_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcpdiscard" function="tcpdiscard">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="50">Disable unnecessary and insecure services: Disable TCP discard service in /etc/inetd.conf: Comments the entry for TCP discard service in /etc/inetd.conf and kills all instances of discard(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard tcp d gdprv1_tcpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcpchargen" function="tcpchargen">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="51">Disable unnecessary and insecure services: Disable TCP chargen service in /etc/inetd.conf: Comments the entry for TCP chargen service in /etc/inetd.conf and kills all instances of chargen(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen tcp d gdprv1_tcpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcpdaytime" function="tcpdaytime">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="52">Disable unnecessary and insecure services: Disable TCP daytime service in /etc/inetd.conf: Comments the entry for TCP daytime service in /etc/inetd.conf and kills all instances of daytime(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp d gdprv1_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcptime" function="tcptime">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="53">Disable unnecessary and insecure services: Disable TCP time service in /etc/inetd.conf: Comments the entry for TCP time service in /etc/inetd.conf and kills all instances of timed(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp d gdprv1_tcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_udpecho" function="udpecho">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="54">Disable unnecessary and insecure services: Disable UDP echo service in /etc/inetd.conf: Comments the entry for UDP echo service in /etc/inetd.conf and kills all instances of echo(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d gdprv1_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_udpdiscard" function="udpdiscard">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="55">Disable unnecessary and insecure services: Disable UDP discard service in /etc/inetd.conf: Comments the entry for UDP discard service in /etc/inetd.conf and kills all instances of discard(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d gdprv1_udpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_udpchargen" function="udpchargen">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="56">Disable unnecessary and insecure services: Disable UDP chargen service in /etc/inetd.conf: Comments the entry for UDP chargen service in /etc/inetd.conf and kills all instances of chargen(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d gdprv1_udpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_udpdaytime" function="udpdaytime">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="57">Disable unnecessary and insecure services: Disable UDP daytime service in /etc/inetd.conf: Comments the entry for UDP daytime service in /etc/inetd.conf and stops the daytime(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp d gdprv1_udpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_udptime" function="udptime">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="58">Disable unnecessary and insecure services: Disable UDP time service in /etc/inetd.conf: Comments the entry for UDP time service in /etc/inetd.conf and stops the time(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp d gdprv1_udptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_dtspc" function="dtspc">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="59">Disable unnecessary and insecure services: Disable dtspcd: Comments the entry for dtspcd daemon in /etc/inetd.conf when LFT is not configured and CDE is disabled in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>dtspc tcp d gdprv1_dtspc</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_ttdbserver" function="ttdbserver">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="60">Disable unnecessary and insecure services: Disable ttdbserver service in /etc/inetd.conf: Comments the entry for ttdbserver service in /etc/inetd.conf and kills all instances of ttdbserver service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ttdbserver tcp d gdprv1_ttdbserver</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_cmsd" function="cmsd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="61">Disable unnecessary and insecure services: Disable cmsd service in /etc/inetd.conf: Comments the entry for cmsd service in /etc/inetd.conf and kills all instances of cmsd service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>cmsd udp d gdprv1_cmsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_ftp" function="ftp">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="62">Disable unnecessary and insecure services: Disable ftpd: Comments the entry for ftpd daemon in /etc/inetd.conf and stops ftpd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp d gdprv1_ftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_telnet" function="telnet">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="63">Disable unnecessary and insecure services: Disable telnetd: Comments the entry for telnetd daemon in /etc/inetd.conf and stops telnetd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp d gdprv1_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disrmtcmds" function="disrmtcmds">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="64">Disable unsecure daemons: Disables unsecure commands rlogin, rsh, rcp, and tftp.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.ILS,bos.rte.odm,bos.rte.install,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disrmtcmds</AIXPertCommand>
+    <AIXPertArgs>d gdprv1_disrmtcmds</AIXPertArgs>
+    <AIXPertGroup>Disable remote services</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disrmtdmns" function="disrmtdmns">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="65">Disable unsecure daemons: Disables unsecure daemons rlogind, rshd, and tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.ILS,bos.rte.odm,bos.rte.install,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disrmtdmns</AIXPertCommand>
+    <AIXPertArgs>d gdprv1_disrmtdmns</AIXPertArgs>
+    <AIXPertGroup>Disable remote services</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_clean_partial_conns" function="clean_partial_conns">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="66">Network option clean_partial_conns: Set the value of the network option clean_partial_conns to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>clean_partial_conns=1 s gdprv1_clean_partial_conns</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_tcp_tcpsecure" function="tcp_tcpsecure">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="67">Network option tcp_tcpsecure: Set the value of the network option tcp_tcpsecure to 7 to protect data against RST and SYN attacks.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_tcpsecure=7 s gdprv1_tcp_tcpsecure</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rmrhostsnetrc" function="rmrhostsnetrc">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="68">Disable .rhosts and .netrc files for all users.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+    <AIXPertArgs>h gdprv1_rmrhostsnetrc</AIXPertArgs>
+    <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rmetchostsequiv" function="rmetchostsequiv">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="69">Disable or comment out entries from /etc/hosts.equiv file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+    <AIXPertArgs>gdprv1_rmetchostsequiv</AIXPertArgs>
+    <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disablepop3d" function="disablepop3d">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="70">SSL and Early TLS should be disabled in applications: Disable for the pop3d server.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableSSL</AIXPertCommand>
+    <AIXPertArgs>a /etc/pop3d.cf</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disableimapd" function="disableimapd">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="71">SSL and Early TLS should be disabled in applications: Disable for the imap server.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableSSL</AIXPertCommand>
+    <AIXPertArgs>a /etc/imapd.cf</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_checkNTP" function="checkNTP">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="72">SSL and Early TLS should be disabled in applications: Check the NTP configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkNTP</AIXPertCommand>
+    <AIXPertArgs>a /etc/ntp.conf</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_secureFTPD" function="secureFTPD">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="73">SSL and Early TLS should be disabled in applications: Check the FTP daemon configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/secureFTP</AIXPertCommand>
+    <AIXPertArgs>a ftpd</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_secureFTP" function="secureFTP">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="74">SSL and Early TLS should be disabled in applications: Check the FTP client configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/secureFTP</AIXPertCommand>
+    <AIXPertArgs>a ftp</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sendmailConfig" function="sendmailConfig">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="75">SSL and Early TLS should be disabled in applications: Disable in sendmail configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sendmailPCIConfig</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sslversion" function="sslversion">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="76">SSL and Early TLS should be disabled in applications: Check for required SSL version.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sslversion</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rmsuidfrmrcmds" function="rmsuidfrmrcmds">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="77">Configure system security parameters to prevent misuse: Removes SUID from remote commands rcp, rdist, rexec, remsh, rlogin, and rsh.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmsuidfrmrcmds</AIXPertCommand>
+    <AIXPertArgs>r gdprv1_rmsuidfrmrcmds</AIXPertArgs>
+    <AIXPertGroup>Disable SUID of commands</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_filepermgr" function="filepermgr">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="78">Configure system security parameters to prevent misuse: Remove setuid from privileged commands.</AIXPertDescription>
+    <AIXPertPrereqList>prereqnontcb,bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/filepermgr</AIXPertCommand>
+    <AIXPertArgs>l gdprv1_filepermgr</AIXPertArgs>
+    <AIXPertGroup>Disable SUID of commands</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_enablenfs" function="enablenfs">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="79">Configure system security parameters to prevent misuse: Configure the NFS exports to restrict the access.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,bos.net.nfs.client</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/nfsconfig</AIXPertCommand>
+    <AIXPertArgs>e gdprv1_enablenfs</AIXPertArgs>
+    <AIXPertGroup>Disable remote services</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshstart" function="sshstart">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="80">Check if ssh filesets are installed, Start the sshd daemon if it is not started and configure to start the sshd daemon at every reboot.</AIXPertDescription>
+    <AIXPertPrereqList>openssl.base,openssl.license,openssl.man.en_US</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sshstart</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshdaemonprotocol" function="sshdaemonprotocol">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="81">The SSH daemon must be configured to only use the SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshclientprotocol" function="sshclientprotocol">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="82">The SSH client must be configured to only use SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshlistenaddress" function="sshlistenaddress">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="83">The SSH daemon must only listen on management network addresses unless authorized to listen on any network address for non-management operations.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>ListenAddress 0 /etc/ssh/sshd_config 1</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshciphers" function="sshciphers">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="84">The SSH daemon must be configured to only use FIPS 140-2 approved ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Ciphers "aes128-ctr" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshmacs" function="sshmacs">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="85">The SSH daemon must be configured to only use Message Authentication Codes (MACs) employing FIPS 140-2 approved cryptographic hash algorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MACs "hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshclientciphers" function="sshclientciphers">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="86">The SSH client must be configured to only use FIPS 140-2 approved ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Ciphers "aes128-ctr" /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshclientmacs" function="sshclientmacs">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="87">The SSH client must be configured to only use Message Authentication Codes (MACs) employing FIPS 140-2 approved cryptographic hash algorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MACs "umac-64@openssh.com,hmac-ripemd160,hmac-sha2-256,hmac-sha2-512" /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshAllowGroups" function="sshAllowGroups">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="88">The SSH daemon must restrict login ability to specific users and/or groups.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>AllowGroups 0 /etc/ssh/sshd_config 1</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshprintlastlogg" function="sshprintlastlog">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="89">Upon login, the system must display the date and time of the last successful account login.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PrintLastLog yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshStrictMode" function="sshStrictMode">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="90">The SSH daemon must perform strict mode checking of home directory configuration files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>StrictModes yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshUsePrivilege" function="sshUsePrivilege">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="91">The SSH daemon must use privilege separation.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>UsePrivilegeSeparation yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sshRSAAuthentication" function="sshRSAAuthentication">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="92">The SSH daemon must not allow rhosts RSA authentication.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>RhostsRSAAuthentication no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sysintegrity" function="sysintegrity">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="94">Maintaining the system integrity by detecting, removing and protecting against known types of malicious software.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+    <AIXPertArgs>gdprv1_sysintegrity</AIXPertArgs>
+    <AIXPertGroup>System Integrity verification</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rmdotfrmpathroot" function="rmdotfrmpathroot">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="95">Remove dot from root path: Removes the dot from the PATH environment variable in files .profile, .kshrc, .cshrc, and .login in the root home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.security</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathroot</AIXPertCommand>
+    <AIXPertArgs>gdprv1_rmdotfrmpathroot</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rmdotfrmpathnroot" function="rmdotfrmpathnroot">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="96">Remove dot from non-root path: Removes the dot from the PATH environment variable in files .profile, .kshrc, .cshrc, and .login in the user home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.security</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathnroot</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_enableRbac" function="enableRbac">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="97">Implementing Strong Access Control Measure: Enable RBAC by creating so, sa, and isso users with appropriate roles.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/EnableRbac</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup></AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_umask" function="umask">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="98">Object creation permissions: Specifies default object creation permissions to 022.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>umask=22 ALL gdprv1_umask</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_limitsysacc" function="limitsysacc">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="99">Limit system access: Makes root the only user in cron.allow file and removes the cron.deny file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/limitsysacc</AIXPertCommand>
+    <AIXPertArgs>h gdprv1_limitsysacc</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rootlogin" function="rootlogin">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="100">Identify all users with a unique user name before allowing them to access system components or card holder data.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=true root gdprv1_rootlogin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_disableacct" function="disableacct">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="101">Accounts must be locked after 90 days of inactivity.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqda</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableacct</AIXPertCommand>
+    <AIXPertArgs>90 gdprv1_disableacct</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_loginretries" function="loginretries">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="102">Number of login attempts before locking the account: Specifies 6 as the number of consecutive unsuccessful login attempts for each non-root user account before the account is disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>loginretries=6 LESS NONROOT gdprv1_loginretries</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_logindisable" function="logindisable">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="103">Disable login after unsuccessful login attempts: Specifies 6 as the number of unsuccessful login attempts on a port before the port is locked.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logindisable=6 default gdprv1_logindisable</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_loginreenable" function="loginreenable">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="104">Reenable login after locking: Specifies the time interval (30 minutes) after which a port is unlocked after being disabled by logindisable.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg loginreenable=30 default gdprv1_loginreenable</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_autologoff" function="autologoff">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="105">Set session idle time: Require the user to renter password if the session is idle for more than 15 minutes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/autologoff</AIXPertCommand>
+    <AIXPertArgs>900 gdprv1_autologoff</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_pwdalgchk" function="pwdalgchk">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="106">Use strong cryptography: Set the system password algorithm to a stronger cryptographic hash algorithm.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pwdalgchk</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_minlen" function="minlen">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="107">Minimum length for password: Specifies the minimum length of a password to 7 characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=7 MORE ALL gdprv1_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_minalpha" function="minalpha">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="108">Minimum number of alphabetic chars: Specifies 1 as the minimum number of alphabetic characters in a password to ensure that the password contains alphabetic characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minalpha=1 MORE ALL gdprv1_minalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_minother" function="minother">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="109">Minimum number of non-alphabetic chars: Specifies the minimum number of non-alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minother=1 MORE ALL gdprv1_minother</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_maxage" function="maxage">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="110">Maximum age for password: Specifies the maximum number of weeks (12 weeks, at most 90 days) that a password is valid.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxage=12 LESS ALL gdprv1_maxage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_histexpire" function="histexpire">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="111">Password reuse: Specifies 52 as the number of weeks before a password can be reused.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histexpire=52 LESS ALL gdprv1_histexpire</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_histsize" function="histsize">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="112">Password reuse limit: Specifies 4 as the number of previous passwords a user cannot reuse.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histsize=4 LESS ALL gdprv1_histsize</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_chkMFA" function="chkMFA">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="113">Secure access using MFA: Check that the system is configured for multi-factor Authentication (MFA). If not inform how to configure.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkMFA</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_removeguest" function="removeguest">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="114">Remove guest account: Removes guest account and its files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/execmds</AIXPertCommand>
+    <AIXPertArgs>"rmuser guest; rm -rf /home/guest; ODMDIR=/etc/objrepos odmdelete -qloc0=/home/guest -o inventory"</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_audit" function="audit">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="115">Enable audit: Enables bin auditing.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pciaudit</AIXPertCommand>
+    <AIXPertArgs>h gdprv1_audit</AIXPertArgs>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_entpdmn" function="entpdmn">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="116">Synchronize all clocks using Time Synchronization technology.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>xntpd a gdprv1_entpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rootrlogin" function="rootrlogin">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="117">Remote root login: Disables remote root login. Activation is on a need basis by the system admin following deactivation.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false root gdprv1_rootrlogin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_chetcftpusers" function="chetcftpusers">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="118">Add root user in /etc/ftpusers file: Adds root username in /etc/ftpusers file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chetcftpusers</AIXPertCommand>
+    <AIXPertArgs>a gdprv1_chetcftpusers</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_sedconfig" function="sedconfig">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="119">Enable SED feature: Enable Stack Execution Disable feature.</AIXPertDescription>
+    <AIXPertPrereqList>prereqsed,bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sedconfig</AIXPertCommand>
+    <AIXPertArgs>gdprv1_sedconfig</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_rootpwdintchk" function="rootpwdintchk">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="120">Root Password Integrity Check: Ensures that the root password being set is not weak.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user dictionlist=/etc/security/aixpert/dictionary/English root gdprv1_rootpwdintchk</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_efsmsg" function="efsmsg">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="121">Display a message to enable Encrypted File System (EFS).</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/GeneralMsg</AIXPertCommand>
+    <AIXPertArgs>enableEFS</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="gdprv1_lockacc_rlogin" function="lockacc_rlogin">
+    <AIXPertRuleType type="GDPRv1"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="215" msgNum="122">Default system accounts must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/lockacc_rlogin</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+</AIXPertSecurityHardening>

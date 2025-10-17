@@ -1,0 +1,114 @@
+import pandas as pd
+from datetime import datetime
+
+def run_compliance_reports_to_csv(data_filename, hosts_filename, output_filename):
+    """
+    Reads a data file and a list of hosts, then generates a compliance report for each host
+    and saves the output to a CSV file.
+
+    Args:
+        data_filename (str): The name of the main data file (e.g., 'your_data_file.csv').
+        hosts_filename (str): The name of the CSV file containing the list of hosts (e.g., 'hosts.csv').
+        output_filename (str): The name of the output CSV file to be created.
+    """
+    try:
+        # Read the main data file, keeping default NA values as strings
+        df_data = pd.read_csv(data_filename, keep_default_na=False)
+        
+        # Read the list of hosts from the hosts file
+        df_hosts = pd.read_csv(hosts_filename)
+        
+        # Get the list of hosts from the DataFrame
+        host_list = df_hosts.iloc[:, 0].astype(str).str.lower().tolist()
+
+        # Convert the 'Host' column in the data to lowercase for consistent searching
+        df_data['Host'] = df_data['Host'].astype(str).str.lower()
+        
+        # Check for required columns in the main data file
+        if 'Host' not in df_data.columns or 'Risk' not in df_data.columns:
+            print("Error: The data file must contain 'Host' and 'Risk' columns.")
+            return
+
+        # List to hold the report data for each host
+        report_data = []
+
+        print("\n--- Generating Compliance Reports ---")
+        
+        # Loop through each host in the list
+        for target_host in host_list:
+            
+            # Filter the DataFrame for the current host
+            host_data = df_data[df_data['Host'] == target_host]
+
+            if host_data.empty:
+                print(f"Skipping host '{target_host}': No data found.")
+                # Add a row with 0 values for this host in the report
+                report_data.append({
+                    'host': target_host,
+                    'passed': 0,
+                    'failed': 0,
+                    'compliance_percentage': 0.0
+                })
+                continue
+
+            # Count the occurrences of each risk level
+            risk_counts = host_data['Risk'].value_counts()
+            
+            # Define the specific risk levels
+            passed_levels = ['None']
+            failed_levels = ['High', 'Medium', 'Low']
+            
+            # Calculate passed and failed counts
+            passed_count = 0
+            failed_count = 0
+            
+            for level, count in risk_counts.items():
+                if level in passed_levels:
+                    passed_count += count
+                elif level in failed_levels:
+                    failed_count += count
+
+            total_records = passed_count + failed_count
+            
+            # Calculate compliance percentage
+            if total_records > 0:
+                compliance_percentage = (passed_count / total_records) * 100
+            else:
+                compliance_percentage = 0.0
+            # Round the percentage to two decimal places
+            compliance_percentage = round(compliance_percentage, 2)
+
+            # Append the results for the current host to our list
+            report_data.append({
+                'host': target_host,
+                'passed': passed_count,
+                'failed': failed_count,
+                'compliance_percentage': compliance_percentage
+            })
+            
+            print(f"Report generated for host: {target_host}")
+
+        # Create a new DataFrame from the collected data
+        df_report = pd.DataFrame(report_data)
+
+        # Save the DataFrame to a CSV file
+        df_report.to_csv(output_filename, index=False)
+        
+        print(f"\n--- Report Generation Complete ---")
+        print(f"Output saved to: {output_filename}")
+
+    except FileNotFoundError as e:
+        print(f"Error: A required file was not found: {e.filename}. Please check your file names.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+if __name__ == "__main__":
+    # Replace these filenames with your actual file names
+    main_data_file = 'CIS-Enterprise-Scan-Level-1_2--AIX_SEPT.csv'
+    hosts_list_file = 'hostname_cmdb.csv'
+    output_file = 'compliance_report.csv'
+    # Generate a timestamp for the output filename
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_file = f"compliance_report_{timestamp}.csv"
+    
+    run_compliance_reports_to_csv(main_data_file, hosts_list_file, output_file)

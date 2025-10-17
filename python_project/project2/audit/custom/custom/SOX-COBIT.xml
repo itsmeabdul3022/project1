@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--    %Z%%M%	%I%  %W% %G% %U%
+
+        COMPONENT_NAME:   (iceexpress) SOX-COBIT.xml
+
+        FUNCTIONS:
+
+        ORIGINS: 27                             -->
+<!-- VERSION : SOX-COBIT 1.0 -->
+<!-- FILE: 1.0 -->
+
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqrl" function="prereqrl">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="2">Prereq rule for root login: Checks whether any non-root user exists that has login privileges.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqrl</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="3">Prereq rule for non-TCB: Checks whether the system is non-TCB or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqtcb" function="prereqtcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="4">Prereq rule for TCB: Checks whether TCB is enabled or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqtcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqipsec" function="prereqipsec">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="5">Prereq rule for IPSec: Checks whether IPSec is enabled or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqipsec</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="6">Prereq rule for Trusted Execution: Checks whether the system has Trusted Execution feature on or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqcefs" function="prereqcefs">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="7">Prereq rule for EFS: Checks whether the Centralized EFS feature is supported or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcefs</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqahafs" function="prereqahafs">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="8">Prereq rule for AHAFS: Checks whether the system supports AHAFS or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqahafs</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_manageITsecurity" function="manageITsecurity">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="10">COBIT DS5.1 Management of IT Security: Turns on Trusted Execution policies to stop loading of binaries, scripts, kernel extensions and shared libraries on checksum mismatch with TSD.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+    <AIXPertArgs>scbps_manageITsecurity</AIXPertArgs>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_resourceprot" function="resourceprot">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="9">COBIT AI3.2 Infrastructure Resource Protection and Availability: Turns on bin auditing for set of events and disables direct root logins.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqbinaudit,prereqrl</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/secactreport</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_identitymgmt" function="identitymgmt">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="11">COBIT DS5.3 Identity Management: Ensure the user accounts are authenticated using password based authentication method i.e., remove .rhosts, .netrc, .shosts, .nodes, hosts.equiv, and shosts.equiv files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/mvhostsfiles</AIXPertCommand>
+    <AIXPertArgs>a scbps_identitymgmt</AIXPertArgs>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_usracctmgmt" function="usracctmgmt">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="12">COBIT DS5.4 User Account Management: Verifies the correctness of user definitions and fixes the errors.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/execmds</AIXPertCommand>
+    <AIXPertArgs>"/usr/bin/usrck -y ALL; /usr/bin/usrck -n ALL"</AIXPertArgs>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_securitymonitor" function="securitymonitor">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="13">COBIT DS5.5 Security Testing Surveillance and Monitoring: Regularly checks the security status of the system against the last applied AIXpert security level.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.cron,bos.rte.security,bos.rte.date,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/securitymonitor</AIXPertCommand>
+    <AIXPertArgs>scbps_securitymonitor</AIXPertArgs>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_erroreporting" function="erroreporting">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="14">COBIT DS5.6 Security Incident Definition: Consolidates errors from different logs and sends mail to administrator.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.cron,bos.rte.security,bos.rte.date,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/erroreporting</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_protsectech" function="protsectech">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="15">COBIT DS5.7 Protection of Security Technology: Avoids modifications to trusted files listed in TSD database.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/protsectech</AIXPertCommand>
+    <AIXPertArgs>scpbs_protsectech</AIXPertArgs>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+    <AIXPertEntry name="scbps_cryptokeymgmt" function="cryptokeymgmt">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="16">COBIT DS5.8 Cryptographic Key Management: Stores EFS keystores on a centralized LDAP server.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,clic.rte.lib,clic.rte.kernext,prereqcefs</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/efsKSonLDAP</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_virusdetsw" function="virusdetsw">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="17">COBIT DS5.9 Malicious Software Prevention Detection and Correction: Malicious Software Prevention Detection and Correction.</AIXPertDescription>
+   <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqnontcb</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/virusdetsw</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_firewsetup" function="firewsetup">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="18">COBIT DS5.10 Network Security: Firewall Architecture and Connections with Public Networks.</AIXPertDescription>
+   <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/firewsetup</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+    <AIXPertEntry name="scbps_xchgsensitivedata" function="xchgsensitivedata">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="19">COBIT DS5.11 Exchange of Sensitive Data: Enables SSH options to ensure sensitive data transfer is protected.</AIXPertDescription>
+   <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,openssh.base.server</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/SSHfordataxchg</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_configrepomgmt" function="configrepomgmt">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="20">COBIT DS9.1 DS9.2 and DS9.3 Configuration Repository Management: Monitors system configuration files for modifications and logs the event data.</AIXPertDescription>
+   <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqahafs</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/configrepomgmt</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_managephyaccess" function="managephyaccess">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="21">COBIT DS12.3 Physical Access: Disables root console login and enables auto logoff of idle user sessions.</AIXPertDescription>
+   <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqrl</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/managephyaccess</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="scbps_manageprtrsrvc" function="manageprtrsrvc">
+    <AIXPertRuleType type="SCBPS"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="205" msgNum="22">COBIT DS13.4 Sensitive Documents and Output Devices: Disables Printer services(qdaemon, piobe and lpd).</AIXPertDescription>
+   <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageprtrsrvc</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>SOX-COBIT Group</AIXPertGroup>
+  </AIXPertEntry>
+</AIXPertSecurityHardening>

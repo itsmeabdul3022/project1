@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--    %Z%%M%  %I%  %W% %G% %U%
+	COMPONENT_NAME:   (iceexpress) DoDv2.xml
+
+	FUNCTIONS:
+
+	ORIGINS: 27                             -->
+
+<!--    Please do not Translate the contents of this file.  -->
+
+<!-- Version 2 -->
+<!-- FILE: 1.0 -->
+
+<AIXPertSecurityHardening>
+
+  <AIXPertEntry name="prereqlh" function="prereqlh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="1">Prereq rule for logindodherald: Checks whether herald value is set or not.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlh</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="2">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqda" function="prereqda">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="3">Prereq rule for disableacct: Adds /bin/false to shells in login.cfg, if it does not exist.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqda</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_mvhostsfiles" function="mvhostsfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="4">(GEN002040: CAT I) This rule will disable .rhosts, .shosts, hosts.equiv and shosts.equiv files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/mvhostsfilesdod</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_logindodherald" function="logindodherald">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="5">(GEN000400: CAT II) Set login herald: Set login herald in default stanza, (GEN000410: CAT II) Add DoD login banner in /etc/herald, (AIX00310: CAT II) Ensure /etc/ftpaccess.ctl exist with a herald entry.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2loginherald</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_enablexntp" function="enablexntpd">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="6">(GEN000240,GEN000241: CAT II) This rule will enable the NTP service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.commands,bos.rte.shell,bos.rte.SRC,bos.rte.control,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cmntrows</AIXPertCommand>
+    <AIXPertArgs>xntpd "/etc/rc.tcpip" "#" a dodv2_xntp</AIXPertArgs>
+    <AIXPertGroup>Network Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_grpusrpass" function="grpusrpass">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="7">(GEN000560: CAT I, GEN000300,GEN000880,GEN000320,GEN000380: CAT II) All accounts on the system must have unique user or account names and unique user or account UIDs, (GEN001440: CAT III) All interactive users must be assigned a home directory in the /etc/passwd file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/grpusrpass_chk</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>User Group System and Password Definitions</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_rootpasswd" function="rootpasswd">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="8">(GEN000900: CAT III) The root user's home directory must not be the root directory (/), (GEN000020: CAT II) The system must require authentication upon booting into single-user.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/rootpasswd_home</AIXPertCommand>
+    <AIXPertArgs>/root</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_limitsysacc" function="limitsysacc">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="9">(GEN002960: CAT II) Access to the cron utility must be controlled using the cron.allow and/or cron.deny file(s), (GEN003060: CAT II) Default system accounts (with the exception of root) must not be listed in the cron.allow file or must be included in the cron.deny file if cron.allow does not exist.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/limitsysacc</AIXPertCommand>
+    <AIXPertArgs>h dodv2_limitsysacc</AIXPertArgs>
+    <AIXPertGroup>Cron Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_acldodfiles" function="acldodfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="10">(Multiple GEN items: CAT II) Change ACL of files and directories as applicable per DoD STIG guideline.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/acldodfiles</AIXPertCommand>
+    <AIXPertArgs>dod_acldodfiles</AIXPertArgs>
+    <AIXPertGroup>Security Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_pathvariable" function="fixpathvars">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="11">(GEN000940,GEN000945,GEN000950, GEN001600,GEN001605,GEN001610,GEN001840, GEN001845,GEN001850,GEN001900,GEN001901, GEN001902: CAT II) Ensure the root account, run control scripts, and global and local initialization files have absolute paths under the PATH, LIBPATH, LD_LIBRARY_PATH, and LDR_PRELOAD variables.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/fixpathvars</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Security Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_usershells" function="usershells">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="12">(GEN002120,GEN002140,GEN005000: CAT I II) This rule will check and configure user shells.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/usershells</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Security Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_rmwwpaths" function="removewwpaths">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="13">(GEN000960,GEN003000,GEN003020, GEN003160,GEN003360,GEN003380: CAT II) Ensure that no world writable directories exist in root account's search path. Also, ensure that the cron and at commands' jobs do not execute group or world-writable programs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/rmwwpaths</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Security Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_wwdevfiles" function="wwdevfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="14">(GEN002280,GEN002300,GEN002480: CAT II) This rule displays world-writable device files, directories and any other files on the system in a non-public directories.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/wwdevfiles</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_fsmntoptions" function="fsMountoptions">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="15">(GEN002420,GEN002430: CAT II) Ensure that remotely mounted file systems have nosuid and nodev options.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.filesystem,bos.rte.security,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/fsmntoptions</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_catIitems" function="CAT1-items">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="16">(GEN000100,GEN004220,GEN006380, GEN008600,GEN008640: CAT I) This rule display results of specified CAT I STIG findings.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.install,bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.boot,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cat1</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_netrules" function="netrules">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="17">(GEN000242,GEN001980,GEN002000, GEN007020: CAT II) This rule will check and configure for specified GEN items.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.control,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2netrules</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Network Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <!--
+  <AIXPertEntry name="dodv2_inetdservices" function="inetdservices">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="18">(GEN000000-AIX0300,GEN003820-3860, GEN004800,GEN005140,GEN005280,GEN009140, GEN009160,GEN009180,GEN009190, GEN009200-9330: CAT I II III) Disable daemon and services: Comments out entries in /etc/inetd.conf and kills all instances of daemon/services.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/inetdservices</AIXPertCommand>
+    <AIXPertArgs>disable</AIXPertArgs>
+    <AIXPertGroup>Network Rules</AIXPertGroup>
+  </AIXPertEntry>
+-->
+  <AIXPertEntry name="dodv2_services" function="networkservices">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="19">(GEN003700,GEN003810,GEN003815, GEN003865,GEN007840,GEN007850,GEN006060: CAT II) This rule will check and configure inetd and portmap services and DHCP client as per STIG guideline.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.control,bos.rte.SRC,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2services</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Network Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_coredumpdev" function="coredumpdev">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="20">(GEN003510: CAT II) This rule disables kernel core dumps on the system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.serv_aid,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/coredumpdev</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_SMTP_ver" function="SMTP_ver">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="21">(GEN004600: CAT I) The SMTP service must be an up-to-date version.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/SMTP_ver</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>SMTP Setting</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_SMTPuucode" function="SMTPuucode">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="22">(GEN004640: CAT I) The SMTP service must not have a uudecode alias active.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/SMTPuucode</AIXPertCommand>
+    <AIXPertArgs>d </AIXPertArgs>
+    <AIXPertGroup> SMTP Setting </AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_EnableTrustedLogging" function="EnableTrustedLogging">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="23">(GEN005440,GEN005460,GEN005480, GEN005450: CAT II) The system must use a remote syslog server (log host).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/GeneralMsg</AIXPertCommand>
+    <AIXPertArgs>enableTrustedLogging</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_SYSattr" function="SYSattr">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="24">(AIX00080: CAT I) The SYSTEM attribute must not be set to NONE for any account.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/SYSattr</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_account" function="account">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="25">(GEN000340,GEN000360: CAT II) UIDs and GIDs reserved for system accounts must not be assigned to non-system accounts or non-system groups.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/account</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>User Group System and Password Definitions</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_fipspasswd" function="fipspasswd">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="26">(GEN000590,GEN000585,GEN000590: CAT II) The system must use a FIPS 140-2 approved cryptographic hashing algorithm for generating account password hashes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/fipspasswd</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_lockacc_rlogin" function="lockacc_rlogin">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="27">(GEN000740: CAT II) All non-interactive/automated processing account passwords must be changed at least once per year or be locked. (GEN002640: CAT II) Default system accounts must be disabled or removed. (GEN000280: CAT II) Direct logins must not be permitted to shared, default, application, utility accounts. (GEN000290: CAT II) The system must not have unnecessary accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/lockacc_rlogin</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_nfsoptions" function="nfsoptions">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="28">(GEN005880: CAT II) The NFS server must not allow remote root access. (GEN005840: CAT II) The NFS server must be configured to restrict file system access to local hosts. (GEN005820: CAT II) The NFS anonymous UID and GID must be configured to values without permissions.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/nfsoptions</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>NFS options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_nisplus" function="nisplus">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="29">(GEN006400: CAT II) The Network Information System (NIS) protocol must not be used. (GEN006420: CAT II) NIS maps must be protected through hard-to-guess domain names. (GEN006460: CAT II) Any NIS+ server must be operating at security level 2.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/nisplus</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>NIS+ policy recommendations </AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_nosuid" function="nosuid">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="30">(GEN005900: CAT II) The nosuid option must be enabled on all NFS client mounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/nosuid</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>NFS options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_passwdhash" function="passwdhash">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="31">(GEN001475: CAT II) The /etc/group file must not contain any group password hashes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/passwdhash</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>User Group System and Password Definitions</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_remoteconsole" function="remoteconsole">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="32">(GEN001000: CAT II) Remote consoles must be disabled or protected from unauthorized access.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/remoteconsole</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_rmtunnel" function="rmtunnel">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="33">(GEN007820: CAT II) The system must not have IP tunnels configured.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/rmtunnel</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_tftp" function="tftp">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="34">(GEN005120: CAT II) A dedicated TFTP user account and a non-login shell (such as /bin/false) and a home directory owned by the TFTP user. (GEN005080: CAT I) The TFTP daemon must operate in secure-mode which provides access only to a single directory on the host file system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/tftpdod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_forward" function="forward">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="35">(GEN004580: CAT II) The system must not use .forward files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/forward</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_loginout" function="loginout">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="36">(GEN000740: CAT II) All non-interactive/automated processing account passwords must be locked. (GEN000280: CAT II) Direct logins must not be permitted to shared, default, application, utility accounts. (GEN002640: CAT II) Default system accounts must be disabled or removed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/loginout</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>User Group System and Password Definitions</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_tcp_icmpsecure" function="tcp_icmpsecure">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="37">(GEN000000-AIX0210: CAT II) Network option tcp_icmpsecure: Set network option tcp_icmpsecure's value to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>tcp_icmpsecure=1 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_tcp_tcpsecure" function="tcp_tcpsecure">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="38">(GEN000000-AIX0220: CAT II) Network option tcp_tcpsecure: Set network option tcp_tcpsecure's value to 7.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>tcp_tcpsecure=7 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dov2d_ip_nfrag" function="ip_nfrag">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="39">(GEN000000-AIX0230: CAT II) Network option ip_nfrag: Set network option ip_nfrag's value to 200.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ip_nfrag=200 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ip6srcrouteforward" function="ip6srcrouteforward">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="40">(GEN007920: CAT II) Network option ip6srcrouteforward: Set network option ip6srcrouteforward's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ip6srcrouteforward=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipsrcrouterecv" function="ipsrcrouterecv">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="41">(GEN007940,GEN003607: CAT II) Network option ipsrcrouterecv: Set network option ipsrcrouterecv's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ipsrcrouterecv=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_clean_partial_conns" function="clean_partial_conns">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="42">(GEN003601,GEN003612: CAT II) Network option clean_partial_conns: Set network option clean_partial_conns's value to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>clean_partial_conns=1 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ip6forwarding" function="ip6forwarding">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="43">(GEN005610: CAT II) Network option ip6forwarding: Set network option ip6forwarding's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ip6forwarding=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipignoreredirects" function="ipignoreredirects">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="44">(GEN007860,GEN003609: CAT II) Network option ipignoreredirects: Set network option ipignoreredirects's value to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ipignoreredirects=1 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipsendredirects" function="ipsendredirects">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="45">(GEN007880,GEN003610: CAT II) Network option ipsendredirects: Set network option ipsendredirects's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ipsendredirects=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_directed_broadcast" function="directed_broadcast">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="46">(AIX0200: CAT II) Network option direct_broadcast: Set network option direct_broadcast's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>directed_broadcast=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipsrcrouteforward" function="ipsrcrouteforward">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="47">(GEN003600: CAT II) Network option ipsrcrouteforward: Set network option ipsrcrouteforward's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ipsrcrouteforward=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_bcastping" function="bcastping">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="48">(GEN003603,GEN003604,GEN007950: CAT II) Network option bcastping: Set network option bcastping's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>bcastping=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_nonlocsrcroute" function="nonlocsrcroute">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="49">(GEN003605: CAT II) Network option nonlocsrcroute: Set network option nonlocsrcroute's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>nonlocsrcroute=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipsrcroutesend" function="ipsrcroutesend">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="50">(GEN003606: CAT II) Network option ipsrcroutesend: Set network option ipsrcroutesend's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ipsrcroutesend=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipforwarding" function="ipforwarding">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="51">(GEN005600: CAT II) Network option ipforwarding: Set network option ipforwarding's value to 0.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ntwkoptsdod</AIXPertCommand>
+    <AIXPertArgs>ipforwarding=0 s </AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_minother" function="minother">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="52">(GEN000640: CAT II) Specifies the minimum number of non-alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a minother=1 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_minspecialchar" function="minspecialchar">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="53">(GEN000640: CAT II) The system must require that passwords contain at least one special character.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a minspecialchar=1 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_mindiff" function="mindiff">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="54">(GEN000750: CAT II) Specifies the minimum number of characters required in a new password to 4 that were not in the old password.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a mindiff=4 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_defaultpwdintchk" function="defaultpwdintchk">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="55">(GEN000790: CAT II) Default Password Integrity Check: Makes sure that the default password being set is not weak.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chuserstanzadod</AIXPertCommand>
+    <AIXPertArgs>a /etc/security/user dictionlist=/etc/security/aixpert/dictionary/English default </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_chcronfiles" function="chcronfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="56">(GEN003280,GEN003300,GEN003320: CAT II) Configure at.allow and at.deny files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chcronfilesdod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_logindelay" function="logindelay">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="57">(GEN000480: CAT II) This rule will set logon delay to 4 seconds.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chdefstanzadod</AIXPertCommand>
+    <AIXPertArgs>a /etc/security/login.cfg logindelay=4 default </AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_chdodftpusers" function="chdodftpusers">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="58">(GEN004880,GEN004900: CAT II) This rule will ensure the ftpusers file exists.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chdodftpusers</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_chetchostsfiles" function="chetchostsfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="59">(GEN006620: CAT II) This rule will configure hosts.deny and hosts.allow files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chetchostsdod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_chsyslog" function="chsyslog">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="60">(GEN003660,GEN004460: CAT II) This rule will log auth and info data.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chsyslogdod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_rootrlogin" function="rootrlogin">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="61">(GEN000980: CAT II, GEN001100: CAT I) This rule will disable rlogind.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chuserstanzadod</AIXPertCommand>
+    <AIXPertArgs>a /etc/security/user rlogin=false root </AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_loginretries" function="loginretries">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="62">(GEN000460: CAT II) This rule will lock account after 3 consecutive failed logon attempts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a loginretries=3 NONROOT </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_minage" function="minage">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="63">(GEN000540: CAT II) This rule will ensure the system global password configuration files are configured as per password requirements.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a minage=2 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_minlen" function="minlen">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="64">(GEN000580: CAT II) This rule will ensure all passwords contain a minimum of 14 characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a minlen=14 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_maxrepeats" function="maxrepeats">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="65">(GEN000680: CAT II) This rule will ensure passwords contain no more than three consecutive repeating characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a maxrepeats=3 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_maxage" function="maxage">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="66">(GEN000700: CAT II) This rule will ensure the system global password configuration files are configured as per password requirements.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a maxage=8 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_histsize" function="histsize">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="67">(GEN000800: CAT II) This rule will ensure passwords will not be reused from the previous five changes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chusrattrdod</AIXPertCommand>
+    <AIXPertArgs>a histsize=5 ALL </AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sndmailhelpfile" function="sndmailhelpfile">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="68">(GEN004540: CAT II) This rule will disable sendmail help command.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/sendmailhelp</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_dodaudit" function="dodaudit">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="69">(GEN002660,GEN002720,GEN002740, GEN002760,GEN002800,GEN002820,GEN002825: CAT II, GEN002750,GEN002751,GEN002752,GEN002753: CAT III) Enable dodaudit: Enables bin auditing for DoD.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodaudit</AIXPertCommand>
+    <AIXPertArgs>h </AIXPertArgs>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_disablecde" function="disablecde">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="70">(GEN005260,GEN009340: CAT II) This rule will disable X Window System connections and Xserver login manager.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.commands,bos.rte.shell,bos.rte.SRC,bos.rte.control,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cmntrows</AIXPertCommand>
+    <AIXPertArgs>"dt:" "/etc/inittab" ":" d dodv2_discde</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_disableX" function="disableX">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="71">(GEN005160,GEN005200,GEN005220, GEN005240: CAT I and II) This rule will disable X Window System programs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2disableX</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_dodsecuretcpip" function="dodsecuretcpip">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="72">(GEN000000-AIX00040: CAT II) The securetcpip command must be used.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodsecuretcpip</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_rotateauditdod" function="rotateauditdod">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="73">(GEN002860: CAT II) Audit logs must be rotated daily.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/rotateauditdod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sedconfigdod" function="sedconfigdod">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="74">(GEN003540: CAT II) The system must implement non-executable program stacks.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/sedconfigdod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_trust" function="trust">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="75">(AIX00020,AIX00060,GEN000140,GEN000220, GEN006480,GEN006560,GEN008380,GEN002400: CAT II) The system must be checked weekly for unauthorized setuid files and unauthorized modification to authorized setuid files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/trust</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipv4_gw" function="iputil_ipv4">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="76">(GEN005560: CAT II) Checking if default gateway for IPv4 is configured.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chkgtway</AIXPertCommand>
+    <AIXPertArgs>inet</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipv6_gw" function="iputil_ipv6">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="77">(GEN005570: CAT II) Checking if default gateway for IPv6 is configured.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chkgtway</AIXPertCommand>
+    <AIXPertArgs>inet6</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_journalutil" function="journalutil">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="78">(GEN003640: CAT II) Employ journaling on root file system which will ensure system consistency.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chkjournal</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_6to4" function="6to4">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="79">(GEN007780: CAT II) Unconfigure 6to4 tunnels on the system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/rmiface</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_anonuser" function="anonuser">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="80">(GEN004820: CAT II) Anonymous FTP must not be active on the system unless authorized.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/anonuser</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_disableacct" function="disableacct">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="81">(GEN000760: CAT II) Accounts must be locked upon 35 days of inactivity.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqda</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/disableacctdod</AIXPertCommand>
+    <AIXPertArgs>a 35</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshrootlogin" function="sshrootlogin">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="82">(GEN001120: CAT II) The system must not permit root logins using ssh.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>PermitRootLogin no /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshdaemonprotocol" function="sshdaemonprotocol">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="83">(GEN005500: CAT II) The SSH daemon must be configured to only use the SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshclientprotocol" function="sshclientprotocol">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="84">(GEN005501: CAT II) SSH Client must be configured to only use SSHv2 Protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshlistenaddress" function="sshlistenaddress">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="85">(GEN005504: CAT II) The SSH daemon must only listen on management network addresses unless authorized for uses other than management.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>ListenAddress 0 /etc/ssh/sshd_config 1</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshciphers" function="sshciphers">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="86">(GEN005505,GEN005506: CAT II) The SSH daemon must be configured to only use FIPS 140-2 approved ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Ciphers "aes128-ctr"  /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshmacs" function="sshmacs">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="87">(GEN005507: CAT II) The SSH daemon must be configured to only use Message Authentication Codes (MACs) employing FIPS 140-2 approved cryptographic hash algorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MACs "hmac-sha1"  /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshclientciphers" function="sshclientciphers">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="88">(GEN005510,GEN5511: CAT II) The SSH Client must be configured to only use FIPS 140-2 approved ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Ciphers "aes128-ctr"  /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshclientmacs" function="sshclientmacs">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="89">(GEN005512: CAT II) The SSH client must be configured to only use Message Authentication Codes (MACs) employing FIPS 140-2 approved cryptographic hash algorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MACs "hmac-sha1"  /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshAllowGroups" function="sshAllowGroups">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="90">(GEN005521: CAT II) The SSH daemon must restrict login ability to specific users and/or groups.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>AllowGroups 0 /etc/ssh/sshd_config 1</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshStrictMode" function="sshStrictMode">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="92">(GEN005536: CAT II) The SSH daemon must perform strict mode checking of home directory configuration files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>StrictModes yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sshBanner" function="sshBanner">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="96">(GEN005550: CAT II) The SSH daemon must be configured with the Department of Defense (DoD) logon banner.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Banner /etc/ssh/dod_ssh_banner /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ldapconfig" function="ldapconfig">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="97">(Multiple CAT II) Modify ldap.cfg file as per DoD requirements.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ldap_config</AIXPertCommand>
+    <AIXPertArgs>a ldap_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_sendmaildod" function="sendmaildod">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="98">(GEN004710: CAT II) Mail relaying must be restricted.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/sendmaildod</AIXPertCommand>
+    <AIXPertArgs>a </AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_chsnmp" function="chsnmp">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="99">(GEN005305,GEN005300,GEN005306: CAT II) SNMP service rules.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chsnmp</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_gated" function="gated">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="100">(GEN005590: CAT II) The system must not be running any routing protocol daemons unless the system is a router. This rule will disable gated.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cmntrows</AIXPertCommand>
+    <AIXPertArgs>gated /etc/rc.tcpip "#" d dodv2_gated</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_routed" function="routed">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="101">(GEN005590: CAT II) The system must not be running any routing protocol daemons unless the system is a router. This rule will disable routed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cmntrows</AIXPertCommand>
+    <AIXPertArgs>routed /etc/rc.tcpip "#" d dodv2_routed</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_tcpwrapper" function="tcpwrapper">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="102">(GEN006580: CAT II) The system must use an access control program.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/checktcpd</AIXPertCommand>
+    <AIXPertArgs>dodv2_tcpd</AIXPertArgs>
+    <AIXPertGroup>TCP Wrappers Rule</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_printers" function="printers">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="103">(GEN003900: CAT II) The hosts.lpd file (or equivalent) must not contain a plus (+) character.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/printers</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_rminet6" function="rminet6">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="104">(GEN007700: CAT II) Disable IPv6 protocol handler from network stack unless specified in the /etc/security/pscexpert/ipv6.conf file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/rminet6</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipsec" function="ipsecshunhost">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="105">(GEN008540: CAT II) The system's local firewall must implement a deny-all allow-by-exception policy.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ipsecshunhosthls</AIXPertCommand>
+    <AIXPertArgs>dodv2_ipsecshunhost</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_ipsecshunports" function="ipsecshunports">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="106">(GEN008520: CAT II) The system must employ a local firewall. Guard host against port scans: Shuns vulnerable ports for 5 minutes to guard the host against port scans.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/ipsecshunports</AIXPertCommand>
+    <AIXPertArgs>dodv2_ipsecshunport</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_fpmdodfiles" function="fpmdodfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="107">(Multiple GEN items: CAT II) Change permissions of files and directories as applicable per DoD STIG guideline.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/fpmdodfiles</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Security Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="dodv2_chowndodfiles" function="chowndodfiles">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="108">(Multiple GEN items: CAT II) Change ownership of files and directories as applicable per DoD STIG guideline.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/chowndodfiles</AIXPertCommand>
+    <AIXPertArgs>dod_chowndodfiles</AIXPertArgs>
+    <AIXPertGroup>Security Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv2_SecureLPM" function="SecureLPM">
+    <AIXPertRuleType type="DoDv2"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="109">Required for LPM on AIX: Enable automated IPSEC Tunnel creation between VIO Servers during live partition migration.</AIXPertDescription>
+    <AIXPertPrereqList>clic.rte.kernext,bos.net.ipsec.rte,bos.net.ipsec.keymgt,ios.cli.rte</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cfgsecmig</AIXPertCommand>
+    <AIXPertArgs>on</AIXPertArgs>
+    <AIXPertGroup>IPSEC Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+
+</AIXPertSecurityHardening>

@@ -1,0 +1,99 @@
+import pandas as pd
+from datetime import datetime
+
+def run_compliance_reports_on_unique_hosts(data_filename, output_filename):
+    """
+    Reads a data file, finds all unique hosts, generates a compliance report for each,
+    and saves the output to a CSV file.
+
+    Args:
+        data_filename (str): The name of the main data file (e.g., 'your_data_file.csv').
+        output_filename (str): The name of the output CSV file to be created.
+    """
+    try:
+        # Read the main data file, keeping default NA values as strings
+        df_data = pd.read_csv(data_filename, keep_default_na=False)
+        
+        # Convert the 'Host' column to string type for safety
+        df_data['Host'] = df_data['Host'].astype(str)
+        
+        # Check for required columns
+        if 'Host' not in df_data.columns or 'Risk' not in df_data.columns:
+            print("Error: The data file must contain 'Host' and 'Risk' columns.")
+            return
+
+        # Get the unique hosts from the 'Host' column and convert to lowercase
+        unique_hosts = df_data['Host'].str.lower().unique()
+        
+        # List to hold the report data for each host
+        report_data = []
+
+        print("\n--- Generating Compliance Reports ---")
+        
+        # Loop through each unique host
+        for target_host in unique_hosts:
+            
+            # Filter the DataFrame for the current host
+            host_data = df_data[df_data['Host'].str.lower() == target_host]
+
+            # Count the occurrences of each risk level
+            risk_counts = host_data['Risk'].value_counts()
+            
+            # Define the specific risk levels
+            passed_levels = ['None']
+            failed_levels = ['High', 'Medium', 'Low']
+            
+            # Calculate passed and failed counts
+            passed_count = 0
+            failed_count = 0
+            
+            for level, count in risk_counts.items():
+                if level in passed_levels:
+                    passed_count += count
+                elif level in failed_levels:
+                    failed_count += count
+
+            total_records = passed_count + failed_count
+            
+            # Calculate compliance percentage and round to two decimal places
+            if total_records > 0:
+                compliance_percentage = round((passed_count / total_records) * 100, 2)
+            else:
+                compliance_percentage = 0.0
+
+            # Append the results for the current host to our list
+            report_data.append({
+                'host': target_host,
+                'passed': passed_count,
+                'failed': failed_count,
+                'compliance_percentage': compliance_percentage
+            })
+            
+            print(f"Report generated for host: {target_host}")
+
+        # Create a new DataFrame from the collected data
+        df_report = pd.DataFrame(report_data)
+        # Sort the DataFrame by 'compliance_percentage' in descending order
+        df_report = df_report.sort_values(by='compliance_percentage', ascending=False)
+
+
+        # Save the DataFrame to a CSV file
+        df_report.to_csv(output_filename, index=False)
+        
+        print(f"\n--- Report Generation Complete ---")
+        print(f"Output saved to: {output_filename}")
+
+    except FileNotFoundError as e:
+        print(f"Error: The data file '{e.filename}' was not found.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+if __name__ == "__main__":
+    # Replace this filename with your actual data file name
+    main_data_file = 'Test2_L2.csv'
+    
+    # Generate a timestamp for the output filename
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_file = f"compliance_report_{timestamp}.csv"
+    
+    run_compliance_reports_on_unique_hosts(main_data_file, output_file)

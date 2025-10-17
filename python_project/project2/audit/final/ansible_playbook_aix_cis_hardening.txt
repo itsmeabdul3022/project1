@@ -1,0 +1,769 @@
+- name: AIX Security Hardening Playbook
+  hosts: all
+  become: yes
+
+  tasks:
+    # - name: 2.1.1 Ensure login banners are configured
+    #   ansible.builtin.lineinfile:
+    #     path: /etc/motd
+    #     line: |
+    #       ***********************************************************
+    #       * Authorized use only. All activity is logged.     *
+    #       ***********************************************************
+    #     create: yes
+    #     state: present
+    #   tags:
+    #     - security
+    #     - banners
+
+    # - name: 2.2.1 Ensure the system has a unique hostname
+    #   ansible.builtin.lineinfile:
+    #     path: /etc/rc.net
+    #     regexp: '^hostname'
+    #     line: 'hostname {{ inventory_hostname }}'
+    #     state: present
+    #   tags:
+    #     - security
+    #     - hostname
+
+    - name: 2.4 Ensure unused symbolic links are removed (Manual Intervention)
+      ansible.builtin.find:
+        paths: /
+        file_type: link
+        follow: no
+        is_symlink: yes
+        is_broken: yes
+      register: broken_links
+      failed_when: False
+      changed_when: False
+      tags:
+        - security
+        - symlinks
+
+    # - name: 3.1.1 Ensure auditing is enabled
+    #   ansible.builtin.shell:
+    #     cmd: audit start
+    #   args:
+    #     warn: false
+    #   register: audit_status
+    #   changed_when: "'audit start: The audit system is already active.' not in audit_status.stderr"
+    #   tags:
+    #     - security
+    #     - auditing
+
+    - name: 3.7 Ensure no files or directories without an owner and a group exist
+      ansible.builtin.find:
+        paths: /
+        file_type: any
+        has_owner: no
+        has_group: no
+      register: find_result
+      failed_when: False
+      changed_when: False
+      tags:
+        - security
+        - permissions
+        - cleanup
+
+    - name: 4.1.1.x Configure access on various system files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: "{{ item.mode }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+      loop:
+        - { path: '/smit.log', mode: '0600', owner: 'root', group: 'sys' }
+        - { path: '/etc/group', mode: '0644', owner: 'root', group: 'security' }
+        - { path: '/etc/inetd.conf', mode: '0644', owner: 'root', group: 'system' }
+        - { path: '/etc/motd', mode: '0644', owner: 'root', group: 'sys' }
+        - { path: '/etc/passwd', mode: '0644', owner: 'root', group: 'security' }
+        - { path: '/etc/mail/submit.cf', mode: '0644', owner: 'root', group: 'system' }
+        - { path: '/etc/ssh/ssh_banner', mode: '0644', owner: 'root', group: 'system' }
+        - { path: '/etc/ssh/ssh_config', mode: '0644', owner: 'root', group: 'system' }
+        - { path: '/etc/ssh/sshd_config', mode: '0600', owner: 'root', group: 'system' }
+        - { path: '/var/adm/cron/cron.allow', mode: '0640', owner: 'root', group: 'cron' }
+        - { path: '/var/ct/RMstart.log', mode: '0640', owner: 'root', group: 'system' }
+        - { path: '/var/tmp/dpid2.log', mode: '0644', owner: 'root', group: 'system' }
+        - { path: '/var/tmp/hostmibd.log', mode: '0644', owner: 'root', group: 'system' }
+        - { path: '/var/tmp/snmpd.log', mode: '0644', owner: 'root', group: 'system' }
+      tags:
+        - security
+        - permissions
+        - files
+
+    - name: 4.1.1.17 Ensure crontab is restricted to authorized users
+      ansible.builtin.file:
+        path: /var/spool/cron/crontabs
+        mode: '0750'
+        owner: root
+        group: cron
+      tags:
+        - security
+        - permissions
+        - cron
+    - name: Get a list of local, non-system users on AIX
+      ansible.builtin.shell: |
+          # Get users with UID between 101 and 65534, which are typically local accounts.
+          # This will filter out system accounts which have UIDs from 0-100.
+          awk -F':' '($3 >= 101 && $3 < 65534) {print $1}' /etc/passwd
+      register: local_users
+      changed_when: false
+      failed_when: local_users.rc != 0 and local_users.rc != 1
+
+    - name: 4.1.2.1 Ensure local user Home directories exist
+      ansible.builtin.user:
+          name: "{{ item }}"
+          state: present
+          create_home: yes
+      loop: "{{ local_users.stdout_lines }}"
+        # Only run this task if the user list is not empty.
+      when: local_users.stdout_lines | length > 0
+
+    # - name: 4.1.2.1 Ensure local user Home directories exist
+    #   ansible.builtin.user:
+    #     name: "{{ item }}"
+    #     state: present
+    #     create_home: yes
+    #   loop:
+    #     - testuser
+    #     - testuser2
+    #   tags:
+    #     - security
+    #     - users
+
+    - name: 4.1.2.2 Ensure Home directories access is configured
+      ansible.builtin.file:
+        path: /home/{{ item }}
+        mode: '0755'
+        owner: "{{ item }}"
+        group: system
+      loop: "{{ local_users.stdout_lines }}"
+        # Only run this task if the user list is not empty.
+      when: local_users.stdout_lines | length > 0
+       
+      tags:
+        - security
+        - permissions
+        - home
+
+    - name: 4.1.2.3 Ensure Home directory write access is restricted to owner
+      ansible.builtin.file:
+        path: /home/{{ item }}
+        mode: 'u=rwx,g=rx,o=rx'
+      loop: "{{ local_users.stdout_lines }}"
+        # Only run this task if the user list is not empty.
+      when: local_users.stdout_lines | length > 0
+       
+      tags:
+        - security
+        - permissions
+        - home
+
+    - name: 4.1.2.x Ensure access on security directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: "{{ item.mode }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+      loop:
+        - { path: '/audit', mode: '0750', owner: 'root', group: 'audit' }
+        - { path: '/etc/security/audit', mode: '0750', owner: 'root', group: 'security' }
+        - { path: '/etc/security', mode: '0750', owner: 'root', group: 'security' }
+        - { path: '/var/adm/ras', mode: '0750', owner: 'root', group: 'system' }
+        - { path: '/var/adm/sa', mode: '0750', owner: 'root', group: 'adm' }
+        - { path: '/var/spool/cron/crontabs', mode: '0750', owner: 'root', group: 'cron' }
+      tags:
+        - security
+        - permissions
+
+    - name: 4.1.2.10 Ensure root user has a dedicated home directory
+      ansible.builtin.user:
+        name: root
+        home: /
+      tags:
+        - security
+        - users
+
+    - name: 4.2.x Ensure NIS client/server services are not in use
+      ansible.builtin.lineinfile:
+        path: /etc/rc.nfs
+        regexp: '^startsrc -s ypbind'
+        line: '# startsrc -s ypbind'
+        state: present
+      tags:
+        - security
+        - nis
+
+    - name: 4.3.x Ensure unneeded services are disabled in inetd.conf
+      ansible.builtin.lineinfile:
+        path: /etc/inetd.conf
+        regexp: '{{ item.regexp }}'
+        line: '#{{ item.line }}'
+        state: present
+      loop:
+        - { regexp: '^writesrv', line: 'writesrv' }
+        - { regexp: '^dt', line: 'dt' }
+        - { regexp: '^qdaemon', line: 'qdaemon' }
+        - { regexp: '^dhcpcd', line: 'dhcpcd' }
+        - { regexp: '^dhcprd', line: 'dhcprd' }
+        - { regexp: '^dhcpsd', line: 'dhcpsd' }
+        - { regexp: '^gated', line: 'gated' }
+        - { regexp: '^named', line: 'named' }
+        - { regexp: '^portmap', line: 'portmap' }
+        - { regexp: '^routed', line: 'routed' }
+        - { regexp: '^rwhod', line: 'rwhod' }
+        - { regexp: '^timed', line: 'timed' }
+        - { regexp: '^autoconf6', line: 'autoconf6' }
+        - { regexp: '^ndpd-host', line: 'ndpd-host' }
+        - { regexp: '^ndpd-router', line: 'ndpd-router' }
+      tags:
+        - security
+        - services
+
+    - name: 4.3.4.x Ensure unneeded daemons are disabled in inetd.conf
+      ansible.builtin.lineinfile:
+        path: /etc/inetd.conf
+        regexp: '{{ item }}'
+        line: '#{{ item }}'
+        state: present
+      loop:
+        - '^bootps'
+        - '^chargen'
+        - '^comsat'
+        - '^daytime'
+        - '^discard'
+        - '^echo'
+        - '^exec'
+        - '^finger'
+        - '^ftpd'
+        - '^imap2'
+        - '^instsrv'
+        - '^klogin'
+        - '^kshell'
+        - '^netstat'
+        - '^ntalk'
+        - '^pcnfsd'
+        - '^pop3'
+        - '^rexd'
+        - '^rquotad'
+        - '^rstatd'
+        - '^rusersd'
+        - '^rwalld'
+        - '^sprayd'
+        - '^xmquery'
+        - '^talk'
+        - '^telnetd'
+        - '^tftpd'
+        - '^time'
+        - '^uucp'
+      tags:
+        - security
+        - daemons
+
+    - name: 4.4.1.2 Ensure NFS server services are not in use
+      ansible.builtin.service:
+        name: nfsd
+        state: stopped
+        enabled: no
+      tags:
+        - security
+        - nfs
+
+    - name: 4.4.1.3 Ensure NFS client mounts include nosuid and nodev options
+      ansible.builtin.lineinfile:
+        path: /etc/vfs
+        regexp: '{{ item }}'
+        line: "{{ item }}"
+        state: present
+      loop:
+        - 'nfs - noauto nosuid nodev'
+        - 'nfs3 - noauto nosuid nodev'
+      tags:
+        - security
+        - nfs
+
+    - name: 4.4.1.4 Ensure localhost aliases do not exist in /etc/exports
+      ansible.builtin.lineinfile:
+        path: /etc/exports
+        regexp: '^/.*localhost'
+        state: absent
+      tags:
+        - security
+        - nfs
+
+    - name: 4.4.1.6 Ensure root access is disabled or blocked.
+      ansible.builtin.lineinfile:
+        path: /etc/exports
+        regexp: '^/.*root'
+        line: '/ -root'
+        state: present
+      tags:
+        - security
+        - nfs
+
+    - name: 4.4.3.1 Ensure only / permits device files.
+      ansible.builtin.lineinfile:
+        path: /etc/vfs
+        regexp: 'devices$'
+        line: 'devices - nodev'
+        state: present
+      tags:
+        - security
+        - files
+
+    - name: 4.5.x Ensure network parameters are configured
+      ansible.builtin.sysctl:
+        name: '{{ item.name }}'
+        value: '{{ item.value }}'
+        state: present
+      loop:
+        - { name: 'net.inet.tcp.sockthresh', value: '4096' }
+        - { name: 'net.inet.icmp.bcastping', value: '0' }
+        - { name: 'net.inet.tcp.clean_partial_conns', value: '1' }
+        - { name: 'net.inet.ip.forwarding', value: '0' }
+        - { name: 'net.inet.ip6.forwarding', value: '0' }
+        - { name: 'net.inet.ip.ignoreredirects', value: '1' }
+        - { name: 'net.inet.ip.sendredirects', value: '0' }
+        - { name: 'net.inet.ip.srcrouteforward', value: '0' }
+        - { name: 'net.inet.ip.srcrouterecv', value: '0' }
+        - { name: 'net.inet.ip.srcroutesend', value: '0' }
+        - { name: 'net.inet.ip6.srcrouteforward', value: '0' }
+        - { name: 'net.inet.tcp.nfs_use_reserved_ports', value: '1' }
+        - { name: 'net.inet.ip.nonlocsrcroute', value: '0' }
+        - { name: 'net.inet.tcp.pmtu_discover', value: '0' }
+        - { name: 'net.inet.udp.pmtu_discover', value: '0' }
+        - { name: 'net.inet.ipforwarding', value: '0' }
+        - { name: 'net.inet.icmpaddr', value: '0' }
+        - { name: 'net.inet.tcp_tcpsecure', value: '7'}
+
+      tags:
+        - security
+        - network
+
+    - name: 4.6.2 Ensure loopback traffic is blocked on external interfaces
+      ansible.builtin.lineinfile:
+        path: /etc/security/aix/firewall.rules
+        line: 'pass out log on lo0 from any to any'
+        state: present
+      tags:
+        - security
+        - firewall
+
+    - name: 4.7.1.1 Ensure CDE is not installed
+      ansible.builtin.shell: /usr/sbin/lslpp -L 'X11.Dt.rte'
+      register: cde_check
+      failed_when: cde_check.rc == 0
+      changed_when: false
+      ignore_errors: yes
+
+    - name: 4.7.1.x Ensure CDE is not configured for remote login
+      ansible.builtin.lineinfile:
+        path: /etc/dt/config/Xconfig
+        regexp: '^Dtlogin.display-manager.auth.authName'
+        line: 'Dtlogin.display-manager.auth.authName = none'
+        state: present
+      tags:
+        - security
+        - cde
+     - name: 4.7.1.2 Ensure the cmsd service is not available
+      ansible.builtin.service:
+        name: cmsd
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+
+    - name: 4.7.1.3 Ensure dtlogin service is not available
+      ansible.builtin.service:
+        name: dtlogin
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+
+    - name: 4.7.1.4 Ensure dtspc is not available
+      ansible.builtin.service:
+        name: dtspc
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+    
+    - name: 4.7.1.5 Ensure CDE daemons have sgid and suid mode disabled
+      ansible.builtin.file:
+        path: "{{ item }}"
+        mode: "u-s,g-s"
+        recurse: yes
+      loop:
+        - /usr/dt
+        - /etc/dt
+
+    - name: 4.7.1.6 Ensure CDE remote GUI login is disabled
+      ansible.builtin.lineinfile:
+        path: /etc/dt/config/Xaccess
+        line: '!*'
+        state: present
+        insertafter: '^# Example: .*'
+        
+    - name: 4.7.1.7 Ensure CDE screensaver lock is enabled
+      ansible.builtin.lineinfile:
+        path: /etc/dt/config/Xresources
+        regexp: '^Dtlock\*lock\*enable:'
+        line: 'Dtlock*lock*enable: True'
+        state: present
+
+    - name: 4.7.1.8 Ensure CDE login screen hostname is masked
+      ansible.builtin.lineinfile:
+        path: /etc/dt/config/Xconfig
+        regexp: '^Dtlogin\*greeting\*labelString:'
+        line: 'Dtlogin*greeting*labelString: Welcome'
+        state: present
+
+    - name: 4.7.1.9 Ensure access to /etc/dt/config/Xconfig is configured
+      ansible.builtin.file:
+        path: /etc/dt/config/Xconfig
+        mode: '0600'
+        owner: 'root'
+        group: 'security'
+    
+    - name: 4.7.1.10 Ensure the file /etc/dt/config/Xservers is configured
+      ansible.builtin.file:
+        path: /etc/dt/config/Xservers
+        mode: '0600'
+        owner: 'root'
+        group: 'security'
+    
+    - name: 4.7.1.11 Ensure access to Xresources is configured
+      ansible.builtin.file:
+        path: /etc/dt/config/Xresources
+        mode: '0600'
+        owner: 'root'
+        group: 'security'
+
+    - name: 4.7.2.1 Ensure root access to ftpd is disabled
+      ansible.builtin.lineinfile:
+        path: /etc/ftpusers
+        line: 'root'
+        state: present
+      tags:
+        - security
+        - ftp
+
+    - name: 4.7.2.2 Ensure ftpd login banner is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ftpaccess.conf
+        line: 'banner /etc/issue.net'
+        state: present
+        create: yes
+      tags:
+        - security
+        - ftp
+
+    - name: 4.7.2.3 Ensure ftpd umask is configured
+      ansible.builtin.lineinfile:
+        path: /etc/ftpd.conf
+        regexp: '^umask'
+        line: 'umask 077'
+        state: present
+        create: yes
+      tags:
+        - security
+        - ftp
+
+    - name: 4.7.3.1 Ensure latest version of openssh is installed
+      ansible.builtin.shell:
+        cmd: lslpp -L openssh.base.client | grep openssh
+      register: openssh_version
+      failed_when: False
+      changed_when: False
+      tags:
+        - security
+        - ssh
+
+    - name: 4.7.3.2 Ensure /etc/shosts.equiv and /etc/rhosts.equiv are removed
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/shosts.equiv
+        - /etc/rhosts.equiv
+      tags:
+        - security
+        - ssh
+    - name: 4.7.3.3 Ensure sftp-server arguments are configured
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^Subsystem sftp'
+        line: 'Subsystem sftp /usr/sbin/sftp-server'
+        state: present
+
+    - name: 4.7.3.x Harden SSHD configuration
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^{{ item.regexp }}'
+        line: '{{ item.line }}'
+        state: present
+      loop:
+        - { regexp: 'Banner', line: 'Banner /etc/ssh/ssh_banner' }
+        - { regexp: 'HostbasedAuthentication', line: 'HostbasedAuthentication no' }
+        - { regexp: 'LogLevel', line: 'LogLevel INFO' }
+        - { regexp: 'MaxAuthTries', line: 'MaxAuthTries 4' }
+        - { regexp: 'PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
+        - { regexp: 'PermitRootLogin', line: 'PermitRootLogin no' }
+        - { regexp: '^#?Ciphers', line: 'Ciphers aes256-cbc,aes192-cbc,aes128-cbc'}
+        - { regexp: '^#?KexAlgorithms', line: 'KexAlgorithms ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256'}
+        - { regexp: '^#?MACs', line: 'MACs hmac-sha2-512,hmac-sha2-256'}
+      tags:
+        - security
+        - ssh
+ 
+      - name: 4.7.4.1 Ensure sendmail version information is hidden
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O SmtpGreetingMessage'
+        line: 'O SmtpGreetingMessage=$j Ready'
+        state: present
+
+    - name: 4.7.4.2 Ensure sendmail PrivacyOptions is configured
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O PrivacyOptions'
+        line: 'O PrivacyOptions=authwarnings,noetrn,restrictqrun,restrictmailq,noexpn,novrfy'
+        state: present
+
+    - name: 4.7.4.3 Ensure sendmail DaemonPortOptions is configured
+      ansible.builtin.lineinfile:
+        path: /etc/mail/sendmail.cf
+        regexp: '^O DaemonPortOptions=.*'
+        line: 'O DaemonPortOptions=Name=MTA,Family=inet,Port=smtp'
+        state: present
+
+    - name: 4.7.4.4 Ensure access to /etc/mail/sendmail.cf is configured
+      ansible.builtin.file:
+        path: /etc/mail/sendmail.cf
+        mode: '0600'
+        owner: 'root'
+        group: 'security'
+
+    - name: 4.7.4.5 Ensure access to /var/spool/clientmqueue is configured
+      ansible.builtin.file:
+        path: /var/spool/clientmqueue
+        mode: '0700'
+        owner: 'smmsp'
+        group: 'smmsp'
+        state: directory
+        
+    - name: 4.7.4.6 Ensure access to /var/spool/mqueue is configured
+      ansible.builtin.file:
+        path: /var/spool/mqueue
+        mode: '0700'
+        owner: 'smmsp'
+        group: 'smmsp'
+        state: directory
+   
+    # - name: 4.7.4.x Harden Sendmail configuration
+    #   ansible.builtin.lineinfile:
+    #     path: /etc/mail/sendmail.cf
+    #     regexp: '^{{ item.regexp }}'
+    #     line: '{{ item.line }}'
+    #     state: present
+    #   loop:
+    #     - { regexp: 'PrivacyOptions', line: 'O PrivacyOptions=authwarnings,noexpn,novrfy' }
+    #     - { regexp: 'DaemonPortOptions', line: 'O DaemonPortOptions=Port=smtp,Addr=127.0.0.1,Name=MTA' }
+    #   tags:
+    #     - security
+    #     - sendmail
+
+    - name: 4.8.x Ensure user accounts are configured for security
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        password_change_min: 7
+        password_change_max: 90
+        password_change_warn: 7
+        password_change_inact: 30
+      loop:
+        - { name: 'root' }
+        - { name: 'otheruser' }
+      tags:
+        - security
+        - users
+
+    - name: 4.8.1 Ensure herald is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^herald\s*='
+        line: 'herald = true'
+        state: present
+        insertafter: '^[a-z]*:\s*$'
+    
+    - name: 4.8.3 Ensure loginretries is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^loginretries\s*='
+        line: 'loginretries = 3'
+        state: present
+        insertafter: '^[a-z]*:\s*$'
+
+
+    # - name: 4.8.5 Ensure administrative user accounts are locked
+    #   ansible.builtin.lineinfile:
+    #     path: /etc/security/user
+    #     regexp: '^account_locked\s*='
+    #     line: 'account_locked = true'
+    #     state: present
+    #     insertafter: '^root:'
+
+    - name: 4.8.6 Ensure session timeout is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^autologout'
+        line: 'autologout = 60'
+        state: present
+      tags:
+        - security
+        - session
+
+    - name: 4.9.2 Ensure root user default shell is ksh
+      ansible.builtin.user:
+        name: root
+        shell: /bin/ksh
+      tags:
+        - security
+        - users
+
+    - name: 4.9.4 Ensure default path does not include current working directory
+      ansible.builtin.lineinfile:
+        path: /etc/environment
+        regexp: '^PATH'
+        line: 'PATH=/usr/bin:/etc:/usr/sbin:/usr/ucb:$HOME/bin:/usr/bin/X11:/sbin'
+        state: present
+      tags:
+        - security
+        - path
+
+    - name: 4.9.5 Ensure root user path does not include current working directory
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^export PATH'
+        line: 'export PATH=/usr/bin:/etc:/usr/sbin:/usr/ucb:$HOME/bin:/usr/bin/X11:/sbin'
+        state: present
+      tags:
+        - security
+        - path
+
+    - name: 4.9.6 Ensure motd is configured
+      ansible.builtin.lineinfile:
+        path: /etc/motd
+        line: 'This system is for authorized use only.'
+        state: present
+      tags:
+        - security
+        - motd
+
+    # - name: 5.1.1 Ensure all local user accounts have a hashed password
+    #   ansible.builtin.user:
+    #     name: "{{ item }}"
+    #     password_algo: 'blowfish'
+    #   loop:
+    #     - testuser
+    #     - testuser2
+    #   tags:
+    #     - security
+    #     - users
+    #     - passwords
+
+    - name: 5.1.2 Ensure usernames and UIDs are unique
+      ansible.builtin.shell:
+        cmd: |
+          lsuid | awk '{print $1}' | sort | uniq -d | wc -l
+      register: unique_uids
+      failed_when: False
+      changed_when: False
+      tags:
+        - security
+        - users
+
+    - name: 5.1.3 Ensure group names and GIDs are unique
+      ansible.builtin.shell:
+        cmd: |
+          lsgid | awk '{print $1}' | sort | uniq -d | wc -l
+      register: unique_gids
+      failed_when: False
+      changed_when: False
+      tags:
+        - security
+        - groups
+
+    - name: 5.2.4 Ensure passwords are controlled by password attributes
+      ansible.builtin.lineinfile:
+        path: /etc/security/user
+        regexp: '^passexp'
+        line: 'passexp = 0'
+        state: present
+      tags:
+        - security
+        - passwords
+
+    - name: 5.2.8 Ensure a strong password hashing algorithm is configured
+      ansible.builtin.lineinfile:
+        path: /etc/security/login.cfg
+        regexp: '^crypt_algorithms'
+        line: 'crypt_algorithms = sha512,ssha512,sha256,ssha256,ssha1,sha1,aixmd5,md5'
+        state: present
+      tags:
+        - security
+        - passwords
+
+    - name: 5.3.x Secure system accounts
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: "{{ item.shell }}"
+        password_disabled: yes
+        home: /nonexistent
+      loop:
+        - { name: 'bin', shell: '/bin/false' }
+        - { name: 'daemon', shell: '/bin/false' }
+        - { name: 'guest', shell: '/bin/false' }
+        - { name: 'lpd', shell: '/bin/false' }
+        - { name: 'nobody', shell: '/bin/false' }
+        - { name: 'nuucp', shell: '/bin/false' }
+        - { name: 'sys', shell: '/bin/false' }
+        - { name: 'uucp', shell: '/bin/false' }
+      tags:
+        - security
+        - users
+
+    - name: 5.3.10 Ensure System Accounts cannot access system using ftp
+      ansible.builtin.lineinfile:
+        path: /etc/ftpusers
+        line: "{{ item }}"
+        state: present
+      loop:
+        - bin
+        - daemon
+        - guest
+        - lpd
+        - nobody
+        - nuucp
+        - sys
+        - uucp
+      tags:
+        - security
+        - ftp
+
+    - name: 6.2.4 Ensure cron.allow is configured
+      ansible.builtin.file:
+        path: /var/adm/cron/cron.allow
+        mode: '0640'
+        owner: root
+        group: cron
+      tags:
+        - security
+        - permissions
+
+    - name: 7.2.1 Ensure syslog local logging is configured
+      ansible.builtin.lineinfile:
+        path: /etc/syslog.conf
+        regexp: '^auth.info'
+        line: 'auth.info /var/log/auth.log'
+        state: present
+      tags:
+        - security
+        - logging

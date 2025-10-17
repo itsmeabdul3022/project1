@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding = "UTF-8"?>
+
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="dodv7_minlen" function="minlen">
+    <AIXPertRuleType type="DoDv7_Custom"/>
+    <AIXPertDescription>Implements STIG Recommendation STIG-ID AIX7-00-001129 (CAT I): AIX must enforce a minimum of  8 character password length.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=8 ALL dodv7_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+</AIXPertSecurityHardening>

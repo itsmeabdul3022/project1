@@ -1,0 +1,1169 @@
+<?xml version="1.0" encoding = "UTF-8"?>
+
+<!-- ROCKET_PROLOG_BEGIN_TAG                                                -->
+<!--                                                                        -->
+<!-- COPYRIGHT Rocket Software, Inc. 2019                                   -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- ROCKET_PROLOG_END_TAG                                                  -->
+<!--	%Z%%M%  %I%  %W% %G% %U%
+
+	RuleType DoDv7 represents DoD version 7
+
+	RuleType Prereq represents Analysis Rules -->
+<!-- Specifies DoDv7 rules -->
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="208" msgNum="2">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqsed" function="prereqsed">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="1">Prereq rule for SED: Checks whether the machine has 64 bit kernel support.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqsed</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="217" msgNum="5">Prereq rule for Trusted Execution: Checks whether the system has the Trusted Execution feature on.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="prereqsecldap" function="prereqsecldap">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="213">Prereq rule for LDAP: Checks whether the system has LDAP configured.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqsecldap</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_unique_account_names" function="unique_account_names">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="229">Implements STIG Recommendation STIG-ID AIX7-00-001008 (CAT I): All accounts on AIX system must have unique account names.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/account_checks</AIXPertCommand>
+    <AIXPertArgs>unique_names</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_unique_user_ids" function="unique_user_ids">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="230">Implements STIG Recommendation STIG-ID AIX7-00-001009 (CAT I): All accounts on AIX must be assigned unique User Identification Numbers (UIDs).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/account_checks</AIXPertCommand>
+    <AIXPertArgs>unique_user_ids</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_special_account_rlogin" function="special_account_rlogin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="231">Implements STIG Recommendation STIG-ID AIX7-00-001011 (CAT II): Direct logins to the AIX system must not be permitted to shared accounts, default accounts, application accounts, and utility accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/special_account_rlogin</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ssh_replay_resistance" function="ssh_replay_resistance">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="232">Implements STIG Recommendation STIG-ID AIX7-00-001012 (CAT I): AIX must use the SSH server to implement replay-resistant authentication.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/replay_resistance</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_emergency_account_removal" function="emergency_account_removal">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="233">Implements STIG Recommendation STIG-ID AIX7-00-001014 (CAT II): The AIX system must automatically remove or disable emergency accounts after the crisis is resolved or 72 hours.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/temporary_account_removal</AIXPertCommand>
+    <AIXPertArgs>emergency</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_root_web_browsers" function="root_web_browsers">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="236">Implements STIG Recommendation STIG-ID AIX7-00-001032 (CAT II): AIX administrative accounts must not run a web browser, except as needed for local service administration.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/root_web_browsers</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ldr_preload_unset" function="ldr_preload_unset">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="237">Implements STIG Recommendation STIG-ID AIX7-00-001037 (CAT II): The AIX root accounts list of preloaded libraries must be empty.
+</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/ldr_preload_unset</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_null_passwords" function="ldr_null_passwords">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="238">Implements STIG Recommendation STIG-ID AIX7-00-001038 (CAT II): AIX must not have accounts configured with blank or null passwords.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/null_passwords</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ssl_ldap_authentication" function="ssl_ldap_authentication">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="242">Implements STIG Recommendation STIG-ID AIX7-00-001045 (CAT II): IF LDAP is used, AIX LDAP client must use SSL to authenticate with LDAP server.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/ssl_ldap_authentication</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_data_confidentiality" function="data_confidentiality">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="243">Implements STIG Recommendation STIG-ID AIX7-00-001048 (CAT II): AIX must protect the confidentiality and integrity of all information at rest.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/data_confidentiality</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_session_lock" function="session_lock">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="28">Implements STIG Recommendation STIG-ID AIX7-00-001100 (CAT II): AIX must be configured to allow users to directly initiate a session lock for all connection types.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/session_lock</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ssl_ldap_client_authentication" function="ssl_ldap_client_authentication">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="246">Implements STIG Recommendation STIG-ID AIX7-00-001104 (CAT II): If LDAP authentication is required on AIX, SSL must be used between LDAP clients and the LDAP servers to protect the integrity of remote access sessions.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/ssl_ldap_authentication</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_certificate_authorities" function="certificate_authorities">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="247">Implements STIG Recommendation STIG-ID AIX7-00-001105 (CAT II): AIX must only allow the use of DoD PKI-established certificate authorities for verification of the establishment of protected sessions.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/certificate_authorities</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sshstart" function="sshstart">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="14">Implements STIG Recommendation STIG-ID AIX7-00-001124 (CAT I): AIX root passwords must never be passed over a network in clear text form.</AIXPertDescription>
+    <AIXPertPrereqList>openssl.base,openssl.license,openssl.man.en_US</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sshstart</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_audittimestamp" function="audittimestamp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="27">Implements STIG Recommendation STIG-ID AIX7-00-002012(CAT II): AIX must use internal clock to generate timestamp for audit records.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/audittimestamp</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_fipspasswd" function="fipspasswd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="250">Implements STIG Recommendation STIG-ID AIX7-00-001134 (CAT II): The password hashes stored on AIX system must have been generated using a FIPS 140-2 approved cryptographic hashing algorithm.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/fipspasswd</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rlogin" function="rlogin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="37">Implements STIG Recommendation STIG-ID AIX-00-001030 ( CAT II):AIX must not permit root login using remote access program rlogin.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false root dodv7_rlogin</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_shells" function="shells">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="47">Implements STIG Recommendation STIG-ID AIX7-00-003110 (CAT II): The /etc/shells file must exist and must be configured to use in login.cfg file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/usershells</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Login policy rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_nntpperm" function="nntpperm">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="51">Implements STIG Recommendation STIG-ID AIX7-00-003013 (CAT II): AIX passwd.nntp file must have mode 0600 or less permissive.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chperm</AIXPertCommand>
+    <AIXPertArgs>num:0600 path:/etc/news/passwd.nntp</AIXPertArgs>
+    <AIXPertGroup>Permission Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disqdaemon" function="disqdaemon">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="69">Implements STIG Recommendation STIG-ID AIX7-00-003042 (CAT II): The AIX qdaemon must be disabled if local or remote printing is not required.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>qdaemon: /etc/inittab : d dodv7_disqdaemon</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_dislpd" function="dislpd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="70">Implements STIG Recommendation STIG-ID AIX7-00-003043 (CAT II): If AIX system does not act as a remote print server, the lpd daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>lpd: /etc/inittab : d dodv7_dislpd</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_dispiobe" function="dispiobe">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="71">Implements STIG Recommendation STIG-ID AIX7-00-003044 (CAT II): If AIX system does not act as a remote print server, the piobe daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>piobe: /etc/inittab : d dodv7_dispiobe</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disdt" function="disdt">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="73">Implements STIG Recommendation STIG-ID AIX7-00-003045 (CAT II): If there are no X11 clients that require CDE on AIX, the dtservice must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>dt: /etc/inittab : d dodv7_disdt</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sendmail_loglevel" function="sendmail_loglevel">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="169">Implements STIG Recommendation STIG-ID AIX7-00-003038 (CAT II): AIX sendmail logging must not be set to less than nine in the sendmail.cf file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/sendmail</AIXPertCommand>
+    <AIXPertArgs>loglevel</AIXPertArgs>
+    <AIXPertGroup>Sendmail configuration recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sendmail_greeting" function="sendmail_greeting">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="170">Implements STIG Recommendation STIG-ID AIX7-00-003114 (CAT II): If the AIX host is running an SMTP service, the SMTP greeting must not provide version information.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/sendmail</AIXPertCommand>
+    <AIXPertArgs>greeting</AIXPertArgs>
+    <AIXPertGroup>Sendmail configuration recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sendmail_privacyoptions" function="sendmail_privacyoptions">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="171">Implements STIG Recommendation STIG-ID AIX7-00-003117 (CAT II): SMTP service must not have the EXPN or VRFY features active on AIX systems.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/sendmail</AIXPertCommand>
+    <AIXPertArgs>privacyoptions</AIXPertArgs>
+    <AIXPertGroup>Sendmail configuration recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sendmail_version" function="sendmail_version">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="172">Implements STIG Recommendation STIG-ID AIX7-00-003116 (CAT II): The sendmail server must have the debug feature disabled on AIX systems.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/sendmail</AIXPertCommand>
+    <AIXPertArgs>version</AIXPertArgs>
+    <AIXPertGroup>Sendmail configuration recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_dissnmpdmn" function="dissnmpdmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="75">Implements STIG Recommendation STIG-ID AIX7-00-003048 (CAT II): If snmpd is not required on AIX, the snmpd service must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpd d dodv7_dissnmpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disdhcpcddmn" function="disdhcpcddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="76">Implements STIG Recommendation STIG-ID AIX7-00-003049 (CAT II): If dhcpcd is not required on AIX, the dhcpcd service must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpcd d dodv7_disdhcpcddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disdhcprddmn" function="disdhcprddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="77">Implements STIG Recommendation STIG-ID AIX7-00-003050 (CAT II): If dhcprd is not required on AIX, the dhcprd service must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d dodv7_disdhcprddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disdhcpsddmn" function="disdhcpsddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="78">Implements STIG Recommendation STIG-ID AIX7-00-003104 (CAT II): If dhcpsd is not required on AIX, the dhcpsd service must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpsd d dodv7_disdhcpsddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disautoconf6" function="disautoconf6">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="79">Implements STIG Recommendation STIG-ID AIX7-00-003051 (CAT II): If IPV6 is not utilized on AIX Server, the autoconf6 daemon  must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>autoconf6 d  dodv7_disautoconf6</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disgateddmn" function="disgateddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="80">Implements STIG Recommendation STIG-ID AIX7-00-003052 (CAT II): If AIX server is not functioning as a network router, the gated daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>gated d dodv7_disgateddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_dismrouteddmn" function="dismrouteddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="81">Implements STIG Recommendation STIG-ID AIX7-00-003053 (CAT II): If AIX server is not functioning as a multicast router, the mrouted daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>mrouted d dodv7_dismrouteddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disnameddmn" function="disnameddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="82">Implements STIG Recommendation STIG-ID AIX7-00-003054 (CAT II): If AIX server is not functioning as a DNS Server, the named daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>named d dodv7_disnameddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disrouteddmn" function="disrouteddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="83">Implements STIG Recommendation STIG-ID AIX7-00-003055 (CAT II): If AIX server is not functioning as a network router, the routed daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>routed d dodv7_disrouteddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disrwhoddmn" function="disrwhoddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="84">Implements STIG Recommendation STIG-ID AIX7-00-003056 (CAT II): If rwhod is not required on AIX, the rwhod daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d dodv7_disrwhoddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_distimeddmn" function="distimeddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="85">Implements STIG Recommendation STIG-ID AIX7-00-003057 (CAT II): The timed daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d dodv7_distimeddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disdpid2dmn" function="disdpid2dmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="86">Implements STIG Recommendation STIG-ID AIX7-00-003058 (CAT II): If AIX server does not host an SNMP agent, the dpid2 daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d dodv7_disdpid2dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_dissnmpmibddmn" function="dissnmpmibddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="87">Implements STIG Recommendation STIG-ID AIX7-00-003060 (CAT II): If SNMP is not required on AIX, the snmpmibd daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpmibd d dodv7_dissnmpmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disaixmibddmn" function="disaixmibddmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="88">Implements STIG Recommendation STIG-ID AIX7-00-003061 (CAT II): The aixmibd daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>aixmibd d dodv7_disaixmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disndpdhostdmn" function="disndpdhostdmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="89">Implements STIG Recommendation STIG-ID AIX7-00-003062 (CAT II): The ndpd-host daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>ndpd-host d dodv7_disndpdhostdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disndpdrouterdmn" function="disndpdrouterdmn">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="90">Implements STIG Recommendation STIG-ID AIX7-00-003063 (CAT II): The ndpd-router daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>ndpd-router d dodv7_disndpdrouterdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_distcpdaytime" function="distcpdaytime">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="91">Implements STIG Recommendation STIG-ID AIX7-00-003064 (CAT II): The daytime daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp d dodv7_distcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disudpdaytime" function="disudpdaytime">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="92">Implements STIG Recommendation STIG-ID AIX7-00-003064 (CAT II): The daytime daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp d dodv7_disudpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_discmsd" function="discmsd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="93">Implements STIG Recommendation STIG-ID AIX7-00-003065 (CAT II): The cmsd daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>cmsd udp d dodv7_discmsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disttbdserver" function="disttbdserver">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="94">Implements STIG Recommendation STIG-ID AIX7-00-003066 (CAT II): The ttbdserver daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ttbdserver tcp d dodv7_disttbdserver</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disuucp" function="disuucp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="95">Implements STIG Recommendation STIG-ID AIX7-00-003067 (CAT II): The uucp(UNIX to UNIX Copy Program) daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>uucp tcp d dodv7_disuucp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_distcptime" function="distcptime">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="96">Implements STIG Recommendation STIG-ID AIX7-00-003068 (CAT II): The time daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp d dodv7_distcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disudptime" function="disudptime">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="97">Implements STIG Recommendation STIG-ID AIX7-00-003068 (CAT II): The time daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp d dodv7_disudptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_distalk" function="distalk">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="98">Implements STIG Recommendation STIG-ID AIX7-00-003069 (CAT II): The talk daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp d dodv7_distalk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disntalk" function="disntalk">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="99">Implements STIG Recommendation STIG-ID AIX7-00-003070 (CAT II): The ntalk daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ntalk udp d dodv7_disntalk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_distcpchargen" function="distcpchargen">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="100">Implements STIG Recommendation STIG-ID AIX7-00-003071 (CAT II): The chargen daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen tcp d dodv7_distcpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disudpchargen" function="disudpchargen">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="101">Implements STIG Recommendation STIG-ID AIX7-00-003071 (CAT II): The chargen daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d dodv7_disudpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disudpdiscard" function="disudpdiscard">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="102">Implements STIG Recommendation STIG-ID AIX7-00-003072 (CAT II): The discard daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d dodv7_disudpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_distcpdiscard" function="distcpdiscard">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="103">Implements STIG Recommendation STIG-ID AIX7-00-003072 (CAT II): The discard daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard tcp d dodv7_distcpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disdtspc" function="disdtspc">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="104">Implements STIG Recommendation STIG-ID AIX7-00-003073 (CAT II): The dtspc daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>dtspc tcp d dodv7_disdtspc</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_dispcnfsd" function="dispcnfsd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="105">Implements STIG Recommendation STIG-ID AIX7-00-003074 (CAT II): The pcnfsd daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d dodv7_dispcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rstatd" function="rstatd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="106">Implements STIG Recommendation STIG-ID AIX7-00-003075 (CAT II): The rstatd daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d dodv7_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ruserd" function="ruserd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="107">Implements STIG Recommendation STIG-ID AIX7-00-003076 (CAT II): The ruserd daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ruserd udp d dodv7_ruserd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rwalld" function="rwalld">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="108">Implements STIG Recommendation STIG-ID AIX7-00-003105 (CAT II): The rwalld daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d dodv7_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sprayd" function="sprayd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="109">Implements STIG Recommendation STIG-ID AIX7-00-003077 (CAT II): The sprayd daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d dodv7_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_klogin" function="klogin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="110">Implements STIG Recommendation STIG-ID AIX7-00-003078 (CAT II): The klogin daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>klogin tcp d dodv7_klogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_kshell" function="kshell">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="111">Implements STIG Recommendation STIG-ID AIX7-00-003079 (CAT II): The kshell daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>klogin tcp d dodv7_kshell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rquotad" function="rquotad">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="112">Implements STIG Recommendation STIG-ID AIX7-00-003080 (CAT II): The rquotad daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d dodv7_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_tftp" function="tftp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="113">Implements STIG Recommendation STIG-ID AIX7-00-003081 (CAT II): The tftp daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp d dodv7_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_imap2" function="imap2">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="114">Implements STIG Recommendation STIG-ID AIX7-00-003082 (CAT II): The imap2 service must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>imap2 tcp d dodv7_imap2</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_pop3" function="pop3">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="115">Implements STIG Recommendation STIG-ID AIX7-00-003083 (CAT II): The pop3 daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pop3 tcp d dodv7_pop3</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_finger" function="finger">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="116">Implements STIG Recommendation STIG-ID AIX7-00-003084 (CAT II): The finger daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d dodv7_finger</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_instsrv" function="instsrv">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="117">Implements STIG Recommendation STIG-ID AIX7-00-003085 (CAT II): The instsrv daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>instsrv tcp d dodv7_instsrv</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_tcpecho" function="tcpecho">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="118">Implements STIG Recommendation STIG-ID AIX7-00-003086 (CAT II): The echo daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d dodv7_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_udpecho" function="udpecho">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="119">Implements STIG Recommendation STIG-ID AIX7-00-003086 (CAT II): The echo daemon must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d dodv7_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_innd" function="innd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="120">Implements STIG Recommendation STIG-ID AIX7-00-003087 (CAT II): The Internet Network News (INN) server must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>innd udp d dodv7_innd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_nntpd" function="nntpd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="121">Implements STIG Recommendation STIG-ID AIX7-00-003087 (CAT II): The Internet Network News (INN) server must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>nntpd udp d dodv7_nntpd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rlogind" function="rlogind">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="122">Implements STIG Recommendation STIG-ID AIX7-00-003041 (CAT I): The AIX rlogind service must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rlogind tcp6 d dodv7_rlogind</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rexecd" function="rexecd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="123">Implements STIG Recommendation STIG-ID AIX7-00-002058 (CAT I): The AIX rexecd daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp6 d dodv7_rexecd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_telnetd" function="telnetd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="124">Implements STIG Recommendation STIG-ID AIX7-00-002059 (CAT I): The AIX telnet daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp6 d dodv7_telnetd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ftpd" function="ftpd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="125">Implements STIG Recommendation STIG-ID AIX7-00-002060 (CAT I): The AIX ftpd daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.smit,bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp6 d dodv7_ftpd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_telnet" function="dodv7telnet">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="128">Implements STIG Recommendation STIG-ID AIX7-00-001102 (CAT II): AIX must employ strong authentication in the establishment of sessions.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS,prereqsed</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp d dodv7_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_nosuid" function="nosuid">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="221">Implements STIG Recommendation STIG-ID AIX7-00-001056 (CAT II): NFS file systems on AIX must be mounted with the nosuid option unless the NFS file systems contain approved setuid or setgid programs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/nfsconfig</AIXPertCommand>
+    <AIXPertArgs>options nosuid </AIXPertArgs>
+    <AIXPertGroup>NFS options</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_nosuidopt" function="nosuidopt">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="221">Implements STIG Recommendation STIG-ID AIX7-00-001138 (CAT II): NFS file systems on AIX must be mounted with the nosuid option unless the NFS file systems contain approved setuid or setgid programs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/nfsconfig</AIXPertCommand>
+    <AIXPertArgs>options nosuid </AIXPertArgs>
+    <AIXPertGroup>NFS options</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_disable_automount" function="disable_automount">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="222">Implements STIG Recommendation STIG-ID AIX7-00-003090 (CAT II): If automated file system mounting tool is not required on AIX, it must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/nfsconfig</AIXPertCommand>
+    <AIXPertArgs>automount</AIXPertArgs>
+    <AIXPertGroup>NFS options</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_commitinstallp" function="commitinstallp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="130">Implements STIG Recommendation STIG-ID AIX7-00-003028 (CAT II): AIX must remove all software components after updated versions have been installed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/commitinstallp</AIXPertCommand>
+    <AIXPertArgs>dodv7_commitinstallp</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_clean_partial_connections" function="clean_partial_connections">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="131">Implements STIG Recommendation STIG-ID AIX7-00-003097 (CAT II): AIX must protect against DOS attacks by implementing rate limiting measures on impacted network interfaces.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell,bos.net.tcp.client</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>clean_partial_conns=1 s dodv7_clean_partial_connections</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_broadcast_ping" function="broadcast_ping">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="132">Implements STIG Recommendation STIG-ID AIX7-00-003135 (CAT II): AIX must not respond to ICMPv6 echo requests sent to a broadcast address.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell,bos.net.tcp.client</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>bcastping=0 s dodv7_broadcast_ping</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_ip6forwarding" function="ip6forwarding">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="133">Implements STIG Recommendation STIG-ID AIX7-00-002065 (CAT II): AIX must not have IP forwarding for IPv6 enabled unless the system is a router.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell,bos.net.tcp.client</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>ip6forwarding=0 s dodv7_ip6forwarding</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sudo_authenticate" function="sudo_authenticate">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="219">Implements STIG Recommendation STIG-ID AIX7-00-002062 (CAT II): AIX must remove !authenticate option from sudo config files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/sudoers</AIXPertCommand>
+    <AIXPertArgs>authenticate</AIXPertArgs>
+    <AIXPertGroup>Sudo configuration recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sudo_nopasswd" function="sudo_nopasswd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="220">Implements STIG Recommendation STIG-ID AIX7-00-002061 (CAT II): AIX must remove NOPASSWD tag from sudo config files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/sudoers</AIXPertCommand>
+    <AIXPertArgs>nopasswd</AIXPertArgs>
+    <AIXPertGroup>Sudo configuration recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_samba" function="samba">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="135">Implements STIG Recommendation STIG-ID AIX7-00-002089 (CAT II): Samba packages must be removed from AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/lslppcmd</AIXPertCommand>
+    <AIXPertArgs>samba  dodv7_samba</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_lockcommand" function="lockcommand">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="141">Implements STIG Recommendation STIG-ID AIX7-00-001028 (CAT II): AIX must provide session lock command.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>/usr/bin/lock a dodv7_lockcommand</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_xlockcommand" function="xlockcommand">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="142">Implements STIG Recommendation STIG-ID AIX7-00-001029 (CAT II): AIX must provide xlock command in CDE Environment.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>/usr/bin/X11/xlock a dodv7_xlockcommand</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_mkusersys" function="mkusersys">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="143">Implements STIG Recommendation STIG-ID AIX7-00-001015 (CAT II): The shipped /etc/security/mkuser.sys file must not be customized directly.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkdata</AIXPertCommand>
+    <AIXPertArgs>/etc/security/mkuser.sys &quot;mkuser.sys.custom&quot; dodv7_mkusersys</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_mkusersyscustom" function="mkusersyscustom">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="144">Implements STIG Recommendation STIG-ID AIX7-00-001000 (CAT II): AIX /etc/security/mkuser.sys.custom must not exist on unless it is needed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>/etc/security/mkuser.sys.custom d dodv7_mkusersyscustom</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_wallcommand" function="wallcommand">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="145">Implements STIG Recommendation STIG-ID AIX7-00-003098 (CAT II): AIX system must allow users to send message to all the users who logged in currently.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>/usr/sbin/wall a dodv7_wallcommand</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_writecommand" function="writecommand">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="146">Implements STIG Recommendation STIG-ID AIX7-00-003099 (CAT II): AIX system must allow admins to send message to a user who logged in currently.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>/usr/bin/write a dodv7_writecommand</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_pgrp" function="dodv7pgrp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscxpert.cat" setNum="218" msgNum="148">Implements STIG Recommendation STIG-ID AIX7-00-001016 (CAT II): The regular users default primary group must be staff on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/mkuser.default pgrp=staff user dodv7_pgrp</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_enablerbac" function="enablerbac">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="150">Implements STIG Recommendation STIG-ID AIX7-00-003102 (CAT II): AIX must turn on enhanced Role Based Access control.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/EnableRbac</AIXPertCommand>
+    <AIXPertArgs>dodv7_enablerbac</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_etchostsequiv" function="etchostsequiv">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="154">Implements STIG Recommendation STIG-ID AIX7-00-003138 (CAT II): There must be no hosts.equiv on the AIX system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.client,bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+    <AIXPertArgs>dodv7_etchostsequiv</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rhostsnetrc" function="rhostsnetrc">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="155">Implements STIG Recommendation STIG-ID AIX7-00-003101 (CAT II): There must be no .rhosts ,.shosts and .netrc files on the AIX system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.client,bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+    <AIXPertArgs>h dodv7_rhostsnetrc</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_shostsequiv" function="shostsequiv">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="156">Implements STIG Recommendation STIG-ID AIX7-00-003138 (CAT II): There must be no shosts.equiv files on the AIX system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.net.tcp.client,bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chetchostsfiles</AIXPertCommand>
+    <AIXPertArgs>d dodv7_shostsequiv</AIXPertArgs>
+    <AIXPertGroup>Remote access settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rmplusgroup" function="rmplusgroup">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="157">Implements STIG Recommendation STIG-ID AIX7-00-001047 (CAT II): THE AIX /etc/passwd, /etc/security/passwd, and /etc/group files must not contain plus (+) markers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmplusmarker</AIXPertCommand>
+    <AIXPertArgs>/etc/group dodv7_rmplusgroup</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rmpluspasswd" function="rmpluspasswd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="158">Implements STIG Recommendation STIG-ID AIX7-00-001047 (CAT II): THE AIX /etc/passwd, /etc/security/passwd, and /etc/group files must not contain plus (+) markers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmplusmarker</AIXPertCommand>
+    <AIXPertArgs>/etc/passwd dodv7_rmpluspasswd</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rmplussecpasswd" function="rmplussecpasswd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="159">Implements STIG Recommendation STIG-ID AIX7-00-001047 (CAT II): THE AIX /etc/passwd, /etc/security/passwd, and /etc/group files must not contain plus (+) markers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmplusmarker</AIXPertCommand>
+    <AIXPertArgs>/etc/security/passwd dodv7_rmplussecpasswd</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sysacctuid" function="sysacctuid">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="160">Implements STIG Recommendation STIG-ID AIX7-00-001036 (CAT II): UIDs reserved for system accounts must not be assigned to non-system accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sysacctuid</AIXPertCommand>
+    <AIXPertArgs>dodv7_sysacctuid</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_justified_remote_syslog" function="justified_remote_syslog">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="224">Implements STIG Recommendation STIG-ID AIX7-00-002131 (CAT II): AIX must only use remote syslog servers justified and documented using site-defined procedures.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/syslog</AIXPertCommand>
+    <AIXPertArgs>dodv7_justified_remote_syslog</AIXPertArgs>
+    <AIXPertGroup>Syslog Rule</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_syslogownership" function="syslogownership">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="176">Implements STIG Recommendation STIG-ID AIX7-00-002070 (CAT II): All AIX log files must be owned by root.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>root recursiveexcl:/var/log/syslog</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sysloggrp" function="sysloggrp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="176">Implements STIG Recommendation STIG-ID AIX7-00-002071 (CAT II): All AIX log files must be group owned by security.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chowngrp</AIXPertCommand>
+    <AIXPertArgs>:security recursiveexcl:/var/log/syslog</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_publicdir" function="publicdir">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="180">Implements STIG Recommendation STIG-ID AIX7-00-001031 (CAT II): ALL AIX Public directories must be owned by root.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chownpath</AIXPertCommand>
+    <AIXPertArgs>publicdir dodv7_publicdir</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_audiodev" function="audiodev">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="181">Implements STIG Recommendation STIG-ID AIX7-00-002079 (CAT II): AIX audio device must be group owned by root,sys,bin, or system.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chownpath</AIXPertCommand>
+    <AIXPertArgs>audioidev dodv7_audiodev</AIXPertArgs>
+    <AIXPertGroup>Ownership Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckucb" function="aclcheckucb">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="183">Implements DoD Recommendations AIX7-00-003009 (CAT II): All system command files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/usr/ucb dodv7_aclcheckucb</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclchecketc" function="aclchecketc">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="183">Implements DoD Recommendations AIX7-00-003009 (CAT II): All system command files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/etc dodv7_aclchecketc</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckbin" function="aclcheckbin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="183">Implements DoD Recommendations AIX7-00-003009 (CAT II): All system command files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/bin dodv7_aclcheckbin</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckusrbin" function="aclcheckusrbin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="183">Implements DoD Recommendations AIX7-00-003009 (CAT II): All system command files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/usr/bin dodv7_aclcheckusrbin</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckusrsbin" function="aclcheckusrsbin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="183">Implements DoD Recommendations AIX7-00-003009 (CAT II): All system command files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/usr/sbin dodv7_aclcheckusrsbin</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclchecksbin" function="aclchecksbin">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="183">Implements DoD Recommendations AIX7-00-003009 (CAT II): All system command files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/sbin dodv7_aclchecksbin</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckmethods" function="aclcheckmethods">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="184">Implements DoD Recommendations AIX7-00-003010 (CAT II): All Library files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/usr/lib/methods dodv7_aclcheckmethods</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclchecksecurity" function="aclchecksecurity">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="184">Implements DoD Recommendations AIX7-00-003010 (CAT II): All Library files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/usr/lib/security dodv7_aclchecksecurity</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckvarlog" function="aclcheckvarlog">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="185">Implements DoD Recommendations AIX7-00-003007 (CAT II): All log files files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/var/log dodv7_aclcheckvarlog</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckvarsyslog" function="aclcheckvarsyslog">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="185">Implements DoD Recommendations AIX7-00-003007 (CAT II): All log files files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/var/log/syslog dodv7_aclcheckvarsyslog</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckvaradm" function="aclcheckvaradm">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="185">Implements DoD Recommendations AIX7-00-003007 (CAT II): All log files files must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/var/adm/ dodv7_aclcheckvaradm</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclchecketcgroup" function="aclchecketcgroup">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="186">Implements DoD Recommendations AIX7-00-003015 (CAT II): The AIX /etc/group file must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>/etc/group dodv7_aclchecketcgroup</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckroot" function="aclcheckroot">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="187">Implements DoD Recommendations AIX7-00-001040 (CAT II): The AIX root accounts home directory  must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>~root dodv7_aclcheckroot</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_aclcheckuserhome" function="aclcheckuserhome">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="188">Implements DoD Recommendations AIX7-00-003019 (CAT II): The AIX user home directories must not have extended ACLs.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/aclcheck</AIXPertCommand>
+    <AIXPertArgs>userhome dodv7_aclcheckuserhome</AIXPertArgs>
+    <AIXPertGroup>Permission settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rshd" function="rshd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="189">Implements DoD Recommendations AIX7-00-003040 (CAT II): The AIX rsh daemon must be disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp d dodv7_rshd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_enhancedRBAC" function="enhancedRBAC">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="190">Implements DoD Recommendations AIX7-00-003102 (CAT II): AIX must turn on enhanced Role-Based Access Control.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdevattr</AIXPertCommand>
+    <AIXPertArgs>sys0 enhanced_RBAC=true</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_sctp" function="sctp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="191">Implements DoD Recommendations AIX7-00-003088 (CAT II): Stream Control Transmission Protocol (SCTP) must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/managefilesets</AIXPertCommand>
+    <AIXPertArgs>uninstall like:sctp</AIXPertArgs>
+    <AIXPertGroup>Manage filesets</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rds" function="rds">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="192">Implements DoD Recommendations AIX7-00-003089 (CAT II): The Reliable Datagram Sockets (RDS) protocol must be disabled on AIX.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>rds a dodv7_rds</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_netstat" function="netstat">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="200">Implements DoD Recommendations AIX7-00-002063 (CAT II): AIX must be configured with a default gateway for IPV4</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/netstat</AIXPertCommand>
+    <AIXPertArgs>netstat dodv7_netstat</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_nslookup" function="nslookup">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="201">Implements DoD Recommendations AIX7-00-002125 (CAT II): AIX must verify that name/address resolution is received from authoritative services.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/netstat</AIXPertCommand>
+    <AIXPertArgs>nslookup dodv7_nslookup</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_forward" function="forward">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="202">Implements DoD Recommendations AIX7-00-003115 (CAT II): AIX must not contain .forward files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+    <AIXPertArgs>h dodv7_forward</AIXPertArgs>
+    <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_auditselect" function="auditselect">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="203">Implements STIG Recommendation STIG-ID AIX7-00-002011 (CAT II): AIX must provide auditselect command.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv7/checkcmd</AIXPertCommand>
+    <AIXPertArgs>/usr/sbin/auditselect a dodv7_auditselect</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_checkgrps" function="dodv7checkgrps">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="223">Implements STIG Recommendation STIG-ID AIX7-00-002087  (CAT II): All files and directories in users home directories must be group owned by a group in which the owner is a member.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkgrps</AIXPertCommand>
+    <AIXPertArgs>dodv7_checkgrps</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_checkgrpsown" function="dodv7checkgrpsown">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="223">Implements STIG Recommendation STIG-ID STIG-ID AIX7-00-003018 (CAT II): All files and directories in users home directories must be group owned by a group in which the owner is a member.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.commands,bos.rte.date,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkgrps</AIXPertCommand>
+    <AIXPertArgs>dodv7_checkgrps</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rbac" function="dodrbac">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="225">Implements STIG recommendation STIG-ID AIX7-00-002032 (CAT II): AIX must provide RBAC roles to perform auditing on all operating system components.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/dodrbac</AIXPertCommand>
+    <AIXPertArgs>dodrbac</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_tvftp" function="dodtvftp">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="999">Implements STIG recommendation STIG-ID AIX7-00-003022 (CAT II): AIX must disable trivial file transfer protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp6 d dodv7_tvftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_kerdump" function="dodkerdump">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="999">Implements STIG recommendation STIG-ID AIX7-00-003094 (CAT II): AIX kernel core dumps must be disabled unless needed.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sysdumpnull</AIXPertCommand>
+    <AIXPertArgs>dodkerdump</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_rmpluslpd" function="dodv7rmpluslpd">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="999">Implements STIG recommendation STIG-ID AIX7-00-003037 (CAT II): The AIX hosts.lpd file must not contain a + character.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmplusmarker</AIXPertCommand>
+    <AIXPertArgs>/etc/hosts.lpd dodv7_rmpluslpd</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_gid" function="dod7gid">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="999">Implements STIG recommendation STIG-ID AIX7-00-003033 (CAT II): All AIX group identifiers referenced in /etc/passwd file must be defined in /etc/group file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chkdodgid</AIXPertCommand>
+    <AIXPertArgs>dodv7_gid</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_bootdev" function="dod7bootdev">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="999">Implements STIG recommendation STIG-ID AIX7-00-003112 (CAT II): AIX must be configured to only boot from system boot device.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cat1</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+  <AIXPertEntry name="dodv7_bootldr" function="dod7bootldr">
+    <AIXPertRuleType type="DoDv7"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="218" msgNum="999">Implements STIG recommendation STIG-ID AIX7-00-003113 (CAT II): AIX must not use removable media as a boot loader.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/dodv2/dodv2cat1</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup>Miscellaneous rules</AIXPertGroup>
+  </AIXPertEntry>
+</AIXPertSecurityHardening>

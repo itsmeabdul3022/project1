@@ -1,0 +1,1065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IBM_PROLOG_BEGIN_TAG                                                   -->
+<!-- This is an automatically generated prolog.                             -->
+<!--                                                                        -->
+<!-- Licensed Materials - Property of IBM                                   -->
+<!--                                                                        -->
+<!-- Restricted Materials of IBM                                            -->
+<!--                                                                        -->
+<!-- COPYRIGHT International Business Machines Corp. 2014,2015              -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- COPYRIGHT Rocket Software, Inc. 2018                                   -->
+<!-- All Rights Reserved                                                    -->
+<!--                                                                        -->
+<!-- US Government Users Restricted Rights - Use, duplication or            -->
+<!-- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.      -->
+<!--                                                                        -->
+<!-- IBM_PROLOG_END_TAG                                                     -->
+
+<!--	%Z%%M%  %I%  %W% %G% %U%
+
+	RuleType PCIv3 represents PCI version 3
+
+	RuleType Prereq represents Analysis Rules -->
+
+<!-- Specifies PCIv3 rules -->
+<!-- VERSION : PCI 3.2 -->
+
+<AIXPertSecurityHardening>
+  <AIXPertEntry name="prereqbinaudit" function="prereqbinaudit">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="1">Prereq rule for binaudit: Checks for available disk space to enable audit.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqbinaudit</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqcde" function="prereqcde">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="2">Prereq rule for CDE: Checks whether CDE entry exists in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqcde</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqgated" function="prereqgated">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="3">Prereq rule for gated: Checks whether the system is configured to be a router.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqgated</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqipsec" function="prereqipsec">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="4">Prereq rule for IPSec: Checks whether IPSec is enabled.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqipsec</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlft" function="prereqlft">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="5">Prereq rule for LFT: Checks whether LFT is configured.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlft</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqlh" function="prereqlh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="6">Prereq rule for loginherald: Checks whether herald value is set.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqlh</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqnosyn" function="prereqnosyn">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="7">Prereq rule for NoSyn: Checks whether IPSec is enabled. If it is not, then IPSec is enabled.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnosyn</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqrl" function="prereqrl">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="8">Prereq rule for root login: Checks whether any non-root user that has login privileges exists.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqrl</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqrrl" function="prereqrrl">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="9">Prereq rule for remote root login: Checks whether any non-root user with privileges to login remotely exists.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqrrl</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqsed" function="prereqsed">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="10">Prereq rule for SED: Checks whether the machine has 64 bit kernel support.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqsed</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqnontcb" function="prereqnontcb">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="11">Prereq rule for non-TCB: Checks whether the system is non-TCB.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqnontcb</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqda" function="prereqda">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="12">Prereq rule for disableacct: Adds /bin/false to shells in login.cfg, if it does not exist.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqda</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqTE" function="prereqTE">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="13">Prereq rule for Trusted Execution: Checks whether the system has the Trusted Execution feature on.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqTE</AIXPertCommand>
+    <AIXPertArgs/>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="prereqssh" function="prereqssh">
+    <AIXPertRuleType type="Prereq"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="14">Prereq rule for SSHPCIConfig: Checks whether the ssh version is at 7.0 or greater.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/prereqfsbyver</AIXPertCommand>
+    <AIXPertArgs>openssh.base.client 7</AIXPertArgs>
+    <AIXPertGroup/>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_ipsecshunhost" function="ipsecshunhost">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="15">Implements PCI DSS Requirement 1.2: Shun host for 5 minutes: Shuns the hosts that try to access unused ports for 5 minutes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunhosthls</AIXPertCommand>
+    <AIXPertArgs>pciv3_ipsecshunhost</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_ipsecshunports" function="ipsecshunports">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="16">Implements PCI DSS Requirement 1.2: Guard host against port scans: Shuns vulnerable ports for 5 minutes to guard the host against port scans.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecshunports</AIXPertCommand>
+    <AIXPertArgs>pciv3_ipsecshunport</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcptr" function="tcptr">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="17">Implements PCI DSS Requirement 1.3.5: TCP Traffic Regulation High: Enforces denial-of-service mitigation on popular ports.</AIXPertDescription>
+    <AIXPertPrereqList></AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/tcptr_aixpert</AIXPertCommand>
+    <AIXPertArgs>pciv3</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_SecureLPM" function="SecureLPM">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="18">Implements PCI DSS Requirement 1.3.5: Enable automated IPSEC Tunnel creation between VIO servers during live partition migration.</AIXPertDescription>
+    <AIXPertPrereqList>clic.rte.kernext,bos.net.ipsec.rte,bos.net.ipsec.keymgt,ios.cli.rte</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cfgsecmig</AIXPertCommand>
+    <AIXPertArgs>on</AIXPertArgs>
+    <AIXPertGroup>IPSEC Secure Partition Migration Group</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_ipsecpermit" function="ipsecpermit">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="19">Implements PCI DSS Requirement 1.3.5: Allow the packets from HMC restricting inbound and outbound traffic to that which is necessary for the cardholder data environment.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.net.ipsec.keymgt,bos.net.ipsec.rte,prereqipsec</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ipsecpermithostorport</AIXPertCommand>
+    <AIXPertArgs>PermitHost_IPSEC</AIXPertArgs>
+    <AIXPertGroup>IPSec Filter Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_maxexpired" function="maxexpired">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="21">Implements PCI DSS Requirement 2.1: Always change vendor-supplied defaults before installing a system on the network. Specifies the maximum time (in weeks) beyond the maxage value that a user can change an expired password to 8.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxexpired=8 LESS ALL pciv3_maxexpired</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_maxrepeats" function="maxrepeats">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="22">Implements PCI DSS Requirement 2.1: Always change vendor-supplied defaults before installing a system on the network. For example include passwords, include simple network management protocol(snmp) community strings, and eliminate unnecessary accounts.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxrepeats=2 LESS ALL pciv3_maxrepeats</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_netstat" function="netstat">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="23">Implements PCI DSS Requirement 2.1: Disable netstat: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>netstat tcp d pciv3_netstat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_dissnmpdmn" function="dissnmpdmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="24">Implements PCI DSS Requirement 2.1.1: Disable SNMP daemon: Change vendor supplied defaults. Stops SNMP daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpd a pciv3_dissnmpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_dissnmpmibddmn" function="dissnmpmibddmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="25">Implements PCI DSS Requirement 2.1.1: Disable SNMPMIBD daemon: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>snmpmibd a pciv3_dissnmpmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disaixmibddmn" function="disaixmibddmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="26">Implements PCI DSS Requirement 2.1.1: Disable AIXMIBD daemon: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>aixmibd d pciv3_disaixmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_hostmibddmn" function="dishostmibddmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="27">Implements PCI DSS Requirement 2.1.1: Disable HOSTMIBD daemon: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>hostmibd d pciv3_dishostmibddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_dislpd" function="dislpd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="28">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable lpd daemon: Stops lpd daemon and comments the lpd entry in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>lpd: /etc/inittab : d pciv3_dislpd</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_discde" function="discde">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="29">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable CDE: Disables CDE when LFT is not configured.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.methods,prereqlft</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/comntrows</AIXPertCommand>
+    <AIXPertArgs>"dt:" "/etc/inittab" ":" d pciv3_discde</AIXPertArgs>
+    <AIXPertGroup>Rules for /etc/inittab</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_distimedmn" function="distimedmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="30">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable timed daemon: Stops timed daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>timed d pciv3_distimedmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disrwhoddmn" function="disrwhoddmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="31">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rwhod daemon: Stops rwhod daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>rwhod d pciv3_disrwhoddmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disdpid2dmn" function="disdpid2dmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="32">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable DPID2 daemon: Stops DPID2 daemon and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dpid2 d pciv3_disdpid2dmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disdhcpserv" function="disdhcpserv">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="33">Implements PCI DSS Requirement 2.2.2: Disable DHCP Server: Change vendor supplied defaults before installing a system on the network.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcpsd d pciv3_disdhcpserv</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disdhcpagent" function="disdhcpagent">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="34">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable DHCP Agent: Stops DHCP relay agent and comments its entry in /etc/rc.tcpip.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>dhcprd d pciv3_disdhcpagent</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_shell" function="shell">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="35">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rshd daemon: Comments the entry for rshd daemon in /etc/inetd.conf and kills all instances of rshd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>shell tcp d pciv3_shell</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rlogin" function="rlogin">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="36">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rlogin in /etc/inetd.conf: Comments the entry for rlogind daemon in /etc/inetd.conf and kills all instances of rlogind.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>login tcp d pciv3_rlogin</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rexecd" function="rexecd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="37">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rexecd in /etc/inetd.conf: Comments the entry for rexecd daemon in /etc/inetd.conf and kills all instances of rexecd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>exec tcp d pciv3_rexecd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_comsat" function="comsat">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="38">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable comsat in /etc/inetd.conf: Comments the entry for comsat daemon in /etc/inetd.conf and kills all instances of comsat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>comsat udp d pciv3_comsat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_fingerd" function="fingerd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="39">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable fingerd in /etc/inetd.conf: Comments the entry for fingerd daemon in /etc/inetd.conf and kills all instances of fingerd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>finger tcp d pciv3_fingerd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_systat" function="systat">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="40">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable systat in /etc/inetd.conf: Comments the entry for systat daemon in /etc/inetd.conf and kills all instances of systat.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>systat tcp d pciv3_systat</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tftp" function="tftp">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="41">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable tftpd in /etc/inetd.conf: Comments the entry for tftpd daemon in /etc/inetd.conf and kills all instances of tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>tftp udp d pciv3_tftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_talk" function="talk">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="42">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable talkd in /etc/inetd.conf: Comments the entry for talkd daemon in /etc/inetd.conf and kills all instances of talkd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>talk udp d pciv3_talk</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rquotad" function="rquotad">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="43">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rquotad in /etc/inetd.conf: Comments the entry for rquotad daemon in /etc/inetd.conf and kills all instances of rquotad.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rquotad udp d pciv3_rquotad</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rstatd" function="rstatd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="44">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rstatd in /etc/inetd.conf: Comments the entry for rstatd daemon in /etc/inetd.conf and kills all instances of rstatd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rstatd udp d pciv3_rstatd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rusersd" function="rusersd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="45">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rusersd in /etc/inetd.conf: Comments the entry for rusersd daemon in /etc/inetd.conf and kills all instances of rusersd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rusersd udp d pciv3_rusersd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rwalld" function="rwalld">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="46">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable rwalld in /etc/inetd.conf: Comments the entry for rwalld daemon in /etc/inetd.conf and kills all instances of rwalld.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>rwalld udp d pciv3_rwalld</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sprayd" function="sprayd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="47">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable sprayd in /etc/inetd.conf: Comments the entry for sprayd daemon in /etc/inetd.conf and kills all instances of sprayd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>sprayd udp d pciv3_sprayd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_pcnfsd" function="pcnfsd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="48">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable pcnfsd in /etc/inetd.conf: Comments the entry for pcnfsd daemon in /etc/inetd.conf and kills all instances of pcnfsd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>pcnfsd udp d pciv3_pcnfsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcpecho" function="tcpecho">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="49">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable TCP echo service in /etc/inetd.conf: Comments the entry for TCP echo service in /etc/inetd.conf and kills all instances of echo(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo tcp d pciv3_tcpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcpdiscard" function="tcpdiscard">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="50">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable TCP discard service in /etc/inetd.conf: Comments the entry for TCP discard service in /etc/inetd.conf and kills all instances of discard(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard tcp d pciv3_tcpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcpchargen" function="tcpchargen">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="51">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable TCP chargen service in /etc/inetd.conf: Comments the entry for TCP chargen service in /etc/inetd.conf and kills all instances of chargen(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen tcp d pciv3_tcpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcpdaytime" function="tcpdaytime">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="52">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable TCP daytime service in /etc/inetd.conf: Comments the entry for TCP daytime service in /etc/inetd.conf and kills all instances of daytime(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime tcp d pciv3_tcpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcptime" function="tcptime">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="53">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable TCP time service in /etc/inetd.conf: Comments the entry for TCP time service in /etc/inetd.conf and kills all instances of timed(tcp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time tcp d pciv3_tcptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_udpecho" function="udpecho">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="54">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable UDP echo service in /etc/inetd.conf: Comments the entry for UDP echo service in /etc/inetd.conf and kills all instances of echo(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>echo udp d pciv3_udpecho</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_udpdiscard" function="udpdiscard">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="55">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable UDP discard service in /etc/inetd.conf: Comments the entry for UDP discard service in /etc/inetd.conf and kills all instances of discard(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>discard udp d pciv3_udpdiscard</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_udpchargen" function="udpchargen">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="56">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable UDP chargen service in /etc/inetd.conf: Comments the entry for UDP chargen service in /etc/inetd.conf and kills all instances of chargen(udp).</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>chargen udp d pciv3_udpchargen</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_udpdaytime" function="udpdaytime">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="57">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable UDP daytime service in /etc/inetd.conf: Comments the entry for UDP daytime service in /etc/inetd.conf and stops the daytime(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>daytime udp d pciv3_udpdaytime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_udptime" function="udptime">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="58">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable UDP time service in /etc/inetd.conf: Comments the entry for UDP time service in /etc/inetd.conf and stops the time(udp) service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>time udp d pciv3_udptime</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_dtspc" function="dtspc">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="59">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable dtspcd: Comments the entry for dtspcd daemon in /etc/inetd.conf when LFT is not configured and CDE is disabled in /etc/inittab.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>dtspc tcp d pciv3_dtspc</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_ttdbserver" function="ttdbserver">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="60">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable ttdbserver service in /etc/inetd.conf: Comments the entry for ttdbserver service in /etc/inetd.conf and kills all instances of ttdbserver service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ttdbserver tcp d pciv3_ttdbserver</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_cmsd" function="cmsd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="61">Implements PCI DSS Requirement 2.2.2: Disable unnecessary and insecure services: Disable cmsd service in /etc/inetd.conf: Comments the entry for cmsd service in /etc/inetd.conf and kills all instances of cmsd service.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.methods,bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands,prereqlft,prereqcde</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>cmsd udp d pciv3_cmsd</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_ftp" function="ftp">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="62">Implements PCI DSS Requirement 2.2.3: Disable unnecessary and insecure services: Disable ftpd: Comments the entry for ftpd daemon in /etc/inetd.conf and stops ftpd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>ftp tcp d pciv3_ftp</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_telnet" function="telnet">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="63">Implements PCI DSS Requirement 2.2.3: Disable unnecessary and insecure services: Disable telnetd: Comments the entry for telnetd daemon in /etc/inetd.conf and stops telnetd daemon.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.SRC,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/cominetdconf</AIXPertCommand>
+    <AIXPertArgs>telnet tcp d pciv3_telnet</AIXPertArgs>
+    <AIXPertGroup>/etc/inetd.conf Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disrmtcmds" function="disrmtcmds">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="64">Implements PCI DSS Requirement 2.2.3: Disable unsecure daemons: Disables unsecure commands rlogin, rsh, rcp, and tftp.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.ILS,bos.rte.odm,bos.rte.install,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disrmtcmds</AIXPertCommand>
+    <AIXPertArgs>d pciv3_disrmtcmds</AIXPertArgs>
+    <AIXPertGroup>Disable remote services</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disrmtdmns" function="disrmtdmns">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="65">Implements PCI DSS Requirement 2.2.3: Disable unsecure daemons: Disables unsecure daemons rlogind, rshd, and tftpd.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.commands,bos.rte.shell,bos.rte.security,bos.rte.ILS,bos.rte.odm,bos.rte.install,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disrmtdmns</AIXPertCommand>
+    <AIXPertArgs>d pciv3_disrmtdmns</AIXPertArgs>
+    <AIXPertGroup>Disable remote services</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_clean_partial_conns" function="clean_partial_conns">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="66">Implements PCI DSS Requirement 2.2.3: Network option clean_partial_conns: Set the value of the network option clean_partial_conns to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>clean_partial_conns=1 s pciv3_clean_partial_conns</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_tcp_tcpsecure" function="tcp_tcpsecure">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="67">Implements PCI DSS Requirement 2.2.3: Network option tcp_tcpsecure: Set the value of the network option tcp_tcpsecure to 7 to protect data against RST and SYN attacks.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands,bos.rte.date</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ntwkopts</AIXPertCommand>
+    <AIXPertArgs>tcp_tcpsecure=7 s pciv3_tcp_tcpsecure</AIXPertArgs>
+    <AIXPertGroup>Tune network options</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rmrhostsnetrc" function="rmrhostsnetrc">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="68">Implements PCI DSS Requirement 2.2.3: Disable .rhosts and .netrc files for all users.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.shell,bos.rte.ILS,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmrhostsnetrc</AIXPertCommand>
+    <AIXPertArgs>h pciv3_rmrhostsnetrc</AIXPertArgs>
+    <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rmetchostsequiv" function="rmetchostsequiv">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="69">Implements PCI DSS Requirement 2.2.3: Disable or comment out entries from /etc/hosts.equiv file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmetchostsequiv</AIXPertCommand>
+    <AIXPertArgs>pciv3_rmetchostsequiv</AIXPertArgs>
+    <AIXPertGroup>Remove unauthorized access</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disablepop3d" function="disablepop3d">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="70">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Disable for the pop3d server.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableSSL</AIXPertCommand>
+    <AIXPertArgs>a /etc/pop3d.cf</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disableimapd" function="disableimapd">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="71">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Disable for the imap server.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableSSL</AIXPertCommand>
+    <AIXPertArgs>a /etc/imapd.cf</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_checkNTP" function="checkNTP">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="72">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Check the NTP configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkNTP</AIXPertCommand>
+    <AIXPertArgs>a /etc/ntp.conf</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_secureFTPD" function="secureFTPD">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="73">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Check the FTP daemon configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/secureFTP</AIXPertCommand>
+    <AIXPertArgs>a ftpd</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_secureFTP" function="secureFTP">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="74">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Check the FTP client configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/secureFTP</AIXPertCommand>
+    <AIXPertArgs>a ftp</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sendmailPCIConfig" function="sendmailPCIConfig">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="75">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Disable in sendmail configuration file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sendmailPCIConfig</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sslversion" function="sslversion">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="76">Implements PCI DSS Requirement 2.2.3: SSL and Early TLS should be disabled in applications: Check for required SSL version.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sslversion</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rmsuidfrmrcmds" function="rmsuidfrmrcmds">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="77">Implements PCI DSS Requirement 2.2.4: Configure system security parameters to prevent misuse: Removes SUID from remote commands rcp, rdist, rexec, remsh, rlogin, and rsh.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.control</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmsuidfrmrcmds</AIXPertCommand>
+    <AIXPertArgs>r pciv3_rmsuidfrmrcmds</AIXPertArgs>
+    <AIXPertGroup>Disable SUID of commands</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_filepermgr" function="filepermgr">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="78">Implements PCI DSS Requirement 2.2.4: Configure system security parameters to prevent misuse: Remove setuid from privileged commands.</AIXPertDescription>
+    <AIXPertPrereqList>prereqnontcb,bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/filepermgr</AIXPertCommand>
+    <AIXPertArgs>l pciv3_filepermgr</AIXPertArgs>
+    <AIXPertGroup>Disable SUID of commands</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_enablenfs" function="enablenfs">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="79">Implements PCI DSS Requirement 2.2.4: Configure system security parameters to prevent misuse: Configure the NFS exports to restrict the access.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,bos.net.nfs.client</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/nfsconfig</AIXPertCommand>
+    <AIXPertArgs>e pciv3_enablenfs</AIXPertArgs>
+    <AIXPertGroup>Disable remote services</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshstart" function="sshstart">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="80">Implements PCI DSS Requirement 2.3: Check if ssh filesets are installed, Start the sshd daemon if it is not started and configure to start the sshd daemon at every reboot.</AIXPertDescription>
+    <AIXPertPrereqList>openssl.base,openssl.license,openssl.man.en_US</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sshstart</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshdaemonprotocol" function="sshdaemonprotocol">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="81">Implements PCI DSS Requirement 2.3: The SSH daemon must be configured to only use the SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshclientprotocol" function="sshclientprotocol">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="82">Implements PCI DSS Requirement 2.3: The SSH client must be configured to only use SSHv2 protocol.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Protocol 2 /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshlistenaddress" function="sshlistenaddress">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="83">Implements PCI DSS Requirement 2.3: The SSH daemon must only listen on management network addresses unless authorized to listen on any network address for non-management operations.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>ListenAddress 0 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshciphers" function="sshciphers">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="84">Implements PCI DSS Requirement 2.3: The SSH daemon must be configured to only use FIPS 140-2 approved ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Ciphers "aes128-ctr" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshmacs" function="sshmacs">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="85">Implements PCI DSS Requirement 2.3: The SSH daemon must be configured to only use Message Authentication Codes (MACs) employing FIPS 140-2 approved cryptographic hash algorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>SET MACs "hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshclientciphers" function="sshclientciphers">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="86">Implements PCI DSS Requirement 2.3: The SSH client must be configured to only use FIPS 140-2 approved ciphers.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>Ciphers "aes128-ctr" /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshclientmacs" function="sshclientmacs">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="87">Implements PCI DSS Requirement 2.3: The SSH client must be configured to only use Message Authentication Codes (MACs) employing FIPS 140-2 approved cryptographic hash algorithms.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqssh</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>MACs "umac-64@openssh.com,hmac-ripemd160,hmac-sha2-256,hmac-sha2-512" /etc/ssh/ssh_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshAllowGroups" function="sshAllowGroups">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="88">Implements PCI DSS Requirement 2.3: The SSH daemon must restrict login ability to specific users and/or groups.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>AllowGroups 0 /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sshStrictMode" function="sshStrictMode">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="90">Implements PCI DSS Requirement 2.3: The SSH daemon must perform strict mode checking of home directory configuration files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/ssh_config_rules</AIXPertCommand>
+    <AIXPertArgs>StrictModes yes /etc/ssh/sshd_config</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sysintegrity" function="sysintegrity">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="94">Implements PCI DSS Requirement 5.1.1: Maintaining the system integrity by detecting, removing and protecting against known types of malicious software.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqTE</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/manageITsecurity</AIXPertCommand>
+    <AIXPertArgs>pciv3_sysintegrity</AIXPertArgs>
+    <AIXPertGroup>System Integrity verification</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rmdotfrmpathroot" function="rmdotfrmpathroot">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="95">Implements PCI DSS Requirement 6.5.8: Remove dot from root path: Removes the dot from the PATH environment variable in files .profile, .kshrc, .cshrc, and .login in the root home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.security</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathroot</AIXPertCommand>
+    <AIXPertArgs>pciv3_rmdotfrmpathroot</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rmdotfrmpathnroot" function="rmdotfrmpathnroot">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="96">Implements PCI DSS Requirement 6.5.8: Remove dot from non-root path: Removes the dot from the PATH environment variable in files .profile, .kshrc, .cshrc, and .login in the user home directory.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.rte.date,bos.rte.shell,bos.rte.security</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rmdotfrmpathnroot</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_enableRbac" function="enableRbac">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="97">Implements PCI DSS Requirement 7: Implementing Strong Access Control Measure: Enable RBAC by creating so, sa, and isso users with appropriate roles.</AIXPertDescription>
+    <AIXPertPrereqList/>
+    <AIXPertCommand>/etc/security/pscexpert/bin/EnableRbac</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup></AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_umask" function="umask">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="98">Implements PCI DSS Requirement 7.1.1: Object creation permissions: Specifies default object creation permissions to 022.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>umask=22 ALL pciv3_umask</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_limitsysacc" function="limitsysacc">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="99">Implements PCI DSS Requirement 7.1.1: Limit system access: Makes root the only user in cron.allow file and removes the cron.deny file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.shell,bos.rte.commands,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/limitsysacc</AIXPertCommand>
+    <AIXPertArgs>h pciv3_limitsysacc</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rootlogin" function="rootlogin">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="100">Implements PCI DSS Requirement 8.1.1: Identify all users with a unique user name before allowing them to access system components or card holder data.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user login=true root pciv3_rootlogin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_disableacct" function="disableacct">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="101">Implements PCI DSS Requirement 8.1.4: Accounts must be locked after 90 days of inactivity.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS,prereqda</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/disableacct</AIXPertCommand>
+    <AIXPertArgs>90 pciv3_disableacct</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_loginretries" function="loginretries">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="102">Implements PCI DSS Requirement 8.1.6: Number of login attempts before locking the account: Specifies 6 as the number of consecutive unsuccessful login attempts for each non-root user account before the account is disabled.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>loginretries=6 LESS NONROOT pciv3_loginretries</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_logindisable" function="logindisable">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="103">Implements PCI DSS Requirement 8.1.6: Disable login after unsuccessful login attempts: Specifies 6 as the number of unsuccessful login attempts on a port before the port is locked.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg logindisable=6 default pciv3_logindisable</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_loginreenable" function="loginreenable">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="104">Implements PCI DSS Requirement 8.1.7: Reenable login after locking: Specifies the time interval (30 minutes) after which a port is unlocked after being disabled by logindisable.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chdefstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/login.cfg loginreenable=30 default pciv3_loginreenable</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_autologoff" function="autologoff">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="105">Implements PCI DSS Requirement 8.1.8: Set session idle time: Require the user to renter password if the session is idle for more than 15 minutes.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/autologoff</AIXPertCommand>
+    <AIXPertArgs>900 pciv3_autologoff</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_pwdalgchk" function="pwdalgchk">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="106">Implements PCI DSS Requirement 8.2.1: Use strong cryptography: Set the system password algorithm to a stronger cryptographic hash algorithm.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pwdalgchk</AIXPertCommand>
+    <AIXPertArgs>a</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_minlen" function="minlen">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="107">Implements PCI DSS Requirement 8.2.3: Minimum length for password: Specifies the minimum length of a password to 7 characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minlen=7 MORE ALL pciv3_minlen</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_minalpha" function="minalpha">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="108">Implements PCI DSS Requirement 8.2.3: Minimum number of alphabetic chars: Specifies 1 as the minimum number of alphabetic characters in a password to ensure that the password contains alphabetic characters.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minalpha=1 MORE ALL pciv3_minalpha</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_minother" function="minother">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="109">Implements PCI DSS Requirement 8.2.3: Minimum number of non-alphabetic chars: Specifies the minimum number of non-alphabetic characters in a password to 1.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>minother=1 MORE ALL pciv3_minother</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_maxage" function="maxage">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="110">Implements PCI DSS Requirement 8.2.4: Maximum age for password: Specifies the maximum number of weeks (12 weeks, at most 90 days) that a password is valid.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>maxage=12 LESS ALL pciv3_maxage</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_histexpire" function="histexpire">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="111">Implements PCI DSS Requirement 8.2.5: Password reuse: Specifies 52 as the number of weeks before a password can be reused.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histexpire=52 MORE ALL pciv3_histexpire</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_histsize" function="histsize">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="112">Implements PCI DSS Requirement 8.2.5: Password reuse limit: Specifies 4 as the number of previous passwords a user cannot reuse.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chusrattr</AIXPertCommand>
+    <AIXPertArgs>histsize=4 LESS ALL pciv3_histsize</AIXPertArgs>
+    <AIXPertGroup>Password policy rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_chkMFA" function="chkMFA">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="113">Implements PCI DSS Requirement 8.3: Secure access using MFA: Check that the system is configured for multi-factor Authentication (MFA). If not inform how to configure.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/checkMFA</AIXPertCommand>
+    <AIXPertArgs></AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_removeguest" function="removeguest">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="114">Implements PCI DSS Requirement 8.5: Remove guest account: Removes guest account and its files.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/execmds</AIXPertCommand>
+    <AIXPertArgs>"rmuser guest; rm -rf /home/guest; ODMDIR=/etc/objrepos odmdelete -qloc0=/home/guest -o inventory"</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_pciaudit" function="pciaudit">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="115">Implements PCI DSS Requirement 10.2: Enable audit: Enables bin auditing.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte,prereqbinaudit</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/pciaudit</AIXPertCommand>
+    <AIXPertArgs>h pciv3_pciaudit</AIXPertArgs>
+    <AIXPertGroup>Audit policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_entpdmn" function="entpdmn">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="116">Implements PCI DSS Requirement 10.4: Synchronize all clocks using Time Synchronization technology.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.ILS,bos.net.tcp.smit,bos.rte.shell,bos.rte.date,bos.rte.commands</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/rctcpip</AIXPertCommand>
+    <AIXPertArgs>xntpd a pciv3_entpdmn</AIXPertArgs>
+    <AIXPertGroup>/etc/rc.tcpip Settings</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rootrlogin" function="rootrlogin">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="117">Implements PCI DSS Requirement 12.3.9: Remote root login: Disables remote root login. Activation is on a need basis by the system admin following deactivation.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.security,bos.rte.date,bos.rte.commands,bos.rte.ILS,bos.rte.shell</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user rlogin=false root pciv3_rootrlogin</AIXPertArgs>
+    <AIXPertGroup>Login policy recommendations</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_chetcftpusers" function="chetcftpusers">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="118">Implements PCI DSS Requirement: Add root user in /etc/ftpusers file: Adds root username in /etc/ftpusers file.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chetcftpusers</AIXPertCommand>
+    <AIXPertArgs>a pciv3_chetcftpusers</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_sedconfig" function="sedconfig">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="119">Implements PCI DSS Requirement: Enable SED feature: Enable Stack Execution Disable feature.</AIXPertDescription>
+    <AIXPertPrereqList>prereqsed,bos.rte.date,bos.rte.commands,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/sedconfig</AIXPertCommand>
+    <AIXPertArgs>pciv3_sedconfig</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+  <AIXPertEntry name="pciv3_rootpwdintchk" function="rootpwdintchk">
+    <AIXPertRuleType type="PCIv3"/>
+    <AIXPertDescription catalog="pscexpert.cat" setNum="210" msgNum="120">Implements PCI DSS Requirement: Root Password Integrity Check: Ensures that the root password being set is not weak.</AIXPertDescription>
+    <AIXPertPrereqList>bos.rte.date,bos.rte.commands,bos.rte.security,bos.rte.shell,bos.rte.ILS</AIXPertPrereqList>
+    <AIXPertCommand>/etc/security/pscexpert/bin/chuserstanza</AIXPertCommand>
+    <AIXPertArgs>/etc/security/user dictionlist=/etc/security/aixpert/dictionary/English root pciv3_rootpwdintchk</AIXPertArgs>
+    <AIXPertGroup>Miscellaneous Rules</AIXPertGroup>
+  </AIXPertEntry>
+
+</AIXPertSecurityHardening>

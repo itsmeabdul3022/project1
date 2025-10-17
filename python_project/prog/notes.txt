@@ -1,0 +1,23 @@
+The code isolates the dotted number using match.group(1) and the description using match.group(2) because the regular expression has two separate capturing groups defined by parentheses ().
+
+How Capturing Groups Work
+r'description\s*:\s*"([\d.]+)\s*(.*?)"': This is the regular expression being used.
+
+([\d.]+): This is the first capturing group. It captures and stores the sequence of digits and periods. The match.group(1) method specifically retrieves the content inside this set of parentheses.
+
+(.*?): This is the second capturing group. It captures and stores the description text. The match.group(2) method retrieves this part.
+
+By using separate capturing groups, the script can extract each piece of data independently, allowing it to use the description for matching and the dotted number for the replacement value.
+
+eg:
+pattern_b = re.compile(r'description\s*:\s*"([\d.]+)\s*(.*?)"')
+
+file_b_data = {}
+with open(file_b_path, 'r') as f_b:
+            for line in f_b:
+                match = pattern_b.search(line)
+                if match:
+                    dotted_number = match.group(1).strip()
+                    other_data = match.group(2).strip().lower()
+                    file_b_data[other_data] = dotted_number
+

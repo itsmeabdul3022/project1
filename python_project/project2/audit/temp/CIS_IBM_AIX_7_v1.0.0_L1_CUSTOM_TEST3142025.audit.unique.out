@@ -1,0 +1,5 @@
+      description   : "4.1.1.1 Ensure access on /smit.log is configured"
+          description : "4.3.2.3 Ensure dhcpcd is not in use"
+      description : "4.4.1.6 Ensure root access is disabled or blocked."
+          description : "4.6.2 Ensure loopback traffic is blocked on external interfaces"
+          description : "4.8.6 Ensure session timeout is configured"
