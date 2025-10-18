@@ -1,0 +1,3 @@
+---
+# vars file for 4.6.2
+precheck_dir: /tmp/pre_checks/

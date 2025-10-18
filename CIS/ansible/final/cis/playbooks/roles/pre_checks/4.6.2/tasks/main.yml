@@ -1,0 +1,27 @@
+---
+# tasks file for 4.4.3.1
+
+    - name: 1. Create a dedicated directory for pre-check files
+      ansible.builtin.file:
+        path: "{{ precheck_dir }}"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+
+
+    - name: 4.6.2 pre_check Capture current active IPsec filter rules for v 6
+      # 'lsfilt -a' lists all active IPsec filters (IPv4 and IPv6)
+      ansible.builtin.shell:
+        cmd: "/usr/sbin/lsfilt"
+      register: lsfilt_output
+      changed_when: false
+
+
+    - name: 5. Write pre_check to file on the  host server
+      ansible.builtin.copy:
+        content: |
+          ###################################################
+          "{{ lsfilt_output.stdout }}"
+        dest: "{{ precheck_dir }}/4.6.2_prechecks_{{ inventory_hostname }}.out"
+      delegate_to: localhost
+

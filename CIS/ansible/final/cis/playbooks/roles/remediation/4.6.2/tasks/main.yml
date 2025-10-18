@@ -10,7 +10,7 @@
 
     - name: 4.6.2. Add the IPv6 deny loopback filter rule
       # Executes the genfilt command only if the filter was not found in the check.
-      ansible.builtin.shell: ""/usr/sbin/genfilt -v 6 -a D -s ::1 -m 128 -l Y -i all""
+      ansible.builtin.shell: "/usr/sbin/genfilt -v 6 -a D -s ::1 -m 128 -l Y -i all"
       when: filter_check.rc != 0
       register: genfilt_result
 
