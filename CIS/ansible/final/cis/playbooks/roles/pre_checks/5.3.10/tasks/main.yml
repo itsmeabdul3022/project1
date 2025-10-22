@@ -1,0 +1,25 @@
+    - name: Create pre_checks directory relative to playbook
+      ansible.builtin.file:
+        path: "{{ lookup('env', 'HOME') }}/pre_check_reports/{{ inventory_hostname }}/5.3.10"
+        state: directory
+        mode: '0755'
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+      delegate_to: localhost
+      run_once: yes
+
+    - name: 5.3.10 Check if /etc/ftpusers exists on the remote host
+      ansible.builtin.stat:
+        path: /etc/ftpusers
+      register: ftpusers_stat
+
+    - name: Backup the /etc/ftpusers file
+      ansible.builtin.fetch:
+        src: /etc/ftpusers
+        dest: "{{ playbook_dir }}/pre_check_reports/{{ inventory_hostname }}/5.3.10/" # This directory path is on the CONTROL NODE
+        flat: yes # Ensures the file is named simply '5.3.10_pre_check.{{ inventory_hostname }}'
+
+      # The 'fetch' module automatically handles remote-to-local copy,
+      # so 'delegate_to: localhost' is not needed and would cause an error.
+      when: ftpusers_stat.stat.exists
+      ignore_errors: yes

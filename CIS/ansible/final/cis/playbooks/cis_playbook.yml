@@ -1,0 +1,24 @@
+- name: Apply CIS standards to servers and Log Failures
+  hosts: AIX
+  become: true
+  gather_facts: true
+  vars:
+    failed_roles: []
+
+  vars_files:
+    - vars/cis_roles.yml # Import the list of roles
+    # main_playbook.yml
+  tasks:
+    - name: Loop over the complex task structure
+      ansible.builtin.include_tasks: complex_task.yml
+      loop: "{{ cis_role_list }}"
+      loop_control:
+        loop_var: cis_role
+
+    # ----------------------------------------------------
+    # 2. Final Report Task
+    # ----------------------------------------------------
+    - name: Final Failure Report # Level 1 task
+      ansible.builtin.debug:
+         msg: "The following CIS roles failed: {{ failed_roles | join(', ') }}"
+      when: failed_roles is defined and failed_roles | length > 0

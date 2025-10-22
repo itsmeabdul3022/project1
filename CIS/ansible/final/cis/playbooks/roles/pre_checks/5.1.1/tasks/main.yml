@@ -1,0 +1,19 @@
+---
+# tasks file for 5.1.1
+
+    - name: Get current timestamp for unique backup name
+      # Get current time in seconds since epoch for a unique, sortable filename
+      ansible.builtin.command: date +%Y%m%d%H%M%S
+      register: timestamp
+      changed_when: false # This task only retrieves data, no change is made
+
+    - name: Create a dated backup of the password file
+      ansible.builtin.copy:
+        src: /etc/security/passwd
+        dest: /etc/security/passwd.bak_{{ timestamp.stdout }}
+        remote_src: yes # Tells Ansible to copy from the remote host to a new file on the remote host
+        mode: '0600' # Ensure only root can read/write the backup
+
+    - name: Display backup file name
+      ansible.builtin.debug:
+        msg: "Backup file created: /etc/security/passwd.bak_{{ timestamp.stdout }}"

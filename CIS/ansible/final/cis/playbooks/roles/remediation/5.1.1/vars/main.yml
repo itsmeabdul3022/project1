@@ -1,0 +1,12 @@
+---
+# vars file for 5.1.1
+    # Pattern to find user accounts with an empty password field in /etc/security/passwd.
+    # The pattern 'tpassword = ' is specifically what we look for to find accounts to fix.
+    empty_password_pattern: '^(?P<user_stanza>[^:]+):(\n(?!tpassword).*\n)*tpassword = *$'
+
+    # This is an impossible password hash '*' used to prevent password-based login.
+    impossible_password_entry: 'tpassword = *'
+
+    # This flag forces the user to change their password on first login (if unlocked).
+    admchg_flag: 'tflags = ADMCHG'
+

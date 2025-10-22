@@ -1,0 +1,8 @@
+---
+# vars file for 5.2.8
+
+    # Patterns for system accounts to skip, derived from the KSH script's SACTS1 and SACTS2
+    system_accounts: "(adm|bin|daemon|invscout|ipsec|lp|lpd|nobody|nuucp|sshd|sys|uucp|esa|srvproxy|imnadm|anonymou|ftp)"
+    # Pattern to find password hashes that are exactly 14 characters long (old crypt hash)
+    old_hash_pattern: 'password[[:blank:]]= .{14}$'
+

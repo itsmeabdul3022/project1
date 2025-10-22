@@ -1,0 +1,7 @@
+---
+# vars file for 6.2.4
+allowed_cron_users: root
+users_to_allow:
+  - esaadmin
+  - uucp
+  - script1

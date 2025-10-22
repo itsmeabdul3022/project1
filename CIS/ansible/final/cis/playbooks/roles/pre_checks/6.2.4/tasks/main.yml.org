@@ -1,0 +1,48 @@
+---
+    - name:  Ensure the final write destination is owned by Ansible user
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/pre_checks_report/{{ inventory_hostname }}/6.2.4_prechecks"
+        state: directory
+        mode: '0755'
+        # Set owner to the non-root user (script1)
+        owner: "{{ ansible_user_id }}" 
+        group: "{{ ansible_user_id }}"
+        # Recursively apply this fix to all subdirectories (TEST72, 6.2.4_prechecks)
+        recurse: true 
+      delegate_to: localhost
+      # CRITICAL: We MUST use become: true here to gain the power to perform 'chown' 
+      # on the existing, potentially root-owned directory.
+      become: true 
+      run_once: true
+
+
+    - name: 2. Find all individual crontab files
+      ansible.builtin.find:
+        paths: /var/spool/cron/crontabs
+        file_type: file
+      register: crontab_files
+
+    - name: 3. Retrieve content of each crontab file using slurp
+      ansible.builtin.slurp:
+        src: "{{ item.path }}"
+      register: crontab_contents
+      loop: "{{ crontab_files.files }}"
+      loop_control:
+        label: "Slurping {{ item.path }}"
+
+    - name: 4. Copy (write) decoded content to a local pre-check file (FINAL FIX)
+      ansible.builtin.copy:
+        # 1. Decode the content retrieved by slurp
+        content: "{{ item.content | b64decode }}"
+        
+        # 2. Set the complete destination path and filename
+        dest: "{{ playbook_dir }}/pre_checks_report/{{ inventory_hostname }}/6.2.4_prechecks/{{ item.source | basename }}.crontab"
+        
+        mode: '0644'
+      delegate_to: localhost
+      become: false
+      loop: "{{ crontab_contents.results }}"
+      loop_control:
+        label: "Saving {{ item.source | basename }}"
+
+

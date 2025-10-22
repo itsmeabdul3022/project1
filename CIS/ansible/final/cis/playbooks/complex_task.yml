@@ -1,0 +1,10 @@
+# complex_task.yml (This file contains the block/rescue logic)
+- name: Run Block/Rescue for role {{ cis_role }}
+  block:
+    - name: Include the role
+      ansible.builtin.include_role:
+        name: "{{ cis_role }}"
+  rescue:
+    - name: Log the failure
+      ansible.builtin.set_fact:
+        failed_roles: "{{ failed_roles | default([]) + [cis_role] }}"

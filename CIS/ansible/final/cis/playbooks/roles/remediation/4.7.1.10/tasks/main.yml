@@ -1,0 +1,25 @@
+---
+# tasks file for 4.7.1.10
+- name: 1. Stat check for the Xservers file existence
+  ansible.builtin.stat:
+    path: /etc/dt/config/Xservers
+  register: xservers_file  # Registering with a clear, lowercase variable name
+
+- name: 2. 4.7.1.10 Explicitly define the Xservers path in /etc/dt/config/Xconfig
+  ansible.builtin.lineinfile:
+    path: /etc/dt/config/Xconfig
+    regexp: '^Dtlogin\*servers: Xservers$'
+    line: 'Dtlogin*servers: /etc/dt/config/Xservers'
+    state: present
+  # The task is conditional: run only if Xservers exists, matching your implied intent.
+  # Note: The 'Xconfig' file will be created if it does not exist (due to state: present).
+  when: xservers_file.stat.exists
+
+- name: 3. 4.7.1.10  Apply appropriate ownership and secure permissions to /etc/dt/config/Xservers
+  ansible.builtin.file:
+    path: /etc/dt/config/Xservers
+    owner: root
+    group: bin
+    mode: '0644' # rw-r--r-- (Effectively 'go-w')
+    state: file
+  when: xservers_file.stat.exists

@@ -1,0 +1,27 @@
+---
+# tasks file for 5.2.4
+    - name: Get current timestamp for unique backup name
+      ansible.builtin.command: date +%Y%m%d%H%M%S
+      register: timestamp
+      changed_when: false
+
+    - name: Create a dated backup of the password file
+      ansible.builtin.copy:
+        src: /etc/security/passwd
+        dest: /etc/security/passwd.bak_{{ timestamp.stdout }}
+        remote_src: yes
+        mode: '0600'
+
+    - name: 1. 5.2.4 Find users with the NOCHECK flag
+      # Use the 'shell' module to execute the initial filter chain
+      ansible.builtin.shell: |
+        /usr/bin/grep -p NOCHECK /etc/security/passwd | /usr/bin/egrep ":$" | sed -e 's/://'
+      register: nocheck_users
+      changed_when: false  # This task is just gathering data
+
+    - name: 2. 5.2.4 Parse and process users if found
+      ansible.builtin.include_tasks: apply_security_flags.yml
+      loop: "{{ nocheck_users.stdout_lines }}"
+      loop_control:
+        loop_var: target_user
+      when: nocheck_users.stdout_lines is defined and nocheck_users.stdout_lines | length > 0

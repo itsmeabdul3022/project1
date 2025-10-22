@@ -1,0 +1,43 @@
+---
+    - name: 1. 6.2.4  Audit- Retrieve list of all crontab files
+      # Equivalent to 'ls -l /var/spool/cron/crontabs/'
+      ansible.builtin.find:
+        paths: /var/spool/cron/crontabs
+        # Ensure we only check files, not directories
+        file_type: file
+      register: crontab_files
+
+
+    - name: 3. Ensure the /var/adm/cron/cron.allow file exists
+      ansible.builtin.file:
+        path: /var/adm/cron/cron.allow
+        state: touch # Create the file if it does not exist
+        owner: root
+        group: cron
+        mode: '0600'
+
+    - name: 4. Add required system users ('sys' and 'adm') to cron.allow
+      # Uses lineinfile for idempotent addition of system users
+      ansible.builtin.lineinfile:
+        path: /var/adm/cron/cron.allow
+        line: "{{ item }}"
+        state: present
+        create: false
+      loop:
+        - sys
+        - adm
+
+    - name: 5. Add custom users (if defined) to cron.allow
+      # This task is only for demonstration; customize the 'users_to_allow' variable below
+      # In a real-world scenario, you would define these users in a vars file or inventory.
+      ansible.builtin.lineinfile:
+        path: /var/adm/cron/cron.allow
+        line: "{{ item }}"
+        state: present
+        create: false
+      loop:
+        "{{ users_to_allow }}"
+      when: users_to_allow is defined # Check if a variable defining custom users exists    
+
+
+

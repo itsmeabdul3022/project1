@@ -1,0 +1,9 @@
+# File: apply_security_flags.yml
+
+- name: 2a. Clear password history (pwdadm -c)
+  ansible.builtin.command: "/usr/bin/pwdadm -c {{ target_user }}"
+  changed_when: true # Assume change, as pwdadm is usually idempotent for this action
+
+- name: 2b. Set ADMCHG flag to force password change on next login (pwdadm -f ADMCHG)
+  ansible.builtin.command: "/usr/bin/pwdadm -f ADMCHG {{ target_user }}"
+  changed_when: true

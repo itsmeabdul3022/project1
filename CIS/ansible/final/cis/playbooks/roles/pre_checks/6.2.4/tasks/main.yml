@@ -1,0 +1,45 @@
+---
+    - name: 1. 6.2.4 find crontab files
+      ansible.builtin.find:
+        paths: /var/spool/cron/crontabs
+        file_type: file
+      register: crontab_files
+
+    - name: 3. Retrieve content of each crontab file using slurp
+      ansible.builtin.slurp:
+        src: "{{ item.path }}"
+      register: crontab_contents
+      loop: "{{ crontab_files.files }}"
+      loop_control:
+        label: "Slurping {{ item.path }}"
+
+    - name: 4a. Create / Overwrite the consolidated pre-check file (Header)
+      # This task ensures the file exists and overwrites any previous content.
+      ansible.builtin.copy:
+        content: "#--- CRONTAB AUDIT FOR HOST {{ inventory_hostname }} ---\n"
+        dest: "/tmp/pre_checks/pre_checks_6.2.4_{{ inventory_hostname }}.out"
+        mode: '0644'
+      delegate_to: localhost
+      run_once: true # Ensure this runs only once per host, on localhost
+
+    - name: 4b. Append all crontab file contents to the consolidated output file
+      # Use lineinfile to append content and ensure a clean format.
+      ansible.builtin.lineinfile:
+        path: "/tmp/pre_checks/pre_checks_6.2.4_{{ inventory_hostname }}.out"
+        # Combine a header with the decoded content
+        line: |
+          \n
+          # =============================================================
+          # Crontab for User: {{ item.source | basename }}
+          # =============================================================
+          {{ item.content | b64decode }}
+          \n
+        insertafter: EOF # Append to the end of the file
+        state: present
+      delegate_to: localhost
+      loop: "{{ crontab_contents.results }}"
+      loop_control:
+        label: "Appending content for {{ item.source | basename }}"
+
+
+

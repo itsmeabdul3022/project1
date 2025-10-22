@@ -1,0 +1,60 @@
+---
+# tasks file for 5.3.10
+
+    - name: 1. Identify users with UID < 200 (excluding root)
+      # Uses the native AIX lsuser command with a loop to find UIDs and filter
+      ansible.builtin.shell: |
+        # Get list of all non-root user names
+        NON_ROOT_USERS=$(/usr/bin/lsuser -c ALL | /usr/bin/grep -v ^#name | /usr/bin/grep -v ^root: | /usr/bin/cut -f1 -d:)
+
+        USERS_TO_ADD=""
+        for USER_NAME in $NON_ROOT_USERS; do
+          # Get the UID for the current user
+          USER_ID=$(/usr/bin/lsuser -f "$USER_NAME" | /usr/bin/grep id | /usr/bin/cut -f2 -d= | /usr/bin/tr -d ' ')
+
+          # Check if the UID is numerically less than 200
+          if [ -n "$USER_ID" ] && [ "$USER_ID" -lt 200 ]; then
+            USERS_TO_ADD="$USERS_TO_ADD $USER_NAME"
+          fi
+        done
+        echo $USERS_TO_ADD
+
+      args:
+        executable: /bin/bash # Use bash for robust scripting within Ansible shell module
+      register: system_users
+      changed_when: system_users.stdout | length > 0
+
+    - name: Set fact with clean list of system usernames
+      # Converts the space-separated output string into a clean Ansible list
+      ansible.builtin.set_fact:
+        ftp_deny_list: "{{ system_users.stdout.split() | reject('equalto', '') | list }}"
+
+    - name: 2. Add identified users to /etc/ftpusers deny list
+      ansible.builtin.lineinfile:
+        path: /etc/ftpusers
+        line: "{{ item }}"
+        state: present
+        create: true # Create the file if it doesn't exist
+        owner: root
+        group: security # Standard group for system security files on AIX
+        mode: '0640' # Recommended permissions for /etc/ftpusers
+        backup: yes # Always back up security files before changes
+      loop: "{{ ftp_deny_list }}"
+      when: ftp_deny_list | length > 0
+
+    - name: 3. Ensure standard system accounts are present (optional)
+      # Ensures common system accounts (daemon, bin, sys, etc.) are explicitly denied,
+      # even if their UID is > 200 on a particular system.
+      ansible.builtin.lineinfile:
+        path: /etc/ftpusers
+        line: "{{ item }}"
+        state: present
+      loop:
+        - daemon
+        - bin
+        - sys
+        - adm
+        - uucp
+        - nuucp
+        - lp
+        - lpd

@@ -1,0 +1,39 @@
+---
+# tasks file for 5.2.8
+
+    - name: 1. Find non-system users with the old 14-character hash
+      # This combines the grep, awk, and egrep filtering logic of the shell script
+      ansible.builtin.shell: |
+        # 1. Find all lines with the old 14-char hash pattern
+        /usr/bin/grep '{{ old_hash_pattern }}' /etc/security/passwd |
+        while read user_line; do
+          cryptedhash=$(echo "$user_line" | /usr/bin/awk '{print $3}')
+          /usr/bin/grep -p "$cryptedhash" /etc/security/passwd |
+          /usr/bin/egrep -v "^({{ system_accounts}}):$" |
+          /usr/bin/egrep '^[a-zA-z0-9]+:$' |
+          /usr/bin/awk -F: '{ print $1 }'
+        done |
+        /usr/bin/sort -u
+
+      args:
+        # Use /bin/bash for complex piping and variable assignment
+        executable: /bin/bash
+      register: users_to_remediate
+      changed_when: users_to_remediate.stdout | length > 0
+
+    - name: Set fact with clean list of usernames for the loop
+      # Ensures users_to_remediate is a clean list of strings
+      ansible.builtin.set_fact:
+        target_users: "{{ users_to_remediate.stdout_lines | reject('equalto', '') | list }}"
+
+    - name: 2. Remediate- Clear existing password flags (if any)
+      # Equivalent to /usr/bin/pwdadm -c ${user}
+      ansible.builtin.shell: /usr/bin/pwdadm -c {{ item }}
+      loop: "{{ target_users }}"
+      when: target_users | length > 0
+
+    - name: 3. Remediate- Set ADMCHG flag to force password reset on next login
+      # Equivalent to /usr/bin/pwdadm -f ADMCHG ${user}
+      ansible.builtin.shell: /usr/bin/pwdadm -f ADMCHG {{ item }}
+      loop: "{{ target_users }}"
+      when: target_users | length > 0
