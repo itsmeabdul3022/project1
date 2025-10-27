@@ -1,0 +1,8 @@
+---
+# vars file for 7.1.1
+audit_lv_name: 'lv_audit'
+audit_vg: 'rootvg'
+audit_mount_point: '/audit'
+   # 1 Physical Partition for size. Assuming 100MB minimum requirement is met.
+audit_size_pp: 1
+

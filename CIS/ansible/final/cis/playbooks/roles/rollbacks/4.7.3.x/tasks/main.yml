@@ -1,0 +1,37 @@
+- name: 4.7.3 Rollback SSHD configuration
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/sshd_config.{{ ansible_hostname }}.txt"
+
+  tasks:
+    - name: Read pre-check file content from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_content
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found on the Ansible host. Cannot perform rollback."
+      when: not pre_check_content.content is defined
+
+    - name: Restore sshd_config file to its original state
+      ansible.builtin.copy:
+        content: "{{ pre_check_content.content | b64decode }}"
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: security
+        mode: '0600'
+      when: pre_check_content.content is defined
+      notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      listen: "Restart sshd"

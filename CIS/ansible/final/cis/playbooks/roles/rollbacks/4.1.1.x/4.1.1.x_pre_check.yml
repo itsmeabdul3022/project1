@@ -1,0 +1,236 @@
+---
+- name: Pre-check and configure multiple files
+  hosts: your_target_hosts
+  become: true # 'become' is necessary for system files
+
+  pre_tasks:
+        - name: Get current settings for /smit.log (4.1.1.1)
+      ansible.builtin.stat:
+        path: /smit.log
+      register: smit_log_stat
+
+    - name: Save current settings for /smit.log to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.1
+          path: /smit.log
+          owner: "{{ smit_log_stat.stat.pw_name }}"
+          group: "{{ smit_log_stat.stat.gr_name }}"
+          mode: '{{ smit_log_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.1_smit.log_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: Get current settings for /etc/group (4.1.1.2)
+      ansible.builtin.stat:
+        path: /etc/group
+      register: etc_group_stat
+
+    - name: Save current settings for /etc/group to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.2
+          path: /etc/group
+          owner: "{{ etc_group_stat.stat.pw_name }}"
+          group: "{{ etc_group_stat.stat.gr_name }}"
+          mode: '{{ etc_group_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.2_etc_group_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: Get current settings for /etc/inetd.conf (4.1.1.3)
+      ansible.builtin.stat:
+        path: /etc/inetd.conf
+      register: inetd_conf_stat
+
+    - name: Get current trust status of /etc/inetd.conf (4.1.1.3)
+      ansible.builtin.command: trustchk /etc/inetd.conf
+      register: trustchk_status
+      ignore_errors: true
+      
+    - name: Save current settings for /etc/inetd.conf to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.3
+          path: /etc/inetd.conf
+          owner: "{{ inetd_conf_stat.stat.pw_name }}"
+          group: "{{ inetd_conf_stat.stat.gr_name }}"
+          mode: '{{ inetd_conf_stat.stat.mode }}'
+          trust_status: "{{ trustchk_status.stdout | default('N/A') }}"
+        dest: "/tmp/4.1.1.3_etc_inetd.conf_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.4 Get current settings for /etc/motd
+      ansible.builtin.stat:
+        path: /etc/motd
+      register: motd_stat
+
+    - name: 4.1.1.4 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.4
+          path: /etc/motd
+          owner: "{{ motd_stat.stat.pw_name }}"
+          group: "{{ motd_stat.stat.gr_name }}"
+          mode: '{{ motd_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.4_motd_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.5 Get current settings for /etc/passwd
+      ansible.builtin.stat:
+        path: /etc/passwd
+      register: passwd_stat
+
+    - name: 4.1.1.5 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.5
+          path: /etc/passwd
+          owner: "{{ passwd_stat.stat.pw_name }}"
+          group: "{{ passwd_stat.stat.gr_name }}"
+          mode: '{{ passwd_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.5_passwd_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.6 Get current settings for /etc/mail/submit.cf
+      ansible.builtin.stat:
+        path: /etc/mail/submit.cf
+      register: submit_cf_stat
+
+    - name: 4.1.1.6 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.6
+          path: /etc/mail/submit.cf
+          owner: "{{ submit_cf_stat.stat.pw_name }}"
+          group: "{{ submit_cf_stat.stat.gr_name }}"
+          mode: '{{ submit_cf_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.6_submit_cf_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.7 Get current settings for /etc/ssh/ssh_banner
+      ansible.builtin.stat:
+        path: /etc/ssh/ssh_banner
+      register: ssh_banner_stat
+
+    - name: 4.1.1.7 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.7
+          path: /etc/ssh/ssh_banner
+          owner: "{{ ssh_banner_stat.stat.pw_name }}"
+          group: "{{ ssh_banner_stat.stat.gr_name }}"
+          mode: '{{ ssh_banner_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.7_ssh_banner_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.8 Get current settings for /etc/ssh/ssh_config
+      ansible.builtin.stat:
+        path: /etc/ssh/ssh_config
+      register: ssh_config_stat
+
+    - name: 4.1.1.8 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.8
+          path: /etc/ssh/ssh_config
+          owner: "{{ ssh_config_stat.stat.pw_name }}"
+          group: "{{ ssh_config_stat.stat.gr_name }}"
+          mode: '{{ ssh_config_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.8_ssh_config_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.9 Get current settings for /etc/ssh/sshd_config
+      ansible.builtin.stat:
+        path: /etc/ssh/sshd_config
+      register: sshd_config_stat
+
+    - name: 4.1.1.9 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.9
+          path: /etc/ssh/sshd_config
+          owner: "{{ sshd_config_stat.stat.pw_name }}"
+          group: "{{ sshd_config_stat.stat.gr_name }}"
+          mode: '{{ sshd_config_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.9_sshd_config_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+      
+    - name: 4.1.1.11 Get current settings for /var/adm/cron/cron.allow
+      ansible.builtin.stat:
+        path: /var/adm/cron/cron.allow
+      register: cron_allow_stat
+
+    - name: 4.1.1.11 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.11
+          path: /var/adm/cron/cron.allow
+          owner: "{{ cron_allow_stat.stat.pw_name }}"
+          group: "{{ cron_allow_stat.stat.gr_name }}"
+          mode: '{{ cron_allow_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.11_cron_allow_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.13 Get current settings for /var/ct/RMstart.log
+      ansible.builtin.stat:
+        path: /var/ct/RMstart.log
+      register: rmstart_log_stat
+
+    - name: 4.1.1.13 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.13
+          path: /var/ct/RMstart.log
+          owner: "{{ rmstart_log_stat.stat.pw_name }}"
+          group: "{{ rmstart_log_stat.stat.gr_name }}"
+          mode: '{{ rmstart_log_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.13_rmstart_log_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.14 Get current settings for /var/tmp/dpid2.log
+      ansible.builtin.stat:
+        path: /var/tmp/dpid2.log
+      register: dpid2_log_stat
+
+    - name: 4.1.1.14 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.14
+          path: /var/tmp/dpid2.log
+          owner: "{{ dpid2_log_stat.stat.pw_name }}"
+          group: "{{ dpid2_log_stat.stat.gr_name }}"
+          mode: '{{ dpid2_log_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.14_dpid2_log_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.15 Get current settings for /var/tmp/hostmibd.log
+      ansible.builtin.stat:
+        path: /var/tmp/hostmibd.log
+      register: hostmibd_log_stat
+
+    - name: 4.1.1.15 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.15
+          path: /var/tmp/hostmibd.log
+          owner: "{{ hostmibd_log_stat.stat.pw_name }}"
+          group: "{{ hostmibd_log_stat.stat.gr_name }}"
+          mode: '{{ hostmibd_log_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.15_hostmibd_log_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+
+    - name: 4.1.1.16 Get current settings for /var/tmp/snmpd.log
+      ansible.builtin.stat:
+        path: /var/tmp/snmpd.log
+      register: snmpd_log_stat
+
+    - name: 4.1.1.16 Save current settings to local file
+      ansible.builtin.copy:
+        content: |
+          # Saved settings for task 4.1.1.16
+          path: /var/tmp/snmpd.log
+          owner: "{{ snmpd_log_stat.stat.pw_name }}"
+          group: "{{ snmpd_log_stat.stat.gr_name }}"
+          mode: '{{ snmpd_log_stat.stat.mode }}'
+        dest: "/tmp/4.1.1.16_snmpd_log_precheck_{{ inventory_hostname }}.txt"
+      delegate_to: localhost
+

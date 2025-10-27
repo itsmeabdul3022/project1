@@ -1,0 +1,34 @@
+---
+# tasks file for 4.4.1.7
+    # --- 1. AUDIT: Get all currently exported filesystems ---
+    - name: 1. Get list of all currently exported filesystems
+      # Uses showmount -e on the local server to list all paths.
+      # Filters out blank lines and grabs the first column (the path).
+      ansible.builtin.shell: showmount -e localhost | grep -v '^$' | awk '{print $1}'
+      register: current_exports
+      changed_when: false
+      failed_when: false
+      
+    - name: Set fact with the list of export paths
+      # The first line of showmount -e is a header, so we skip it.
+      ansible.builtin.set_fact:
+        # Use stdout_lines and slice [1:] to skip the header line "Exports:"
+        nfs_exports: "{{ current_exports.stdout_lines[1:] }}"
+      when: current_exports.stdout_lines | length > 1
+
+    # --- 2. REMEDIATION: Apply Secure RPC Authentication ---
+    - name: 2. Apply {{ target_security_method }} authentication to all exports
+      # Uses chnfsexp -d to replace the existing export with the -S option added.
+      # Note: chnfsexp -S will override any existing 'sec=' options.
+      ansible.builtin.shell: "chnfsexp -d {{ item }} -S {{ target_security_method }}"
+      loop: "{{ nfs_exports }}"
+      loop_control:
+        label: "Setting RPC security for {{ item }} to {{ target_security_method }}"
+      when: nfs_exports | length > 0
+
+    # --- 3. ACTIVATION: Re-export all filesystems ---
+    - name: 3. Activate new security settings using exportfs -a
+      ansible.builtin.shell: exportfs -a
+      # Only run this if the previous remediation step reported a change
+      # which is implied by running the remediation task itself.
+      when: nfs_exports | length > 0

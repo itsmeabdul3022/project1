@@ -1,0 +1,8 @@
+---
+# vars file for 4.4.1.7
+
+   # Target secure authentication method. krb5 is generally preferred over dh.
+    target_security_method: "krb5"
+    # Initialize the list of all currently exported filesystems
+    nfs_exports: []
+

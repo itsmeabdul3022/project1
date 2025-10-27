@@ -1,0 +1,54 @@
+---
+- name: 4.7.4 Rollback Sendmail configuration
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    cf_pre_check_file: "/tmp/pre_checks/sendmail.cf.{{ ansible_hostname }}.txt"
+    perms_pre_check_file: "/tmp/pre_checks/sendmail_perms.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ perms_pre_check_file }}"
+      delegate_to: localhost
+      register: perms_pre_check_content
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The permissions pre-check file was not found. Cannot perform rollback."
+      when: not perms_pre_check_content.content is defined
+
+    - name: Restore permissions for files and directories
+      ansible.builtin.file:
+        path: "{{ item.stat.path }}"
+        mode: "{{ item.stat.mode | default('0640') }}"
+        owner: "{{ item.stat.pw_name | default('root') }}"
+        group: "{{ item.stat.gr_name | default('mail') }}"
+      loop: "{{ (perms_pre_check_content.content | b64decode | from_json) }}"
+      when: perms_pre_check_content.content is defined
+
+    - name: Read sendmail.cf content from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ cf_pre_check_file }}"
+      delegate_to: localhost
+      register: cf_pre_check_content
+      ignore_errors: yes
+
+    - name: Restore sendmail.cf file content
+      ansible.builtin.copy:
+        content: "{{ cf_pre_check_content.content | b64decode }}"
+        dest: /etc/mail/sendmail.cf
+        owner: root
+        group: mail
+        mode: '0640'
+      when: cf_pre_check_content.content is defined
+      notify: Restart sendmail
+
+  handlers:
+    - name: Restart sendmail
+      ansible.builtin.service:
+        name: sendmail
+        state: restarted

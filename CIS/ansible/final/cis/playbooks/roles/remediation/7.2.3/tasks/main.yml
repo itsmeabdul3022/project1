@@ -1,0 +1,23 @@
+---
+# tasks file for 7.2.3
+    - name: 1. Suppress remote logging in syslogd configuration (chssys -a "-r")
+      # chssys -s syslogd -a "-r" updates the SRC entry for syslogd.
+      # This command is idempotent in that it ensures the attribute is set.
+      ansible.builtin.command: chssys -s syslogd -a "-r"
+      register: chssys_status
+      # If chssys returns a code indicating a change, we flag it.
+      # We assume rc=0 means success (set or already set).
+      changed_when: chssys_status.stdout is defined and 'syslogd' in chssys_status.stdout
+
+    - name: 2. Stop syslogd daemon
+      # stopsrc -s syslogd
+      ansible.builtin.command: stopsrc -s syslogd
+      ignore_errors: true # Ignore if it's already stopped
+      register: stop_status
+      
+    - name: 3. Start syslogd daemon to activate the new configuration
+      # startsrc -s syslogd
+      ansible.builtin.command: startsrc -s syslogd
+      register: start_status
+      # Only consider this task changed if the chssys command made a change.
+      changed_when: chssys_status.changed

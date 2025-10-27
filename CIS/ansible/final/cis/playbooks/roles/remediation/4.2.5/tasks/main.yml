@@ -1,0 +1,24 @@
+---
+# tasks file for 4.2.5
+- name: 1. 4.2.5 Check if /etc/hosts.equiv exists on the remote host
+  ansible.builtin.stat:
+    path: /etc/hosts.equiv
+  register: hosts_equiv_stat
+  changed_when: false # This is a check, so it should never report a changea
+
+
+- name: 4.2.5 Remove all entries from /etc/hosts.equiv if present, and backup file first
+  ansible.builtin.copy:
+    # 1. Ensure content is empty
+    content: "" 
+    dest: /etc/hosts.equiv
+    # 2. Set secure ownership and permissions
+    owner: root
+    group: system
+    mode: '0644'
+    # 3. Create a backup of the file (equivalent to 'cp /etc/hosts.equiv /etc/hosts.equiv.YYYYMMDD@HHMM')
+    backup: yes 
+  become: true
+  
+  # 4. Conditional Execution: Only run if the file already exists
+  when: hosts_equiv_stat.stat.exists

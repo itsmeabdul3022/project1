@@ -1,0 +1,11 @@
+---
+# vars file for 4.4.1.5
+
+    # ⚠️ IMPORTANT: Define your secure client list here
+    # Example: A comma-separated string of clients allowed access
+    nfs_secure_clients: "a,b,c"
+
+    # Initialize a list to hold the export paths that need fixing
+    insecure_export_paths: []
+
+

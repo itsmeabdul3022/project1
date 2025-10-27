@@ -1,0 +1,66 @@
+ tasks:
+    - name: Rollback /etc/motd (4.1.1.4)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/motd
+        rollback_filename: "/tmp/4.1.1.4_motd_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/passwd (4.1.1.5)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/passwd
+        rollback_filename: "/tmp/4.1.1.5_passwd_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/mail/submit.cf (4.1.1.6)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/mail/submit.cf
+        rollback_filename: "/tmp/4.1.1.6_submit_cf_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/ssh/ssh_banner (4.1.1.7)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/ssh/ssh_banner
+        rollback_filename: "/tmp/4.1.1.7_ssh_banner_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/ssh/ssh_config (4.1.1.8)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/ssh/ssh_config
+        rollback_filename: "/tmp/4.1.1.8_ssh_config_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /etc/ssh/sshd_config (4.1.1.9)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /etc/ssh/sshd_config
+        rollback_filename: "/tmp/4.1.1.9_sshd_config_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/adm/cron/cron.allow (4.1.1.11)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/adm/cron/cron.allow
+        rollback_filename: "/tmp/4.1.1.11_cron_allow_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/ct/RMstart.log (4.1.1.13)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/ct/RMstart.log
+        rollback_filename: "/tmp/4.1.1.13_rmstart_log_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/tmp/dpid2.log (4.1.1.14)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/tmp/dpid2.log
+        rollback_filename: "/tmp/4.1.1.14_dpid2_log_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/tmp/hostmibd.log (4.1.1.15)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/tmp/hostmibd.log
+        rollback_filename: "/tmp/4.1.1.15_hostmibd_log_precheck_{{ inventory_hostname }}.txt"
+
+    - name: Rollback /var/tmp/snmpd.log (4.1.1.16)
+      ansible.builtin.include_tasks: rollback_file.yml
+      vars:
+        file_path: /var/tmp/snmpd.log
+        rollback_filename: "/tmp/4.1.1.16_snmpd_log_precheck_{{ inventory_hostname }}.txt"

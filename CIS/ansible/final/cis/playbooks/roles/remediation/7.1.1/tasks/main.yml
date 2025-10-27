@@ -1,0 +1,96 @@
+---
+    # --------------------------------------------------------------------------
+    # PART 1: FILESYSTEM CREATION AND MOUNTING
+    # --------------------------------------------------------------------------
+    - name: '7.1.1 a. Create Logical Volume (LV) {{ audit_lv_name }} (mklv)'
+      ansible.builtin.shell: |
+        # Check if the Logical Volume exists in the Volume Group
+        if /usr/sbin/lsvg -l {{ audit_vg }} | /usr/bin/grep -q '{{ audit_lv_name }}'; then
+          echo "{{ audit_lv_name }} already exists. No change needed."
+          exit 0
+        else
+          # Execute the mklv command exactly as specified (1 PP size):
+          /usr/sbin/mklv -y {{ audit_lv_name }} -t jfs2 -u 1 -c 1 {{ audit_vg }} {{ audit_size_pp }}
+          echo "{{ audit_lv_name }} created successfully."
+          exit 42 # Custom exit code to signal change
+        fi
+      register: lv_status
+      changed_when: lv_status.rc == 42
+      failed_when: lv_status.rc != 0 and lv_status.rc != 42
+
+    - name: '7.1.1 b. Create and Configure JFS2 Filesystem (crfs)'
+      ansible.builtin.command:
+        # crfs -v jfs2 -d lv_audit -m /audit -A yes -t no
+        cmd: "crfs -v jfs2 -d {{ audit_lv_name }} -m {{ audit_mount_point }} -A yes -t no"
+      # Only run this if the LV was just created or if the crfs command hasn't been run yet (non-idempotent way)
+      when: lv_status.changed or "already exists" not in lv_status.stdout
+      register: crfs_status
+      failed_when: crfs_status.rc != 0 and "already exists" not in crfs_status.stderr
+
+    - name: '7.1.1 c. Ensure /audit is mounted'
+      ansible.builtin.mount:
+        name: "{{ audit_mount_point }}"
+        src: "/dev/{{ audit_lv_name }}"
+        fstype: jfs2
+        state: mounted
+
+    - name: '7.1.1 d. Set Correct Ownership and Permissions on /audit'
+      ansible.builtin.file:
+        path: "{{ audit_mount_point }}"
+        owner: root
+        group: audit
+        mode: '0750'
+        state: directory
+
+    # --------------------------------------------------------------------------
+    # PART 2: SECURITY CONFIGURATION AND FILE EDITING
+    # --------------------------------------------------------------------------
+    - name: '7.1.1 e. Update /usr/lib/security/mkuser.default for new users (chsec)'
+      ansible.builtin.command:
+        cmd: chsec -f /usr/lib/security/mkuser.default -s user -a auditclasses=general,SRC,cron,tcpip
+      register: mkuser_sec_change
+      changed_when: mkuser_sec_change.stdout | length > 0
+
+    - name: '7.1.1 f. Add audit startup command to /etc/inittab (mkitab)'
+      # Using native AIX command via the 'command' module
+      ansible.builtin.command:
+        cmd: 'mkitab "audit:2:boot:audit start > /dev/console 2>&1 # Start audit"'
+      register: inittab_change
+      # mkitab returns 2 if entry exists (no change), 0 if created (changed).
+      failed_when: inittab_change.rc not in [0, 2]
+      changed_when: inittab_change.rc == 0
+
+    - name: '7.1.1 g. Add cron job for /audit free space monitoring'
+      ansible.builtin.cron:
+        name: "AIX Audit Log Rotation"
+        minute: "0"
+        hour: "*"
+        job: "/etc/security/aixpert/bin/cronaudit"
+        user: root
+        state: present
+
+    - name: '7.1.1 h. Configure /etc/security/audit/config for BIN mode'
+      ansible.builtin.blockinfile:
+        path: /etc/security/audit/config
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR AUDIT CONFIG"
+        block: |
+          start:
+            binmode = on
+            streammode = off
+          bin:
+            trail = {{ audit_mount_point }}/trail
+            bin1 = {{ audit_mount_point }}/bin1
+            bin2 = {{ audit_mount_point }}/bin2
+            binsize = 10240
+            cmds = /etc/security/audit/bincmds
+      register: config_change
+
+    # --------------------------------------------------------------------------
+    # PART 3: ACTIVATION
+    # --------------------------------------------------------------------------
+    - name: '7.1.1 i. Finalize: Start the audit subsystem immediately'
+      ansible.builtin.command: audit start
+      register: audit_start_status
+      # Restart only if config changed or LV was just created (which implies config was applied/changed)
+      when: lv_status.changed or config_change.changed
+      failed_when: audit_start_status.rc not in [0, 1]

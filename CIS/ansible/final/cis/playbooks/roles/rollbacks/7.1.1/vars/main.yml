@@ -1,0 +1,6 @@
+---
+# vars file for 7.1.1
+   audit_lv_name: 'lv_audit'
+   audit_mount_point: '/audit'
+   audit_vg: 'rootvg'
+

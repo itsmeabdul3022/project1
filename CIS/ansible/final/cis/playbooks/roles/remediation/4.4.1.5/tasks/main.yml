@@ -1,0 +1,30 @@
+---
+# tasks file for 4.4.1.5
+
+    - name: 1. Audit - Find insecure exports with '(everyone)' access
+      # This task runs the check command and registers the output
+      ansible.builtin.shell: showmount -e | grep "(everyone)"
+      register: insecure_exports_audit
+      changed_when: false
+      failed_when: false # Continue even if no insecure exports are found
+
+    - name: 2. Set Fact - Extract paths of insecure exports
+      # This creates a clean list of just the export paths (e.g., ['/export/repo', '/data/db'])
+      ansible.builtin.set_fact:
+        insecure_export_paths: "{{ insecure_exports_audit.stdout_lines | map('split') | map('first') | list }}"
+      
+      # Only run this if the audit found results
+      when: insecure_exports_audit.stdout_lines | length > 0
+
+    - name: 3. Conditional Remediation - Fix insecure exports with explicit clients
+      # This task loops and applies the fix only if the list is not empty
+      ansible.builtin.shell: 
+        "chnfsexp -d {{ item }} -c {{ nfs_secure_clients }}"
+      
+      loop: "{{ insecure_export_paths }}"
+      loop_control:
+        label: "Fixing export {{ item }}"
+        
+      # 🚨 The 'when' condition is applied here:
+      when: insecure_export_paths | length > 0
+

@@ -1,0 +1,7 @@
+---
+# vars file for 4.1.1.17
+    # Initialize the list to store all unique, absolute directories found
+    cron_dirs_to_check: []
+    # Initialize the list to store all security violations
+    security_violations: []
+

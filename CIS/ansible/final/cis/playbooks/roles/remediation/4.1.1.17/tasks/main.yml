@@ -1,0 +1,37 @@
+---
+# tasks file for 4.1.1.17
+    - name: 1. Extract unique absolute paths from crontab commands
+      # Replicates: crontab -l | egrep -v '^#' | awk '{print $6}' | grep "^/" | sort -u
+      ansible.builtin.shell: |
+        # Use 'awk' to extract the command field and filter for absolute paths
+        crontab -l 2>/dev/null | grep -v '^[[:space:]]*#' | awk '{
+          if (NF >= 6 && $6 ~ /^\/.*/) {
+            print $6
+          }
+        }' | sort -u
+        #  args:
+        # warn: false # Suppress the warning for using the shell module
+      register: cron_output
+      changed_when: false
+
+    - name: 2. Set Fact with the List of Directories
+      # Convert the shell output into a list fact
+      ansible.builtin.set_fact:
+        cron_dirs_to_check: "{{ cron_output.stdout_lines | unique }}"
+
+    - name: List the directorires
+      debug: 
+        msg: "{{ cron_dirs_to_check }}"
+
+    - name: 3. Recursively Audit Each Directory and its Parents
+      # The loop iterates through the list of absolute paths found in step 1 & 2
+      ansible.builtin.include_tasks: audit_directory_path.yml
+      loop: "{{ cron_dirs_to_check }}"
+      loop_control:
+        loop_var: current_base_dir
+        label: "{{ current_base_dir }}"
+
+    - name: 4. Final Security Violation Report
+      ansible.builtin.debug:
+        msg: "Security Audit Violations Found: {{ security_violations }}"
+      when: security_violations | length > 0

@@ -1,0 +1,62 @@
+---
+# This file handles the logic for a single path and all its parents (DIR=${DIR%/*} logic)
+
+- name: Set up initial path for recursion
+  ansible.builtin.set_fact:
+    # Initialize a list of directories to check for the current path
+    dir_list: "{{ [current_base_dir] }}"
+    # Initialize the current directory index
+    dir_index: 0
+    # Temporarily store the current path being checked
+    current_dir: "{{ current_base_dir }}"
+
+- name: Generate the List of Parent Directories to Check
+  # This loop simulates the 'DIR=${DIR%/*}' and 'while [[ -a ${DIR} ]]' logic
+  ansible.builtin.set_fact:
+    # Prepend the parent path to the list and increment the index
+    dir_list: "{{ [current_dir | dirname] + dir_list }}"
+    current_dir: "{{ current_dir | dirname }}"
+  when: current_dir != '/' and current_dir | length > 0
+    #until: current_dir == '/' or current_dir == '.'
+  register: path_recursion
+
+- name: Audit Permissions and Ownership for each directory
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  register: dir_stat
+  loop: "{{ dir_list }}"
+  loop_control:
+    label: "{{ item }}"
+    
+  # Use a separate task to process the results of the stat module
+  #
+# --- CORRECTED Task C: Check for World Writable Permissions ---
+- name: C. Check for World or Group Writable Permissions
+  ansible.builtin.set_fact:
+    security_violations: >-
+      {{ security_violations + [ 
+        'WARNING: ' + item.stat.path + ' is world writable' 
+      ] }}
+  when: 
+    - item.stat.exists         # <-- FIXED: Removed .ansible_facts
+    - item.stat.isdir          # <-- FIXED: Removed .ansible_facts
+    - item.stat.mode is search('.......w.')
+  loop: "{{ dir_stat.results }}"
+  loop_control:
+    label: "World Writable Check: {{ item.stat.path }}" # <-- FIXED: Removed .ansible_facts
+
+# --- CORRECTED Task D: Check for Secure Ownership ---
+- name: D. Check for Secure Ownership (Not Root or Bin)
+  ansible.builtin.set_fact:
+    security_violations: >-
+      {{ security_violations + [ 
+        'WARNING: ' + item.stat.path + ' is not owned by root or bin (Owned by: ' + item.stat.pw_name + ')'
+      ] }}
+  when: 
+    - item.stat.exists         # <-- FIXED: Removed .ansible_facts
+    - item.stat.isdir          # <-- FIXED: Removed .ansible_facts
+    - item.stat.pw_name not in ['root', 'bin'] # <-- FIXED: Removed .ansible_facts
+  loop: "{{ dir_stat.results }}"
+  loop_control:
+    label: "Ownership Check: {{ item.stat.path }}" # <-- FIXED: Removed .ansible_facts
+
