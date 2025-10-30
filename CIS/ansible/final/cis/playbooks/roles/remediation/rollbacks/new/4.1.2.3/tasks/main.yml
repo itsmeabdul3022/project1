@@ -1,0 +1,23 @@
+---
+# tasks file for 4.1.2.3
+    - name: '4.1.2.3 - 1. Fetch Log File Content from Control Node'
+      ansible.builtin.slurp:
+        src: "{{ log_dir }}/{{ log_file_name }}"
+      register: log_content
+      delegate_to: localhost
+      run_once: true
+
+    - name: '4.1.2.3 - 2. Decode Log Content and Prepare Rollback List'
+      # Decodes the base64 content and parses the clean JSON list.
+      ansible.builtin.set_fact:
+        rollback_list: "{{ log_content.content | b64decode | from_json }}"
+      
+    - name: '4.1.2.3 - 3. Perform Rollback: Set Original Permissions'
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        mode: "{{ item.mode }}" # This reverts permissions using the logged mode (e.g., 0777)
+      loop: "{{ rollback_list }}"
+      loop_control:
+        label: "Reverting {{ item.path }} to {{ item.mode }}"
+      when: rollback_list | length > 0
