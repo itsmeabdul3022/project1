@@ -1,0 +1,25 @@
+    - name: '4.1.2.1 - rollback 1. Read the list of locked users from the local log file'
+      # This runs on the Ansible Control Node (delegate_to: localhost)
+      ansible.builtin.slurp:
+        src: "{{ lock_log_file }}"
+      register: lock_file_contents
+      delegate_to: localhost
+
+    - name: '4.1.2.1 - rollback 2. Decode the user list for use in the playbook'
+      ansible.builtin.set_fact:
+        users_to_unlock: "{{ lock_file_contents.content | b64decode | split('\n') | reject('equalto', '') | list }}"
+
+    - name: '4.1.2.1 - rollback 3. FAIL if no users are found in the log'
+      ansible.builtin.fail:
+        msg: "The log file was read, but no users were found to unlock for {{ inventory_hostname }}. Aborting rollback."
+      when: users_to_unlock | length == 0
+
+    - name: '4.1.2.1 - rollback 4. Execute UNLOCK: Unlock the specified user accounts (chuser)'
+      # EXECUTE UNLOCK using the shell module with chuser
+      ansible.builtin.shell: "chuser account_locked=false {{ item }}"
+      loop: "{{ users_to_unlock }}"
+      register: unlock_results
+      changed_when: unlock_results.rc == 0
+      loop_control:
+        label: "Unlocking user: {{ item }}"
+

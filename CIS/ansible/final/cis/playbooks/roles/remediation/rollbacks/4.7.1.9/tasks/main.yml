@@ -1,0 +1,29 @@
+---
+- name: 4.7.1.9 Rollback /etc/dt/config/Xconfig permissions
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/4.7.1.9_pre_checks.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_content
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found. Cannot perform rollback."
+      when: not pre_check_content.content is defined
+
+    - name: Set Xconfig permissions and ownership back to original
+      ansible.builtin.file:
+        path: /etc/dt/config/Xconfig
+        mode: "{{ (pre_check_content.content | b64decode | from_json).mode | default('0644') }}"
+        owner: "{{ (pre_check_content.content | b64decode | from_json).pw_name | default('root') }}"
+        group: "{{ (pre_check_content.content | b64decode | from_json).gr_name | default('sys') }}"
+      when: pre_check_content.content is defined

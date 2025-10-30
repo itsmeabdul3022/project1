@@ -1,0 +1,16 @@
+  - name: 4.1.1.1 Pre check get current  access on /smit.log 
+    ansible.builtin.stat:
+        path: /smit.log
+      register: smit_log_stat_info
+
+  - name: Save permissions to a local rollback file
+    ansible.builtin.copy:
+        content: |
+          # Rollback information for {{ inventory_hostname }}
+          # Timestamp: {{ ansible_date_time.iso8601_basic_short }}
+          path: /smit.log
+          owner: {{ smit_log_stat_info.stat.pw_name }}
+          group: {{ smit_log_stat_info.stat.gr_name }}
+          mode: '{{ smit_log_stat_info.stat.mode }}'
+        dest: "/tmp/4.1.1.1_smit_log_rollback_{{ inventory_hostname }}.txt"
+    delegate_to: localhost

@@ -40,41 +40,29 @@
     label: "{{ item.name }}"
   when: eligible_users_list | length > 0
 
-- name: '4.1.2.2 - 4a. Identify Users with Missing Home Directories (Refactored)'
+- name: '4.1.2.2 - 4a. Identify Users with Missing Home Directories'
   ansible.builtin.set_fact:
     users_with_missing_home: >
-      [
-      {% for result in home_stats.results %}
-        {# Include the user's name if the stat did NOT fail and the path does NOT exist #}
-        {% if not result.failed and not result.stat.exists %}
-          '{{ result.item.name }}',
-        {% endif %}
-      {% endfor %}
-      ]
+      {{ home_stats.results
+        | selectattr('failed', 'equalto', false)
+        | rejectattr('stat.exists', 'equalto', true)
+        | map(attribute='item.name') | list
+      }}
   when: home_stats is defined
-
-
-
 
 - name: '4.1.2.2 - 4b. Identify Users with Incorrect Ownership'
   ansible.builtin.set_fact:
     users_with_bad_ownership: >
-      [
-      {% for result in home_stats.results %}
-        {#
-          We only include the user's name if ALL these conditions are met:
-          1. The stat didn't fail.
-          2. The home directory exists.
-          3. The UID is not the root UID (0).
-          4. The expected UID (item.uid) does NOT equal the actual UID (stat.uid).
-        #}
-        {% if not result.failed and result.stat.exists and result.stat.uid != 0 and result.item.uid != result.stat.uid %}
-          '{{ result.item.name }}',
-        {% endif %}
-      {% endfor %}
-      ]
+      {{ home_stats.results
+        | selectattr('failed', 'equalto', false)
+        | selectattr('stat.exists', 'equalto', true)
+        
+        | reject('equalto', 'item.uid', 'stat.uid') 
+        
+        | rejectattr('stat.uid', 'equalto', 0) 
+        | map(attribute='item.name') | list
+      }}
   when: home_stats is defined
-
 
 - name: '4.1.2.2 - 4c. Merge all users to lock'
   ansible.builtin.set_fact:

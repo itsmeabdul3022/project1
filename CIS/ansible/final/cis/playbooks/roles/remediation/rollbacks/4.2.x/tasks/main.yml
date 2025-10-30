@@ -1,0 +1,58 @@
+- name: 4.2 Rollback NIS and Remote Daemons
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/4.2_pre_check.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_data
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found. Cannot perform rollback."
+      when: not pre_check_data.content is defined
+
+    - name: Set facts from pre-check data
+      ansible.builtin.set_fact:
+        original_data: "{{ pre_check_data.content | b64decode | from_json }}"
+
+    - name: Restore NIS client if it was installed
+      ansible.builtin.shell: installp -acF bos.net.nis.client
+      args:
+        warn: false
+      when: original_data.nis_client_installed | bool
+
+    - name: Restore /etc/inetd.conf
+      ansible.builtin.copy:
+        content: "{{ original_data.inetd_conf_content }}"
+        dest: /etc/inetd.conf
+        owner: root
+        group: security
+        mode: '0640'
+      notify:
+        - Refresh inetd
+
+    - name: Start NIS services if they were running
+      ansible.builtin.shell: startsrc -s ypserv && startsrc -s yppasswdd && startsrc -s ypbind
+      args:
+        warn: false
+      when: original_data.nis_was_running | bool
+
+    - name: Start legacy daemons that were running
+      ansible.builtin.shell: startsrc -s {{ item }}
+      args:
+        warn: false
+      loop: "{{ original_data.legacy_daemons_running }}"
+  
+  handlers:
+    - name: Refresh inetd
+      ansible.builtin.shell: refresh -s inetd
+      args:
+        warn: false

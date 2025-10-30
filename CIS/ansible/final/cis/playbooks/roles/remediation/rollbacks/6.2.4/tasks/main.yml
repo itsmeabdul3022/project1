@@ -1,0 +1,51 @@
+- name: 6.2.4 Rollback cron.allow configuration
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/6.2.4_pre_check.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_data
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found. Cannot perform rollback."
+      when: not pre_check_data.content is defined
+
+    - name: Set facts from pre-check data
+      ansible.builtin.set_fact:
+        original_cron_allow_exists: "{{ (pre_check_data.content | b64decode | from_json).cron_allow_exists }}"
+        original_cron_allow_content: "{{ (pre_check_data.content | b64decode | from_json).cron_allow_content }}"
+        original_cron_deny_exists: "{{ (pre_check_data.content | b64decode | from_json).cron_deny_exists }}"
+        original_cron_deny_content: "{{ (pre_check_data.content | b64decode | from_json).cron_deny_content }}"
+
+    - name: Restore /etc/cron.allow
+      ansible.builtin.copy:
+        content: "{{ original_cron_allow_content }}"
+        dest: /etc/cron.allow
+        owner: root
+        group: security
+        mode: '0640'
+      when: original_cron_allow_exists | bool
+
+    - name: Remove /etc/cron.allow if it did not originally exist
+      ansible.builtin.file:
+        path: /etc/cron.allow
+        state: absent
+      when: not original_cron_allow_exists | bool
+
+    - name: Restore /etc/cron.deny if it originally existed
+      ansible.builtin.copy:
+        content: "{{ original_cron_deny_content }}"
+        dest: /etc/cron.deny
+        owner: root
+        group: security
+        mode: '0640'
+      when: original_cron_deny_exists | bool

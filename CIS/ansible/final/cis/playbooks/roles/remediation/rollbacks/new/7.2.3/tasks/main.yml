@@ -1,0 +1,16 @@
+---
+# tasks file for 7.2.3
+    - name: 1. Restore syslogd to accept remote logging (chssys -a "")
+      # chssys -s syslogd -a "" removes all arguments, including "-r".
+      ansible.builtin.command: chssys -s syslogd -a ""
+      register: chssys_rollback_status
+      changed_when: chssys_rollback_status.stdout is defined and 'syslogd' in chssys_rollback_status.stdout
+
+    - name: 2. Stop syslogd daemon
+      ansible.builtin.command: stopsrc -s syslogd
+      ignore_errors: true
+      register: stop_status_rollback
+      
+    - name: 3. Start syslogd daemon to activate the rolled-back configuration
+      ansible.builtin.command: startsrc -s syslogd
+      changed_when: chssys_rollback_status.changed

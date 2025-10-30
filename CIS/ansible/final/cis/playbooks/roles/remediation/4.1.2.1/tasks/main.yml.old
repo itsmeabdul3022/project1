@@ -1,0 +1,47 @@
+---
+# tasks file for 4.1.2.1
+    - name: 14.1.2.1 Ensure local user Home directories exists. Get user and home directory information
+      # Example output for an entry: 'user1:home=/home/user1'
+      ansible.builtin.command: lsuser -a home ALL
+      register: user_homes_raw
+      changed_when: false
+
+    - name: 2. Parse user data into a usable dictionary
+      # This creates a list of dicts like: [{'name': 'user1', 'home': '/home/user1'}, ...]
+      ansible.builtin.set_fact:
+        parsed_users: |
+          {% set data = [] %}
+          {% for line in user_homes_raw.stdout_lines %}
+          {% if ':home=' in line %}
+          {% set parts = line.split(':') %}
+          {% set user = parts[0] %}
+          {% set home = parts[1].split('=')[1] | default('') %}
+          {% do data.append({'name': user, 'home': home}) %}
+          {% endif %}
+          {% endfor %}
+          {{ data }}
+
+    - name: 3. Check existence of home directories
+      ansible.builtin.stat:
+        path: "{{ item.home }}"
+      register: home_dir_stats
+      loop: "{{ parsed_users }}"
+      loop_control:
+        label: "Checking home for {{ item.name }}"
+
+    - name: 4. Lock accounts with missing home directories (The Security Enforcer)
+      # AIX chuser is used for the lock
+      ansible.builtin.command: "chuser account_locked=true {{ item.item.name }}"
+      loop: "{{ home_dir_stats.results }}"
+      # Explanation of 'when' for security/clarity:
+      # - 'item.stat.exists' is false: Directory is missing.
+      # - 'item.item.home not in ['/', '/etc']': Skips common administrative/system homes that might be missing for service accounts but shouldn't be locked.
+      when:
+        - not item.stat.exists
+        - item.item.home is defined
+        - item.item.home | length > 0
+        - item.item.home not in ['/', '/etc', '/dev/null']
+      register: lock_results
+      changed_when: lock_results.rc == 0
+      loop_control:
+        label: "Locking user: {{ item.item.name }}"

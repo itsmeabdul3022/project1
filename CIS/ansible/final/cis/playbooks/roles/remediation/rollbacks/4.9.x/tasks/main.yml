@@ -1,0 +1,53 @@
+---
+- name: 4.9 Rollback user and shell settings
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/4.9_pre_check.{{ ansible_hostname }}.json"
+
+  tasks:
+    - name: Read pre-check data from Ansible host
+      ansible.builtin.slurp:
+        src: "{{ pre_check_file }}"
+      delegate_to: localhost
+      register: pre_check_data
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found. Cannot perform rollback."
+      when: not pre_check_data.content is defined
+
+    - name: Restore root user shell
+      ansible.builtin.user:
+        name: root
+        shell: "{{ (pre_check_data.content | b64decode | from_json).root_shell }}"
+
+    - name: Restore /etc/profile content
+      ansible.builtin.copy:
+        content: "{{ (pre_check_data.content | b64decode | from_json).etc_profile }}"
+        dest: /etc/profile
+        owner: root
+        group: sys
+        mode: '0644'
+      when: (pre_check_data.content | b64decode | from_json).etc_profile is defined
+
+    - name: Restore /root/.profile content
+      ansible.builtin.copy:
+        content: "{{ (pre_check_data.content | b64decode | from_json).root_profile }}"
+        dest: /root/.profile
+        owner: root
+        group: sys
+        mode: '0600'
+      when: (pre_check_data.content | b64decode | from_json).root_profile is defined
+
+    - name: Restore /etc/motd content
+      ansible.builtin.copy:
+        content: "{{ (pre_check_data.content | b64decode | from_json).motd_content }}"
+        dest: /etc/motd
+        owner: root
+        group: sys
+        mode: '0644'
+      when: (pre_check_data.content | b64decode | from_json).motd_content is defined

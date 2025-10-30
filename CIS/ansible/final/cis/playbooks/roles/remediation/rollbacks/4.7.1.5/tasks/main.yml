@@ -1,0 +1,62 @@
+---
+- name: Rollback CDE daemons sgid/suid modes to pre-check state
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/4.7.1.5_pre_checks.{{ ansible_hostname }}.txt"
+    daemons:
+      - /usr/dt/bin/dtlogin
+      - /usr/dt/bin/dtspc
+      - /usr/dt/bin/dtappgather
+      - /usr/dt/bin/dtsession
+      - /usr/dt/bin/dthelpo
+      - /usr/dt/bin/dtprintinfo
+
+  tasks:
+    - name: Fetch pre-check status file from remote host
+      ansible.builtin.fetch:
+        src: "{{ pre_check_file }}"
+        dest: "/tmp/pre_check_rollback_data/"
+        flat: yes
+      delegate_to: "{{ inventory_hostname }}"
+      register: fetched_file
+      ignore_errors: yes
+
+    - name: Fail if pre-check file was not found
+      ansible.builtin.fail:
+        msg: "The pre-check file was not found on the remote host. Cannot perform rollback."
+      when: not fetched_file.changed
+
+    - name: Read content of the fetched file on the Ansible host
+      ansible.builtin.slurp:
+        src: "{{ fetched_file.dest }}"
+      delegate_to: localhost
+      register: file_content
+
+    - name: Extract original modes from file content
+      ansible.builtin.set_fact:
+        original_modes: >
+          {% set modes = {} %}
+          {% for line in (file_content.content | b64decode | splitlines) %}
+          {% if 'Path:' in line %}
+          {% set path = line.split('Path: ')[1].split(' ')[0] | trim %}
+          {% elif 'setuid enabled:' in line %}
+          {% set isuid_enabled = 'yes' in line %}
+          {% elif 'setgid enabled:' in line %}
+          {% set isgid_enabled = 'yes' in line %}
+          {% if path is defined %}
+          {% set modes = modes | combine({path: {'isuid': isuid_enabled, 'isgid': isgid_enabled}}) %}
+          {% set path = None %}
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          {{ modes }}
+
+    - name: Apply rollback of sgid and suid modes for each daemon
+      ansible.builtin.file:
+        path: "{{ item.0 }}"
+        mode: "{{ ((item.1.isuid | ternary('u+s', 'u-s')) + ',' + (item.1.isgid | ternary('g+s', 'g-s'))) }}"
+      with_dict: "{{ original_modes }}"
+      ignore_errors: yes

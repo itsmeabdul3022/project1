@@ -1,0 +1,70 @@
+---
+# tasks file for 7.1.1
+    # --------------------------------------------------------------------------
+    # PART 1: AUDIT SHUTDOWN AND STARTUP REMOVAL
+    # --------------------------------------------------------------------------
+    - name: 1. Shut down the audit subsystem
+      ansible.builtin.command: audit shutdown
+      ignore_errors: true
+      
+    - name: 2. Remove audit startup entry from /etc/inittab (rmitab)
+      ansible.builtin.command: rmitab audit
+      ignore_errors: true
+      changed_when: true
+      
+    - name: 3. Remove audit log rotation cron job
+      ansible.builtin.cron:
+        name: "AIX Audit Log Rotation"
+        state: absent
+
+    # --------------------------------------------------------------------------
+    # PART 2: CONFIGURATION FILE CLEANUP
+    # --------------------------------------------------------------------------
+    - name: 4. Remove 'start' and 'bin' stanzas from /etc/security/audit/config
+      ansible.builtin.blockinfile:
+        path: /etc/security/audit/config
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR AUDIT CONFIG"
+        state: absent
+      ignore_errors: true
+
+    - name: 5. Revert /usr/lib/security/mkuser.default (removes auditclasses)
+      # WARNING: This sets auditclasses to an empty value, which is generally the default
+      # state when auditing is not specifically enabled for new users.
+      ansible.builtin.command:
+        cmd: chsec -f /usr/lib/security/mkuser.default -s user -a auditclasses=""
+      ignore_errors: true
+      
+    # --------------------------------------------------------------------------
+    # PART 3: FILESYSTEM DESTRUCTION (LVM)
+    # --------------------------------------------------------------------------
+    - name: 6a. Explicitly unmount the /audit filesystem
+      ansible.builtin.command: "umount {{ audit_mount_point }}"
+      ignore_errors: true # In case it's not mounted, we don't fail the playbook
+
+    - name: 6b. Unmount and remove /audit filesystem entry (rmfs)
+      # 'rmfs -r' removes the entry from /etc/filesystems.
+      ansible.builtin.command: "rmfs -r {{ audit_mount_point }}"
+      ignore_errors: true
+      register: rmfs_status
+
+    - name: 7. Remove the Logical Volume (rmlv)
+      # This task is already correct and should now run safely after unmount/rmfs.
+      ansible.builtin.shell: |
+        # Check if the Logical Volume still exists before attempting removal
+        if /usr/sbin/lsvg -l {{ audit_vg }} | /usr/bin/grep -q '{{ audit_lv_name }}'; then
+          /usr/sbin/rmlv -f {{ audit_lv_name }}
+          echo "LV removed."
+          exit 42 # Custom exit code for change
+        else
+          echo "LV does not exist. No change needed."
+          exit 0
+        fi
+      register: rmlv_status
+      changed_when: rmlv_status.rc == 42
+      failed_when: rmlv_status.rc != 0 and rmlv_status.rc != 42
+    - name: 6. Unmount and remove /audit filesystem entry (rmfs)
+      # 'rmfs -r' unmounts and removes the entry from /etc/filesystems.
+      ansible.builtin.command: "rmfs -r {{ audit_mount_point }}"
+      ignore_errors: true
+      register: rmfs_status
+

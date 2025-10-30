@@ -1,0 +1,13 @@
+ tasks:
+    - name: 4.1.1.3 Read the rollback file from the local machine
+      ansible.builtin.slurp:
+        src: "/tmp/4.1.1.3_etc_inetd.conf_rollback_{{ inventory_hostname }}.txt"
+      register: rollback_file_content
+      delegate_to: localhost
+      
+    - name: Apply previous owner, group, and permissions
+      ansible.builtin.file:
+        path: /etc/inetd.conf
+        owner: "{{ (rollback_file_content.content | b64decode | from_yaml).owner }}"
+        group: "{{ (rollback_file_content.content | b64decode | from_yaml).group }}"
+        mode: "{{ (rollback_file_content.content | b64decode | from_yaml).mode }}"

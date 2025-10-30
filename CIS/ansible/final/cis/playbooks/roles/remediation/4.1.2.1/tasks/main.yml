@@ -1,0 +1,45 @@
+    - name: 4.1.2.1 1. Get list of non-system users with home directory info
+      # Filter out common system accounts and non-user entries
+      ansible.builtin.shell: |
+        lsuser -a home ALL | grep -E ':[a-z]+=' | \
+        grep -v -E '^(root|daemon|bin|sys|adm|uucp|guest|nobody|lpd|ipsec|sshd|pconsole|nim|lp|perf|vts|snapp|diag|ssh):'
+      register: user_homes_raw
+      changed_when: false
+
+    - name: 2. Check existence of home directories for each user
+      ansible.builtin.stat:
+        path: "{{ item.split(':')[1].split('=')[1] | default('') }}"
+      register: home_dir_stats
+      loop: "{{ user_homes_raw.stdout_lines }}"
+      loop_control:
+        label: "Checking home for {{ item.split(':')[0] }}"
+
+    - name: 3. Identify users to be locked
+      # Collects the usernames that are missing a home directory
+      ansible.builtin.set_fact:
+        users_to_lock: "{{ home_dir_stats.results | selectattr('stat.exists', 'equalto', false) | \
+                           map(attribute='item') | map('split', ':') | map('first') | list }}"
+
+    - name: 4. LOG: Write the list of users to be locked to a local file
+      # This task runs on the Ansible Control Node (delegate_to: localhost)
+      # and ensures the log file has the list BEFORE the locking happens.
+      ansible.builtin.lineinfile:
+        path: "{{ lock_log_file }}"
+        line: "{{ item }}"
+        create: true
+        state: present
+        mode: '0600' # Secure permissions for the log file
+      delegate_to: localhost
+      loop: "{{ users_to_lock }}"
+      # Only run if we actually found users to lock
+      when: users_to_lock | length > 0
+      run_once: true # The file creation should only happen once per host/run
+
+        #    - name: 5. Execute LOCK: Lock missing accounts
+        #      # Lock the accounts using AIX 'chuser' if the directory is missing.
+        #      ansible.builtin.command: "chuser account_locked=true {{ item }}"
+        #      loop: "{{ users_to_lock }}"
+        #      register: lock_results
+        #      changed_when: lock_results.rc == 0
+        #      loop_control:
+        #        label: "Locking user: {{ item }}"

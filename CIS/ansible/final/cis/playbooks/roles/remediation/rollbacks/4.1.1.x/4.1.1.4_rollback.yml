@@ -1,0 +1,16 @@
+    - name: 4.1.1.4 Read the rollback file from the local machine
+      ansible.builtin.slurp:
+        src: "/tmp/4.1.1.3_etc_inetd.conf_rollback_{{ inventory_hostname }}.txt"
+      register: rollback_file_content
+      delegate_to: localhost
+      
+    - name: Set owner, group, and permissions
+      ansible.builtin.file:
+        path: /etc/inetd.conf
+        owner: "{{ (rollback_file_content.content | b64decode | from_yaml).owner }}"
+        group: "{{ (rollback_file_content.content | b64decode | from_yaml).group }}"
+        mode: "{{ (rollback_file_content.content | b64decode | from_yaml).mode }}"
+
+    - name: Restore original trust status if needed
+      ansible.builtin.command: trustchk -u /etc/inetd.conf mode={{ (rollback_file_content.content | b64decode | from_yaml).mode }}
+      when: "(rollback_file_content.content | b64decode | from_yaml).trust_status != 'trusted'"
