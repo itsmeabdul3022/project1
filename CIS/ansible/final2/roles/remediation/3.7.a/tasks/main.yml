@@ -1,0 +1,49 @@
+---
+# tasks file for 3.7.a
+
+- name: 3.7.a Audit - Find orphan files (no owner/group)
+  # Review the currently mounted local filesystems (JFS/JFS2 example):
+  # find / ( -fstype jfs -o -fstype jfs2 ) ( -type d -o -type f ) ( -nouser -o -nogroup ) -ls
+  # NOTE: Use '-xdev' instead of '-fstype ...' for general Linux systems.
+  ansible.builtin.shell: /usr/bin/find / \( -fstype jfs -o -fstype jfs2 \) \( -type d -o -type f \) \( -nouser -o -nogroup \) -ls
+  register: orphan_files
+  changed_when: false
+
+- name: 3.7 Report - Display files/directories without an owner/group
+  ansible.builtin.debug:
+    msg: |
+      *** ORPHAN FILE AUDIT: {{ inventory_hostname }} ***
+      {{ '-'*80 }}
+      | UID  | GID  | FILE PATH
+      {{ '-'*80 }}
+      {% for line in orphan_files.stdout_lines %}
+      {% set parts = line.split() %}
+      {% set uid = parts[3] %}
+      {% set gid = parts[4] %}
+      {% set path = parts[-1] %}
+      | {{ uid | center(4) }} | {{ gid | center(4) }} | {{ path }}
+      {% endfor %}
+      {{ '-'*80 }}
+  when: orphan_files.stdout_lines | length > 0
+
+- name: 3.7.a Log - Save formatted orphan file report to Ansible host
+  # Uses copy with content and delegate_to: localhost to create a file
+  # on the control node with the formatted report.
+  ansible.builtin.copy:
+    content: |
+      *** ORPHAN FILE AUDIT: {{ inventory_hostname }} ***
+      {{ '-'*80 }}
+      | UID  | GID  | FILE PATH
+      {{ '-'*80 }}
+      {% for line in orphan_files.stdout_lines %}
+      {% set parts = line.split() %}
+      {% set uid = parts[3] %}
+      {% set gid = parts[4] %}
+      {% set path = parts[-1] %}
+      | {{ uid | center(4) }} | {{ gid | center(4) }} | {{ path }}
+      {% endfor %}
+      {{ '-'*80 }}
+    dest: "{{ log_dir }}/3.7_orphan_files_{{ inventory_hostname }}.out"
+  delegate_to: localhost
+  # run_once: true # Optional, as delegate_to: localhost is host-aware anyway.
+  when: orphan_files.stdout_lines | length > 0

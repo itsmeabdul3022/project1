@@ -1,0 +1,20 @@
+---
+# vars file for 4.1.1.x
+
+    file_permissions:
+      # Format: path, desired mode, desired owner, desired group
+      - { path: /smit.log, mode: 'o-rw', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.1
+      - { path: /etc/group, mode: 'u=rw,go=r', owner: root, group: security } # CIS 4.1.1.2
+      - { path: /etc/inetd.conf, mode: 'u=rw,go=r', owner: root, group: system } # CIS 4.1.1.3
+      - { path: /etc/motd, mode: 'u=rw,go=r', owner: bin, group: bin } # CIS 4.1.1.4
+      - { path: /etc/passwd, mode: 'u=rw,go=r', owner: root, group: security } # CIS 4.1.1.5
+      - { path: /etc/mail/submit.cf, mode: 'u=rw,g=r,o=', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.6
+      - { path: /etc/ssh/ssh_banner, mode: 'u=rw,go=r', owner: root, group: system } # CIS 4.1.1.7
+      - { path: /etc/ssh/ssh_config, mode: '644', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.8
+      - { path: /etc/ssh/sshd_config, mode: 'u=rw,go=r', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.9
+      - { path: /var/adm/cron/cron.allow, mode: 'u=r,go=', owner: root, group: sys } # CIS 4.1.1.11
+      - { path: /var/ct/RMstart.log, mode: 'o-rw', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.13
+      - { path: /var/tmp/dpid2.log, mode: 'o-rw', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.14
+      - { path: /var/tmp/hostmibd.log, mode: 'o-rw', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.15
+      - { path: /var/tmp/snmpd.log, mode: 'o-rw', owner: "{{ omit }}", group: "{{ omit }}" } # CIS 4.1.1.16
+

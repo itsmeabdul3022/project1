@@ -1,0 +1,76 @@
+    - name: '4.1.2.1 - 1. Fetch User Data (lsuser equivalent)'
+      # 1. Get raw user data
+      ansible.builtin.shell: |
+        lsuser -R files -a id home account_locked ALL
+      register: user_data
+      changed_when: false
+
+    - name: '4.1.2.1 - 2. Parse and Filter Users Eligible for Check (UID >= 200 and UNLOCKED)'
+      ansible.builtin.set_fact:
+        # Create a YAML list string structure from raw output
+        eligible_users: |
+          [
+          {% for line in user_data.stdout_lines %}
+            {% set parts = line.split() %}
+            {% if parts | length >= 4 %}
+              {% set name = parts[0] %}
+              {% set uid = parts[1].split('=')[1] | int(default=0) %}
+              {% set home_path = parts[2].split('=')[1] %}
+              {% set locked = parts[3].split('=')[1] %}
+
+              # Apply filtering logic (UID >= 200 AND NOT locked)
+              {% if uid >= 200 and locked != 'true' %}
+                { 'name': '{{ name }}', 'home': '{{ home_path }}' },
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          ]
+
+    - name: '4.1.2.1 - 3. Convert Raw User Data to List'
+      ansible.builtin.set_fact:
+        eligible_users_list: "{{ eligible_users | from_yaml | unique }}"
+
+    - name: '4.1.2.1 - 4. Check if Home Directories Exist for Eligible Users'
+      # Use the dedicated stat module for each eligible user
+      ansible.builtin.stat:
+        path: "{{ item.home }}"
+      register: home_check_results
+      loop: "{{ eligible_users_list }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: '4.1.2.1 - 5. Identify Final List of Users to Lock'
+      # Filter the stat results to find those that are MISSING a home directory
+      ansible.builtin.set_fact:
+        users_to_lock: >
+          {{ home_check_results.results |
+            selectattr('stat.exists', 'defined') |
+            rejectattr('stat.exists', 'equalto', True) |
+            map(attribute='item.name') |
+            list
+          }}
+          
+    - name: '4.1.2.1 - 6. LOG: Write the list of users to be locked to a local file'
+      # This task runs on the Ansible Control Node (delegate_to: localhost)
+      ansible.builtin.lineinfile:
+        path: "{{ lock_log_file }}"
+        line: "{{ item }}"
+        create: true
+        state: present
+        mode: '0600'
+      delegate_to: localhost
+      loop: "{{ users_to_lock }}"
+      when: users_to_lock | length > 0
+      run_once: true
+      
+  # run the playbook again with below task uncommented  for remediation after review with the owners
+  # or manually lock the identified users with no home directories
+  #    - name: '4.1.2.1 - 7. Execute LOCK: Lock accounts missing a home directory (chuser)'
+  #      # Execute the lock command using the final filtered list.
+  #      ansible.builtin.shell: "chuser account_locked=true {{ item }}"
+  #      loop: "{{ users_to_lock }}"
+  #      when: users_to_lock | length > 0
+  #      register: lock_results
+  #      changed_when: lock_results.rc == 0
+  #      loop_control:
+  #        label: "Locking user: {{ item }}"

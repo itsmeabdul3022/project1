@@ -1,0 +1,3 @@
+---
+# vars file for 2.4_rollback
+log_file_name: "2.4_broken_links_raw_{{ inventory_hostname }}.log"

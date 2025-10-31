@@ -1,0 +1,102 @@
+    - name: "4.1.2.3 - 0. (Pre-req) Ensure log directory exists on control node"
+      ansible.builtin.file:
+        path: "{{ log_dir }}"
+        state: directory
+        mode: '0700' 
+      delegate_to: localhost
+      run_once: true
+      
+    - name: "4.1.2.3 - 1. Fetch User Data (lsuser equivalent)"
+      # Fetches user attributes in a key=value format suitable for parsing.
+      ansible.builtin.shell: |
+        lsuser -R files -a id home account_locked ALL
+      register: user_data
+      changed_when: false # Data gathering task
+
+
+    - name: "4.1.2.3 - 2. Parse and Extract Target Home Paths (Using Proven Logic)"
+      ansible.builtin.set_fact:
+        # 1. Adapt your working loop to generate a list of strings (paths) instead of dicts.
+        target_homes_raw: |
+          [
+          {% for line in user_data.stdout_lines %}
+            {% set parts = line.split() %}
+            {% if parts | length >= 4 %}
+              {% set uid = parts[1].split('=')[1] | int(default=0) %}
+              {% set home_path = parts[2].split('=')[1] %}
+              {% set locked = parts[3].split('=')[1] %}
+
+              # Apply all filtering logic: UID >= 200, UNLOCKED, AND Path is valid
+              {% if uid >= min_uid_check and locked != 'true' and home_path != '/dev/null' and home_path != '/' %}
+                "{{ home_path }}",
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          ]
+    
+    - name: "4.1.2.3 - 2b. Finalize target_homes list"
+      ansible.builtin.set_fact:
+        # Use your proven filter to convert the YAML string to a final, clean list of paths.
+        target_homes: "{{ target_homes_raw | from_yaml | unique }}"
+        
+    - name: "4.1.2.3 - 3. Check permissions for each target home directory (STAT Module Loop)"
+      # Now loop over the clean list of paths.
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop: "{{ target_homes | default([]) }}"
+      register: home_stats
+      ignore_errors: true 
+      when: target_homes | length > 0
+     
+    - name: "4.1.2.3 - 3b. Determine final list of non-compliant home paths"
+      # This version removes the comment that caused the failure.
+      ansible.builtin.set_fact:
+        non_compliant_home_paths: "{{ home_stats.results |
+                                      selectattr('stat.exists', 'defined') |
+                                      selectattr('stat.exists', '==', true) |
+                                      selectattr('stat.isdir', '==', true) |
+                                      selectattr('stat.mode', 'match', '^(07[67].*|.*[2367][67][67])$') |
+                                      map(attribute='stat.path') |
+                                      list }}"
+      when: home_stats is defined and home_stats.results is defined and home_stats.results | length > 0
+
+    - name: "4.1.2.3 - 3c. Final Check: Proceed only if non-compliant paths were found"
+      ansible.builtin.fail:
+        msg: "Found no non-compliant home directories to remediate."
+      when: non_compliant_home_paths | length == 0
+
+          
+
+    # Note: Tasks 4, 4b, and 5 (logging/remediation) remain the same, but their 'when'
+    # condition now correctly depends on 'non_compliant_home_paths' being populated.    
+        # The logging and remediation tasks (4, 4b, 5) follow here... 
+    - name: "4.1.2.3 - 4. Log original permissions for rollback"
+      # Cleaned stat task. Delegate_to is removed as it's implicit on the loop target.
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop: "{{ non_compliant_home_paths }}"
+      register: stat_results # This now registers correctly for the loop
+      when: non_compliant_home_paths | length > 0 # Run only if there's something to fix
+
+    - name: "4.1.2.3 - 4b. Format log data and write to control node (PURE FILTER)"
+      ansible.builtin.copy:
+        content: "{{ stat_results.results | 
+                     selectattr('stat.path', 'defined') | 
+                     map('json_query', '{path: stat.path, mode: stat.mode}') | 
+                     to_json }}"
+        dest: "{{ log_dir }}/4.1.2.3_home_perms_{{ inventory_hostname }}.log"
+        mode: '0600'
+      delegate_to: localhost
+      when: stat_results is defined and stat_results.results is defined and stat_results.results | length > 0
+        
+    - name: "4.1.2.3 - 5. Set secure permissions (0755) on non-compliant home directories"
+      # Loop over the list of non-compliant paths identified by the native find.
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ non_compliant_home_paths }}"
+      when: non_compliant_home_paths | length > 0
+      loop_control:
+        label: "Correcting permissions on: {{ item }}"
+        

@@ -1,0 +1,4 @@
+---
+# vars file for 3.7.b
+remote_temp_file: "/tmp/orphan_paths_{{ inventory_hostname }}.list"
+log_file_path: "{{ log_dir }}/3.7_orphan_files_{{ inventory_hostname }}.out"

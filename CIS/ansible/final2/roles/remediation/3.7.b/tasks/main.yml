@@ -1,0 +1,41 @@
+---
+# tasks file for 3.7.b
+# This playbook to be run after 3.7.a role is run and the list generated is reviewed 
+# 3.7.a Orphan File Remediation (Post-Review Cleanup)
+#    log_dir: "/path/to/your/log/directory"
+#    log_file_path: "{{ log_dir }}/3.7_orphan_files_{{ inventory_hostname }}.out"
+    # Define a custom temporary path on the remote host for the file list
+
+    - name: 3.7 Cleanup - Read the audit log file from control host
+      # We delegate to localhost to read the log file that was created there
+      ansible.builtin.slurp:
+        src: "{{ log_file_path }}"
+      register: audit_log_content
+      delegate_to: localhost
+
+    - name: 3.7 Cleanup - Parse log content to extract only file paths (FIXED)
+      ansible.builtin.set_fact:
+       paths_to_delete: >-
+         {{ audit_log_content.content | b64decode | split('\n') | map('trim')
+           | reject('match', '^(?:\\*|\\-).*')
+           | reject('match', '^\\|\\s+UID\\s+\\|.*')
+           | select('match', '^(?!\\s*$).*')
+           | map('split') | map('last') | list
+         }}
+      when: audit_log_content.content is defined
+
+
+    - name: 3.7 Cleanup - Remove listed orphan files/directories
+      # Now we loop over the clean list of paths generated in the previous step
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop: "{{ paths_to_delete }}"
+      loop_control:
+        label: "Removing {{ item }}"
+      when: paths_to_delete is defined and paths_to_delete | length > 0
+
+    - name: 3.7 Cleanup - Report final count
+      ansible.builtin.debug:
+        msg: "Successfully processed (attempted to remove) {{ paths_to_delete | length }} files/directories listed in the audit log."
+      when: paths_to_delete is defined and paths_to_delete | length > 0

@@ -1,0 +1,43 @@
+---
+# rollback tasks file for 4.7.3.15
+
+    - name: 1. Find the most recent backup file in the backup directory
+      ansible.builtin.find:
+        paths: "{{ backup_dir }}"
+        patterns: "sshd_config.*\\.bak"
+        sort_by: mtime
+        file_type: file
+      register: find_result
+
+    - name: Fail if no backup file is found 🛑
+      ansible.builtin.fail:
+        msg: "No sshd_config backup file found in {{ backup_dir }}. Cannot perform file rollback."
+      when: find_result.files | length == 0
+
+    - name: 2. Set fact for the most recent backup file path
+      ansible.builtin.set_fact:
+        latest_backup: "{{ find_result.files | last }}"
+
+    - name: 3. Restore /etc/ssh/sshd_config from the latest backup
+      ansible.builtin.copy:
+        src: "{{ latest_backup.path }}"
+        dest: "{{ sshd_config_path }}"
+        remote_src: yes
+        owner: root
+        group: system
+        mode: '0600'
+      register: restore_change
+
+    - name: 4. Restart sshd daemon to apply the restored configuration 🔄
+      ansible.builtin.shell: |
+        /usr/bin/stopsrc -s sshd
+        sleep 5
+        /usr/bin/startsrc -s sshd
+      when: restore_change.changed
+
+    - name: 5. Clean up the latest backup file (Optional cleanup step)
+      ansible.builtin.file:
+        path: "{{ latest_backup.path }}"
+        state: absent
+      when: restore_change.changed
+

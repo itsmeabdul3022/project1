@@ -1,0 +1,44 @@
+---
+# tasks file for 2.4_rollback
+#
+    - name: 1. Read Raw Log File Content from Control Node (PATH CHECK)
+      ansible.builtin.slurp:
+        # Use the actual path from the previous successful run.
+        src: "{{ log_dir }}/2.4_broken_links_raw_{{ inventory_hostname }}.log" 
+      register: log_content
+      delegate_to: localhost
+      run_once: true
+
+    - name: DEBUG Show Slurped Content
+      ansible.builtin.debug:
+        var: log_content
+
+
+    - name: 2. Prepare Rollback List (Robust String Splitting)
+      ansible.builtin.set_fact:
+        rollback_data: |
+          {%- set raw_text = log_content.content | b64decode | trim -%}
+          {%- set lines = raw_text.split('\n') | map('trim') | reject('equalto', '') | list -%}
+          {%- set clean_data = [] -%}
+          {%- for line in lines -%}
+            {%- set parts = line.split('|') -%}
+            {%- if parts | length == 2 -%}
+              {%- set clean_data = clean_data + [{'path': parts[0] | trim, 'src': parts[1] | trim}] -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{- clean_data | list -}}
+
+
+    - name: debug2
+      debug:
+        msg: "{{ rollback_data }}"
+
+    - name: 3. Perform Rollback Recreate Symbolic Links
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        src: "{{ item.src }}"
+        state: link
+      loop: "{{ rollback_data }}"
+      loop_control:
+        label: "Recreating link: {{ item.path }} -> {{ item.src }}"
+      when: rollback_data | length > 0

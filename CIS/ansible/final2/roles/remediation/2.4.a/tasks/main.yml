@@ -1,0 +1,50 @@
+---
+# tasks file for 2.4
+#    - name: '2.4 - 1. Find Unused (Broken) Symbolic Links and Log Paths (CLEAN AWK)'
+#      ansible.builtin.shell: |
+#        /usr/bin/find / \( -fstype jfs -o -fstype jfs2 \) -type l -exec test ! -e {} \; -ls 2>&1 \
+#        | /usr/bin/grep -v 'Link to an already visited ancestor' \
+#        | awk '{
+#            source=$(NF-2);
+#            target=$NF;
+#            printf "%s|%s\n", source, target;
+#        }'
+#      register: broken_links_output
+#      changed_when: broken_links_output.stdout_lines | length > 0
+#      # Ensure you include 'ignore_errors: true' here if you want it to continue on other find errors
+#      ignore_errors: true
+
+
+    - name: '2.4 - 1. Find Unused (Broken) Symbolic Links and Log Paths (CLEANEST INPUT)'
+      ansible.builtin.shell: |
+        /usr/bin/find / \( -fstype jfs -o -fstype jfs2 \) -type l -exec test ! -e {} \; -ls 2>&1 \
+        | /usr/bin/grep -v 'Link to an already visited ancestor' \
+        | awk '{
+            source=$(NF-2);
+            target=$NF;
+            printf "%s|%s\n", source, target;
+        }' \
+        | tr -cd '[:print:]\n' # <--- THIS IS NOW CRITICAL
+      register: broken_links_output
+      changed_when: broken_links_output.stdout_lines | length > 0
+      ignore_errors: true
+
+    - name: '2.4 - 2. Prepare Remediation List (Paths Only)'
+      ansible.builtin.set_fact:
+        # We only need a simple list of paths for the file module in Task 4.
+        links_to_remove: "{{ broken_links_output.stdout_lines | map('split', '|') | map('first') | list }}"
+
+    - name: debug
+      debug:
+        msg: "{{ broken_links_output.stdout }}"
+
+    - name: '2.4 - 3. LOG: Write Raw Audit Data to File'
+      # Write the raw, source|target strings, one per line, directly to the log file.
+      ansible.builtin.copy:
+        content: "{{ broken_links_output.stdout }}"
+        dest: "{{ log_dir | default('/tmp/pre_checks') }}/2.4_broken_links_raw_{{ inventory_hostname }}.log"
+        mode: '0600'
+      delegate_to: localhost
+      when: broken_links_output.stdout | length > 0
+
+

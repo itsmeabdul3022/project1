@@ -1,0 +1,4 @@
+---
+# vars file for 4.1.2.1
+
+lock_log_file: "{{ log_dir }}/4.1.2.1_aix_user_no_home_dir_{{ inventory_hostname }}.log"

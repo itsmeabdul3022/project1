@@ -1,0 +1,33 @@
+---
+# tasks file for 4.1.1.x_rollback
+    - name: 1. Rollback - Fetch rollback data from control host
+      # Reads the structured JSON log file from the Ansible control host
+      ansible.builtin.slurp:
+        src: "{{ log_dir }}/4.1.1.x_rollback_data_{{ inventory_hostname }}.json"
+      register: rollback_data_slurp
+      delegate_to: localhost
+
+    - name: 2. Rollback - Decode and set rollback data fact
+      # Decodes the Base64 content and loads the JSON into a usable list
+      ansible.builtin.set_fact:
+        rollback_items: "{{ rollback_data_slurp.content | b64decode | from_json }}"
+      when: rollback_data_slurp.content is defined
+
+    - name: 3. Rollback - Restore original permissions and ownership
+      # Iterates over the items in the log file to restore their exact prior state
+      ansible.builtin.file:
+        path: "{{ item.item.path }}"
+        # UID name (pw_name) and GID name (gr_name) are used for reliable restoration
+        owner: "{{ item.stat.pw_name }}"
+        group: "{{ item.stat.gr_name }}"
+        # Uses the octal mode string (e.g., '0644') from the original stat output
+        mode: "{{ item.stat.mode }}" 
+      loop: "{{ rollback_items }}"
+      loop_control:
+        # If 'item.stat.mode' doesn't exist (because the file didn't exist), display 'N/A'
+        label: "Restoring {{ item.item.path }} to {{ item.stat.mode | default('N/A (File Did Not Exist)') }}"
+      when: item.stat.exists # Only attempt to restore files that existed originally
+
+    - name: 4. Rollback - Trustchk Reversal Notice
+      ansible.builtin.debug:
+        msg: "Permissions for /etc/inetd.conf have been restored. NOTE: Reversing the 'trustchk' command often requires specialized or manual steps if the previous trust state needs to be fully undone."

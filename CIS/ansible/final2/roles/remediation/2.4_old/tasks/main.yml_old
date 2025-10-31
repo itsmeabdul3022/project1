@@ -1,0 +1,23 @@
+  - name: 2.4 Ensure unused symbolic links are removed
+      # The following command will remove all symbolic links that lack a valid target object:
+      # Impact: Symbolic Links, used properly, are a tremendous asset - enhancing system usability (ease of use).
+      # However, when pointing to nothing (i.e., whatever they pointed at has been removed but not replaced) system integrity is at the mercy of whatever process replaces that filesystem location later.
+      # To reduce risk to system integrity any symbolic link that points at a non-existent file-system object is to be removed.
+      # Note: most symbolic links that point at no longer existent objects exist due to incomplete software removal procedures.
+      # When an authorized application is (re-)installed it's installation process will (or should) re-create the symbolic link.
+      #      ansible.builtin.shell: find -L / ( -fstype jfs -o -fstype jfs2 ) -type l | xargs rm
+      #args:
+      #  warn: false
+
+  - name: Check 2.4 Ensure unused symbolic links are removed
+    raw: test "$(/usr/bin/find -L / \( -fstype jfs -o -fstype jfs2 \) -type l -ls 2>&1 | /usr/bin/grep -v 'Link to an already visited ancestor' | awk '{print} END {if (NR==0) print "none"}' | tee {{ PREV_2_4 }})" == "none" && echo "PASS" || echo "NO_PASS"
+    register: item_2_4_output
+    ignore_errors: true
+
+  - debug: msg={{ item_2_4_output.stdout_lines }}
+
+  - name: Skip if 2.4 is compliance
+    raw: find -L / \( -fstype jfs -o -fstype jfs2 \) -type l | xargs rm
+    when: item_2_4_output.stdout_lines[1] == "NO_PASS"
+    ignore_errors: true
+

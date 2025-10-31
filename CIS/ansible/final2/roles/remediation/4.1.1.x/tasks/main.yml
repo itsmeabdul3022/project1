@@ -1,0 +1,39 @@
+---
+# tasks file for 4.1.1.x
+    - name: 1. Audit - Check and Register current file permissions (stat)
+      # Gathers the current state of ALL files needed for remediation AND rollback
+      ansible.builtin.stat:
+        path: "{{ item.path }}"
+      loop: "{{ file_permissions }}"
+      register: file_stats
+      loop_control:
+        label: "Audit {{ item.path }}"
+
+    - name: 2. Log - Save current state for rollback purposes
+      # The full stat output is saved to the control host in JSON format
+      ansible.builtin.copy:
+        content: "{{ file_stats.results | to_nice_json }}"
+        dest: "{{ log_dir }}/4.1.1.x_rollback_data_{{ inventory_hostname }}.json"
+      delegate_to: localhost
+      run_once: true
+      # This task runs even if no changes will be made, ensuring the log exists
+
+    - name: 3. Remediate - Configure file permissions, owner, and group
+      # Iterates over the stat results and applies the desired configuration
+      ansible.builtin.file:
+        path: "{{ item.item.path }}"
+        # Pass desired values from the original file_permissions list
+        owner: "{{ item.item.owner | default(omit) }}"
+        group: "{{ item.item.group | default(omit) }}"
+        mode: "{{ item.item.mode }}"
+      loop: "{{ file_stats.results }}"
+      loop_control:
+        label: "Remediating {{ item.item.path }}"
+      # Only run if the file exists on the remote system
+      when: item.stat.exists
+
+        #    - name: 4. Final - Run trustchk on /etc/inetd.conf
+      # Run this final command, conditioned on the file existing
+      # ansible.builtin.command:  
+      #  cmd: trustchk -u /etc/inetd.conf mode=644
+      #when: file_stats.results | selectattr('item.path', 'equalto', '/etc/inetd.conf') | first | default({'stat': {'exists': false}}) | json_query('stat.exists')

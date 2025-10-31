@@ -1,0 +1,93 @@
+- name: '4.1.2.2 - 1. Fetch User Data (lsuser equivalent)'
+  ansible.builtin.shell: |
+    lsuser -R files -a id home account_locked ALL
+  register: user_data
+  changed_when: false
+
+- name: '4.1.2.2 - 2a. Generate Raw YAML String of Eligible Users'
+  ansible.builtin.set_fact:
+    # Generates the clean list string.
+    eligible_users_yaml_string: >-
+      [
+      {%- for line in user_data.stdout_lines -%}
+        {% set parts = line.split() %}
+        {% if parts | length >= 4 %}
+          {% set name = parts[0] %}
+          {% set uid = parts[1].split('=')[1] | int(default=0) %}
+          {% set home_path = parts[2].split('=')[1] %}
+          {% set locked = parts[3].split('=')[1] %}
+
+          {% if uid >= 200 and locked != 'true' and home_path != '/dev/null' %}
+            { 'name': '{{ name }}', 'uid': {{ uid }}, 'home': '{{ home_path }}' },
+          {%- endif -%}
+        {% endif %}
+      {%- endfor -%}
+      ]
+
+- name: '4.1.2.2 - 2b. Convert YAML String to Final List Object'
+  ansible.builtin.set_fact:
+    # Safely converts the string into a proper list object.
+    eligible_users_list: "{{ eligible_users_yaml_string | default('[]', true) | from_yaml | unique(attribute='name') }}"
+
+# --- Compliance Checks ---
+
+- name: '4.1.2.2 - 3. Stat Home Directories for Ownership Check'
+  ansible.builtin.stat:
+    path: "{{ item.home }}"
+  register: home_stats
+  loop: "{{ eligible_users_list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: eligible_users_list | length > 0
+
+- name: '4.1.2.2 - 4a. Identify Users with Missing Home Directories'
+  ansible.builtin.set_fact:
+    users_with_missing_home: >
+      {{ home_stats.results
+        | selectattr('failed', 'equalto', false)
+        | rejectattr('stat.exists', 'equalto', true)
+        | map(attribute='item.name') | list
+      }}
+  when: home_stats is defined
+
+- name: '4.1.2.2 - 4b. Identify Users with Incorrect Ownership'
+  ansible.builtin.set_fact:
+    users_with_bad_ownership: >
+      {{ home_stats.results
+        | selectattr('failed', 'equalto', false)
+        | selectattr('stat.exists', 'equalto', true)
+        
+        | reject('equalto', 'item.uid', 'stat.uid') 
+        
+        | rejectattr('stat.uid', 'equalto', 0) 
+        | map(attribute='item.name') | list
+      }}
+  when: home_stats is defined
+
+- name: '4.1.2.2 - 4c. Merge all users to lock'
+  ansible.builtin.set_fact:
+    users_to_lock: "{{ (users_with_missing_home | default([]) + users_with_bad_ownership | default([])) | unique }}"
+  when: home_stats is defined
+
+# --- Enforcement Logic ---
+
+- name: '4.1.2.2 - 5. LOG: Write list of users to be locked to Control Node'
+  ansible.builtin.lineinfile:
+    path: "{{ lock_log_file }}"
+    line: "{{ item }}"
+    create: true
+    state: present
+    mode: '0600'
+  delegate_to: localhost
+  loop: "{{ users_to_lock }}"
+  when: users_to_lock | length > 0
+  run_once: true
+
+- name: '4.1.2.2 - 6. Execute LOCK: Lock accounts with issues (chuser)'
+  ansible.builtin.command: "chuser account_locked=true {{ item }}"
+  loop: "{{ users_to_lock }}"
+  when: users_to_lock | length > 0
+  register: lock_results
+  changed_when: lock_results.rc == 0
+  loop_control:
+    label: "Locking user: {{ item }}"

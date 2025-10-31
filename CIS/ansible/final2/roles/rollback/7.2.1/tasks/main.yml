@@ -1,0 +1,23 @@
+- name: 7.2.1 Rollback syslog local logging
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    pre_check_file: "/tmp/pre_checks/7.2.1_pre_check.{{ ansible_hostname }}.txt"
+
+  tasks:
+    - name: Restore /etc/syslog.conf from pre-check
+      ansible.builtin.copy:
+        src: "{{ pre_check_file }}"
+        dest: /etc/syslog.conf
+        owner: root
+        group: system
+        mode: '0640'
+        remote_src: no
+      notify:
+        - Refresh syslogd
+
+  handlers:
+    - name: Refresh syslogd
+      ansible.builtin.shell: refresh -s syslogd
